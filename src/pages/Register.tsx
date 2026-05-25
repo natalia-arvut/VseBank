@@ -126,16 +126,8 @@ export default function Register() {
           <div className="absolute w-48 h-48 rounded-full border border-gold-400" />
         </div>
 
-        {/* VseBank логотип (в светлом стиле для тёмного фона) */}
-        <div className="flex items-center gap-3">
-          <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
-            <path d="M10 12 C 10 5, 17 5, 20 12 C 23 19, 30 19, 30 12 C 30 5, 23 5, 20 12 C 17 19, 10 19, 10 12 Z"
-              stroke="#D4B87A" strokeWidth="3" fill="none" strokeLinecap="round"/>
-          </svg>
-          <span className="font-serif text-2xl text-cream-50 tracking-wide font-medium leading-none">
-            VseBank
-          </span>
-        </div>
+        {/* VseBank логотип — единый компонент в светлом варианте */}
+        <VseBankLogo size="md" variant="light" />
 
         <div className="relative z-10">
           <div className="font-sans text-xs text-gold-400 tracking-[0.2em] uppercase mb-4">
@@ -167,27 +159,29 @@ export default function Register() {
             <div className="w-12 h-px bg-gold-400" />
           </div>
 
-          {/* Тип счёта */}
+          {/* Тип счёта — единый размер с кнопкой submit */}
           <div className="flex gap-2 mb-3">
             <button
               type="button"
               onClick={() => handleChange('accountType', 'personal')}
-              className={`flex-1 py-2 text-xs font-sans border transition-all duration-200 ${
+              className={`flex-1 py-3 text-sm font-sans font-medium tracking-widest uppercase border transition-all duration-200 ${
                 form.accountType === 'personal'
                   ? 'bg-gold-500 text-white border-gold-500'
-                  : 'border-gold-300/50 text-stone-600 hover:border-gold-500'
+                  : 'border-gold-300/60 text-stone-600 hover:border-gold-500'
               }`}
+              style={{ borderRadius: '15px' }}
             >
               Личный
             </button>
             <button
               type="button"
               onClick={() => handleChange('accountType', 'company')}
-              className={`flex-1 py-2 text-xs font-sans border transition-all duration-200 ${
+              className={`flex-1 py-3 text-sm font-sans font-medium tracking-widest uppercase border transition-all duration-200 ${
                 form.accountType === 'company'
                   ? 'bg-gold-500 text-white border-gold-500'
-                  : 'border-gold-300/50 text-stone-600 hover:border-gold-500'
+                  : 'border-gold-300/60 text-stone-600 hover:border-gold-500'
               }`}
+              style={{ borderRadius: '15px' }}
             >
               Бизнес
             </button>
@@ -212,7 +206,7 @@ export default function Register() {
               </>
             ) : (
               // Поля для личного счёта
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <input
                   className="input-field"
                   placeholder="Имя *"
@@ -229,7 +223,7 @@ export default function Register() {
             )}
 
             {form.accountType === 'personal' && (
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <input
                   className="input-field"
                   placeholder="Дата рождения"
