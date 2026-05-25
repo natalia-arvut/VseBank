@@ -54,11 +54,11 @@ export default function Login() {
   return (
     <div className="h-screen overflow-hidden bg-cream-100 bg-pattern flex items-center justify-center px-8 py-6">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="inline-flex"><VseBankLogo size="md" /></div>
+        <div className="mb-8">
+          <div className="flex justify-start mb-4">
+            <VseBankLogo size="md" />
           </div>
-          <div className="w-12 h-px bg-gold-400 mx-auto mb-4" />
+          <div className="w-12 h-px bg-gold-400 mb-4" />
           <p className="font-sans text-stone-500 text-sm">Войдите в ваш кабинет изобилия</p>
         </div>
 

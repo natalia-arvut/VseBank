@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import CabinetLayout from '../components/CabinetLayout'
 import emailjs from '@emailjs/browser'
@@ -18,10 +18,20 @@ const TYPES = [
 
 export default function Transfer() {
   const navigate = useNavigate()
+  const location = useLocation()
   const { user, addTransfer } = useApp()
 
   const [amount, setAmount] = useState('')
   const [currency, setCurrency] = useState('USD')
+
+  // Подхватываем сумму из URL (если пришли с лендинга)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search || window.location.hash.split('?')[1] || '')
+    const a = params.get('amount')
+    const c = params.get('currency')
+    if (a) setAmount(a)
+    if (c) setCurrency(c)
+  }, [location.search])
   const [timing, setTiming] = useState('fast')
   const [type, setType] = useState('trust')
   const [loading, setLoading] = useState(false)

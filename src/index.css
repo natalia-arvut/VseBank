@@ -99,25 +99,14 @@
     padding-right: 38px;
   }
 
-  /* Календарь — золотой стиль */
+  /* Календарь — золотой стиль, ввод вручную работает */
   input[type="date"].input-field {
     color-scheme: light;
-    position: relative;
   }
   input[type="date"].input-field::-webkit-calendar-picker-indicator {
     cursor: pointer;
-    opacity: 0;
-    position: absolute;
-    right: 0;
-    width: 100%;
-    height: 100%;
-  }
-  input[type="date"].input-field {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23B89058' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='18' rx='2'/><line x1='16' y1='2' x2='16' y2='6'/><line x1='8' y1='2' x2='8' y2='6'/><line x1='3' y1='10' x2='21' y2='10'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    background-size: 16px;
-    padding-right: 40px;
+    filter: invert(58%) sepia(50%) saturate(380%) hue-rotate(0deg) brightness(85%);
+    margin-left: 8px;
   }
 
   /* Единый контейнер сайта — 12-колоночная сетка, отступы 5% по краям */

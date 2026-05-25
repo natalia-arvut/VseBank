@@ -1,8 +1,24 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Crown, Brain } from 'lucide-react'
 
 export default function Landing() {
   const navigate = useNavigate()
+  const [quickName, setQuickName] = useState('')
+  const [quickEmail, setQuickEmail] = useState('')
+  const [quickAmount, setQuickAmount] = useState('')
+  const [quickCurrency, setQuickCurrency] = useState('USD')
+
+  const handleQuickStart = () => {
+    // Сохраняем намерение и редиректим на регистрацию
+    localStorage.setItem('vbi_intent', JSON.stringify({
+      name: quickName.trim(),
+      email: quickEmail.trim().toLowerCase(),
+      amount: quickAmount.trim(),
+      currency: quickCurrency,
+    }))
+    navigate('/register')
+  }
 
   return (
     <div className="min-h-screen bg-cream-100 font-sans">
@@ -40,7 +56,7 @@ export default function Landing() {
 
         {/* Картинка — на мобайле показывается только ЛЕВАЯ (чистая) часть */}
         <img
-          src={`/hero-cover.png?v=${Date.now()}`}
+          src={`${import.meta.env.BASE_URL}hero-cover.png`}
           alt=""
           className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none hero-image"
           draggable={false}
@@ -346,17 +362,19 @@ export default function Landing() {
                 Ваш безлимитный счёт уже активирован. Вам осталось только «присвоить» его себе.
               </p>
               <div className="space-y-3">
-                <input className="input-field" placeholder="Ваше имя" />
-                <input className="input-field" placeholder="Email" type="email" />
+                <input className="input-field" placeholder="Ваше имя" value={quickName} onChange={e => setQuickName(e.target.value)} />
+                <input className="input-field" placeholder="Email" type="email" value={quickEmail} onChange={e => setQuickEmail(e.target.value)} />
                 <div className="grid grid-cols-2 gap-3">
-                  <input className="input-field" placeholder="Введите сумму" />
-                  <div className="input-field flex items-center gap-2 text-stone-600">
-                    <span>USD</span>
-                    <span className="ml-auto text-gold-500">∞</span>
-                  </div>
+                  <input className="input-field" placeholder="Введите сумму" value={quickAmount} onChange={e => setQuickAmount(e.target.value)} />
+                  <select className="input-field" value={quickCurrency} onChange={e => setQuickCurrency(e.target.value)}>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="CHF">CHF</option>
+                    <option value="RUB">RUB</option>
+                  </select>
                 </div>
                 <button
-                  onClick={() => navigate('/register')}
+                  onClick={handleQuickStart}
                   className="w-full btn-gold text-center"
                 >
                   Активировать перевод →

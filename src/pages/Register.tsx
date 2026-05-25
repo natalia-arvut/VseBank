@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import VseBankLogo from '../components/VseBankLogo'
@@ -28,6 +28,23 @@ export default function Register() {
   const [rulesOpen, setRulesOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  // Подхватываем намерение с лендинга
+  useEffect(() => {
+    const intent = localStorage.getItem('vbi_intent')
+    if (intent) {
+      try {
+        const data = JSON.parse(intent)
+        if (data.name || data.email) {
+          setForm(prev => ({
+            ...prev,
+            firstName: data.name || prev.firstName,
+            email: data.email || prev.email,
+          }))
+        }
+      } catch {}
+    }
+  }, [])
 
   const handleChange = (field: string, value: string | boolean) => {
     setForm(prev => ({ ...prev, [field]: value }))
@@ -80,6 +97,20 @@ export default function Register() {
     })
 
     setLoading(false)
+
+    // Если было намерение перевести сумму с лендинга — идём сразу в перевод
+    const intent = localStorage.getItem('vbi_intent')
+    if (intent) {
+      try {
+        const data = JSON.parse(intent)
+        if (data.amount) {
+          localStorage.removeItem('vbi_intent')
+          navigate(`/transfer?amount=${data.amount}&currency=${data.currency || 'USD'}`)
+          return
+        }
+      } catch {}
+    }
+    localStorage.removeItem('vbi_intent')
     navigate('/cabinet')
   }
 
@@ -126,14 +157,14 @@ export default function Register() {
       <div className="lg:w-1/2 flex flex-col justify-center px-8 md:px-12 py-6 overflow-y-auto">
         <div className="max-w-md mx-auto w-full">
 
-          {/* Логотип VseBank по центру формы */}
-          <div className="flex justify-center mb-5">
+          {/* Логотип VseBank — выровнен по левому краю формы */}
+          <div className="flex justify-start mb-5">
             <VseBankLogo size="md" />
           </div>
 
-          <div className="text-center mb-6">
+          <div className="mb-6">
             <div className="tag mb-2 text-sm">Открытие счёта</div>
-            <div className="w-12 h-px bg-gold-400 mx-auto" />
+            <div className="w-12 h-px bg-gold-400" />
           </div>
 
           {/* Тип счёта */}
