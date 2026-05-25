@@ -59,7 +59,7 @@ export default function Login() {
         <div className="w-full max-w-md mx-auto">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <VseBankLogo size="md" />
+            <VseBankLogo size="lg" />
           </div>
           <div className="w-12 h-px bg-gold-400 mx-auto mb-4" />
           <p className="font-sans text-stone-600 text-base md:text-lg">Войдите в ваш кабинет изобилия</p>

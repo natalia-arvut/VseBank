@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Crown, Brain } from 'lucide-react'
+
 import VseBankLogo from '../components/VseBankLogo'
 
 export default function Landing() {
@@ -26,7 +26,7 @@ export default function Landing() {
           <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 min-w-0">
             <VseBankLogo size="md" />
             <div className="hidden md:block w-px h-10 bg-gold-400/40 flex-shrink-0" />
-            <div className="font-sans text-[10px] sm:text-xs md:text-sm text-gold-600 font-medium tracking-[0.2em] uppercase leading-tight md:leading-relaxed">
+            <div className="font-sans text-xs sm:text-sm md:text-sm text-gold-600 font-medium tracking-[0.2em] uppercase leading-snug md:leading-relaxed">
               Инструкция по сонастройке<br />с Бесконечным Потоком
             </div>
           </div>
@@ -80,10 +80,9 @@ export default function Landing() {
               {/* Кнопка — высокая, как в последнем блоке */}
               <button
                 onClick={() => navigate('/register')}
-                className="btn-gold inline-flex items-center justify-center gap-2 text-xs md:text-sm px-6 md:px-8 py-4 md:py-4 w-full sm:w-auto"
+                className="btn-gold inline-flex items-center justify-center text-sm md:text-base px-8 md:px-10 py-4 w-full sm:w-auto whitespace-nowrap"
               >
-                Открыть мой счёт — это бесплатно
-                <span>→</span>
+                Открыть мой счёт бесплатно
               </button>
             </div>
           </div>
@@ -107,7 +106,7 @@ export default function Landing() {
               Большинство людей живут в иллюзии дефицита. Они верят, что ресурсы ограничены, а деньги нужно «тяжело зарабатывать». Но на квантовом уровне реальности всё, что вы можете себе вообразить, уже существует в виде чистой потенциальности.
             </p>
             <p className="body-text">
-              Этот Банк — <span className="font-serif italic text-gold-500 text-xl">не просто игра</span>. Это тренажёр для вашего сознания, созданный на стыке метафизики изобилия и нейропластичности.
+              Этот Банк — <span className="font-serif italic text-2xl" style={{ color: "#9A6F09" }}>не просто игра</span>. Это тренажёр для вашего сознания, созданный на стыке метафизики изобилия и нейропластичности.
             </p>
           </div>
 
@@ -256,11 +255,14 @@ export default function Landing() {
               <h3 className="card-title mb-3">Осознание<br />Своего Права</h3>
               <div className="w-10 h-px bg-gold-500 mb-6" />
 
-              {/* Иконка в стиле блока 2 — тонкие линии, золотой круг */}
-              <div className="flex justify-center my-8">
-                <div className="w-20 h-20 rounded-full border border-gold-500 bg-gold-500/5 flex items-center justify-center text-gold-500 shadow-gold">
-                  <Crown className="w-11 h-11" strokeWidth={1.5} />
-                </div>
+              {/* Иллюстрация — золотой храм с бесконечностью */}
+              <div className="flex justify-center my-6">
+                <img
+                  src={`${import.meta.env.BASE_URL}card-awareness.jpg`}
+                  alt="Осознание Своего Права"
+                  className="w-full max-w-sm aspect-square object-cover shadow-card"
+                  style={{ borderRadius: '15px' }}
+                />
               </div>
 
               <p className="body-text">
@@ -283,11 +285,14 @@ export default function Landing() {
               <h3 className="card-title mb-3">Перепрошивка<br />Разума</h3>
               <div className="w-10 h-px bg-gold-500 mb-6" />
 
-              {/* Иконка — мозг только контур, в стиле короны */}
-              <div className="flex justify-center my-8">
-                <div className="w-20 h-20 rounded-full border border-gold-500 bg-gold-500/5 flex items-center justify-center shadow-gold">
-                  <Brain className="w-11 h-11 text-gold-500" strokeWidth={1.5} />
-                </div>
+              {/* Иллюстрация — золотая голова с бесконечностью внутри */}
+              <div className="flex justify-center my-6">
+                <img
+                  src={`${import.meta.env.BASE_URL}card-mind.jpg`}
+                  alt="Перепрошивка Разума"
+                  className="w-full max-w-sm aspect-square object-cover shadow-card"
+                  style={{ borderRadius: '15px' }}
+                />
               </div>
 
               <p className="body-text">
@@ -394,131 +399,7 @@ export default function Landing() {
             </p>
           </div>
           <div className="relative flex justify-center">
-            {/* Сложная сакральная мандала + золотые монеты вокруг */}
-            <svg viewBox="0 0 400 400" className="w-80 h-80 md:w-96 md:h-96" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <radialGradient id="mandalaSun" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#FFE9B0" stopOpacity="0.35"/>
-                  <stop offset="40%" stopColor="#D4B87A" stopOpacity="0.15"/>
-                  <stop offset="100%" stopColor="#D4B87A" stopOpacity="0"/>
-                </radialGradient>
-                <linearGradient id="goldStroke" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#E8D5A3"/>
-                  <stop offset="50%" stopColor="#B89058"/>
-                  <stop offset="100%" stopColor="#8B6F3D"/>
-                </linearGradient>
-                <radialGradient id="coinGrad" cx="35%" cy="35%" r="65%">
-                  <stop offset="0%" stopColor="#F4E5B8"/>
-                  <stop offset="60%" stopColor="#C9A35C"/>
-                  <stop offset="100%" stopColor="#8B6914"/>
-                </radialGradient>
-              </defs>
-
-              {/* Лёгкое сияние */}
-              <circle cx="200" cy="200" r="160" fill="url(#mandalaSun)"/>
-
-              {/* Внешнее кольцо точек (72 точки) */}
-              {[...Array(72)].map((_, i) => {
-                const deg = i * 5
-                const x = 200 + 175 * Math.cos(deg * Math.PI/180)
-                const y = 200 + 175 * Math.sin(deg * Math.PI/180)
-                return <circle key={`o-${i}`} cx={x} cy={y} r="1" fill="#B89058" opacity="0.6"/>
-              })}
-
-              {/* Длинные лучи (16) */}
-              {[...Array(16)].map((_, i) => {
-                const deg = i * 22.5
-                const x1 = 200 + 100 * Math.cos(deg * Math.PI/180)
-                const y1 = 200 + 100 * Math.sin(deg * Math.PI/180)
-                const x2 = 200 + 165 * Math.cos(deg * Math.PI/180)
-                const y2 = 200 + 165 * Math.sin(deg * Math.PI/180)
-                return <line key={`l-${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#B89058" strokeWidth="1" opacity="0.7"/>
-              })}
-
-              {/* Средние лучи (32) */}
-              {[...Array(32)].map((_, i) => {
-                const deg = i * 11.25 + 5.6
-                const x1 = 200 + 110 * Math.cos(deg * Math.PI/180)
-                const y1 = 200 + 110 * Math.sin(deg * Math.PI/180)
-                const x2 = 200 + 145 * Math.cos(deg * Math.PI/180)
-                const y2 = 200 + 145 * Math.sin(deg * Math.PI/180)
-                return <line key={`m-${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#D4B87A" strokeWidth="0.6" opacity="0.6"/>
-              })}
-
-              {/* Концентрические окружности */}
-              <circle cx="200" cy="200" r="160" stroke="#B89058" strokeWidth="0.6" fill="none" opacity="0.7"/>
-              <circle cx="200" cy="200" r="140" stroke="#D4B87A" strokeWidth="0.4" fill="none" opacity="0.5"/>
-              <circle cx="200" cy="200" r="105" stroke="#B89058" strokeWidth="0.8" fill="none"/>
-              <circle cx="200" cy="200" r="90" stroke="#D4B87A" strokeWidth="0.4" fill="none" opacity="0.6"/>
-
-              {/* Цветок жизни (6 кругов вокруг центра) */}
-              {[0, 60, 120, 180, 240, 300].map(deg => {
-                const cx = 200 + 45 * Math.cos(deg * Math.PI/180)
-                const cy = 200 + 45 * Math.sin(deg * Math.PI/180)
-                return <circle key={`f-${deg}`} cx={cx} cy={cy} r="45" stroke="#B89058" strokeWidth="0.6" fill="none" opacity="0.6"/>
-              })}
-
-              {/* 8-конечная звезда внутри */}
-              <path d="M 200 130 L 215 185 L 270 200 L 215 215 L 200 270 L 185 215 L 130 200 L 185 185 Z"
-                stroke="url(#goldStroke)" strokeWidth="1.2" fill="#D4B87A" fillOpacity="0.15" strokeLinejoin="round"/>
-
-              {/* Центральный круг с бесконечностью */}
-              <circle cx="200" cy="200" r="38" fill="#FBF7F0" stroke="url(#goldStroke)" strokeWidth="1.5"/>
-              <circle cx="200" cy="200" r="32" stroke="#D4B87A" strokeWidth="0.5" fill="none" opacity="0.7"/>
-
-              {/* Бесконечность в центре */}
-              <g transform="translate(200 200)">
-                <path d="M-22 0 C-22 -12, -10 -12, 0 0 C10 12, 22 12, 22 0 C22 -12, 10 -12, 0 0 C-10 12, -22 12, -22 0 Z"
-                  stroke="url(#goldStroke)" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-              </g>
-
-              {/* Декоративные точки */}
-              {[45, 135, 225, 315].map(deg => {
-                const x = 200 + 70 * Math.cos(deg * Math.PI/180)
-                const y = 200 + 70 * Math.sin(deg * Math.PI/180)
-                return <circle key={`p-${deg}`} cx={x} cy={y} r="2.5" fill="#B89058"/>
-              })}
-
-              {/* Золотые монеты — больше монет сверху, разбросаны на разном расстоянии */}
-              {[
-                // Верхняя половина — больше монет
-                { cx: 200, cy: 35, r: 9 },
-                { cx: 145, cy: 50, r: 7 },
-                { cx: 255, cy: 50, r: 8 },
-                { cx: 95, cy: 75, r: 11 },
-                { cx: 305, cy: 75, r: 10 },
-                { cx: 175, cy: 95, r: 6 },
-                { cx: 235, cy: 105, r: 7 },
-                { cx: 45, cy: 110, r: 13 },
-                { cx: 355, cy: 110, r: 12 },
-                { cx: 280, cy: 130, r: 8 },
-                { cx: 145, cy: 145, r: 9 },
-                { cx: 380, cy: 95, r: 14 },
-                { cx: 60, cy: 165, r: 10 },
-                { cx: 360, cy: 175, r: 8 },
-                // Низ
-                { cx: 30, cy: 250, r: 16 },
-                { cx: 115, cy: 305, r: 9 },
-                { cx: 370, cy: 350, r: 13 },
-                { cx: 290, cy: 270, r: 8 },
-                { cx: 380, cy: 220, r: 11 },
-                { cx: 230, cy: 365, r: 14 },
-                { cx: 130, cy: 360, r: 9 },
-              ].map((c, i) => (
-                <g key={`coin-${i}`}>
-                  <circle cx={c.cx} cy={c.cy} r={c.r} fill="url(#coinGrad)" stroke="#8B6914" strokeWidth="0.8"/>
-                  <text x={c.cx} y={c.cy + c.r*0.35} textAnchor="middle"
-                    fill="#FBF7F0" fontFamily="serif" fontSize={c.r*1.2} fontWeight="bold">∞</text>
-                </g>
-              ))}
-
-              {/* Маленькие звёздочки-блёстки */}
-              {[[150, 50], [260, 60], [80, 150], [340, 160], [120, 350], [260, 340]].map(([x, y], i) => (
-                <path key={`sp-${i}`}
-                  d={`M ${x} ${y-4} L ${x+1.5} ${y-1.5} L ${x+4} ${y} L ${x+1.5} ${y+1.5} L ${x} ${y+4} L ${x-1.5} ${y+1.5} L ${x-4} ${y} L ${x-1.5} ${y-1.5} Z`}
-                  fill="#D4B87A" opacity="0.8"/>
-              ))}
-            </svg>
+            <img src={`${import.meta.env.BASE_URL}philosophy-image.png`} alt="Философия" className="w-full max-w-md shadow-card" style={{ borderRadius: "15px" }}/>
           </div>
           </div>
 
@@ -542,9 +423,9 @@ export default function Landing() {
           </p>
           <button
             onClick={() => navigate('/register')}
-            className="btn-gold inline-flex items-center gap-3"
+            className="btn-gold inline-flex items-center justify-center text-sm md:text-base px-10 py-4 whitespace-nowrap"
           >
-            Открыть мой счёт — это бесплатно
+            Открыть мой счёт бесплатно
           </button>
         </div>
       </section>

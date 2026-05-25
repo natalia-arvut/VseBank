@@ -48,6 +48,27 @@ const TRANSFERS_KEY = 'vbi_transfers'
 export function AppProvider({ children }: { children: ReactNode }) {
   // Все зарегистрированные пользователи
   const [users, setUsers] = useState<User[]>(() => {
+    // Миграция: если есть старый одиночный пользователь — переносим в массив
+    const oldUser = localStorage.getItem('vbi_user')
+    if (oldUser) {
+      try {
+        const u = JSON.parse(oldUser)
+        const existingUsers = localStorage.getItem(USERS_KEY)
+        const arr: User[] = existingUsers ? JSON.parse(existingUsers) : []
+        // Добавляем старого пользователя если его нет
+        if (!arr.find(x => x.email === u.email)) {
+          arr.push({
+            ...u,
+            email: (u.email || '').toLowerCase(),
+            password: u.password || '',
+            accountNumber: u.accountNumber || `VBI-${Date.now().toString().slice(-10)}`,
+            registeredAt: u.registeredAt || new Date().toISOString(),
+          })
+          localStorage.setItem(USERS_KEY, JSON.stringify(arr))
+        }
+        localStorage.removeItem('vbi_user')
+      } catch {}
+    }
     const saved = localStorage.getItem(USERS_KEY)
     return saved ? JSON.parse(saved) : []
   })

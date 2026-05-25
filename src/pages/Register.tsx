@@ -247,8 +247,8 @@ export default function Register() {
             )}
 
             {form.accountType === 'personal' && (
-              <>
-                {/* Дата рождения с лейблом */}
+              <div className="hidden sm:block space-y-2.5">
+                {/* Дата рождения с лейблом — только desktop */}
                 <div className="relative">
                   <label className="absolute left-4 top-1.5 text-[10px] text-gold-700 tracking-wide uppercase pointer-events-none z-10">
                     Дата рождения
@@ -260,9 +260,9 @@ export default function Register() {
                     onChange={e => handleChange('birthDate', e.target.value)}
                   />
                 </div>
-                {/* Пол — скрыт на мобайле */}
+                {/* Пол — только desktop */}
                 <select
-                  className="input-field hidden sm:block"
+                  className="input-field"
                   value={form.gender}
                   onChange={e => handleChange('gender', e.target.value)}
                 >
@@ -270,7 +270,7 @@ export default function Register() {
                   <option value="male">Мужской</option>
                   <option value="female">Женский</option>
                 </select>
-              </>
+              </div>
             )}
 
             <input
