@@ -43,47 +43,66 @@ export default function Landing() {
         </div>
       </nav>
 
-      {/* Hero — mobile-first адаптивный */}
-      <section className="relative w-full overflow-hidden" style={{ height: '100vh', backgroundColor: '#F5EFE6' }}>
+      {/* Hero — mobile-first: на мобайле текстовый hero, на десктопе с картинкой */}
+      <section className="relative w-full overflow-hidden" style={{ minHeight: '100vh', backgroundColor: '#F5EFE6' }}>
 
-        {/* Картинка — на мобайле показывается только ЛЕВАЯ (чистая) часть */}
+        {/* Картинка — только на планшете и десктопе */}
         <img
           src={`${import.meta.env.BASE_URL}hero-cover.png`}
           alt=""
-          className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none hero-image"
+          className="hidden md:block absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
           draggable={false}
         />
 
-        {/* HTML-контент — mobile-first */}
-        <div className="absolute inset-0 flex items-end sm:items-center pt-16 sm:pt-20 pb-8 sm:pb-0">
+        {/* Декоративные золотые элементы для мобайла (вместо картинки) */}
+        <div className="md:hidden absolute top-32 right-6 opacity-30">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="38" stroke="#B89058" strokeWidth="0.5"/>
+            <circle cx="40" cy="40" r="28" stroke="#D4B87A" strokeWidth="0.5"/>
+            {[...Array(12)].map((_, i) => (
+              <line key={i} x1="40" y1="40"
+                x2={40 + 36 * Math.cos(i * 30 * Math.PI / 180)}
+                y2={40 + 36 * Math.sin(i * 30 * Math.PI / 180)}
+                stroke="#B89058" strokeWidth="0.4"/>
+            ))}
+          </svg>
+        </div>
+        <div className="md:hidden absolute bottom-32 left-6 opacity-20">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+            <path d="M30 4 L33 22 L52 24 L36 32 L42 50 L30 38 L18 50 L24 32 L8 24 L27 22 Z" fill="#B89058"/>
+          </svg>
+        </div>
+
+        {/* HTML-контент */}
+        <div className="absolute inset-0 flex items-center pt-24 md:pt-20 pb-12 md:pb-0">
           <div className="site-container">
-            <div className="max-w-xl text-left bg-cream-100/85 sm:bg-transparent backdrop-blur-sm sm:backdrop-blur-0 rounded-2xl sm:rounded-none p-5 sm:p-0">
+            <div className="max-w-xl text-left">
 
               {/* Заголовок */}
-              <h1 className="font-serif mb-4 sm:mb-6 text-left">
-                <span className="block font-sans font-normal text-sm sm:text-lg md:text-xl lg:text-2xl text-ink-700 mb-1 sm:mb-2 tracking-wide">
+              <h1 className="font-serif mb-5 md:mb-6 text-left">
+                <span className="block font-sans font-normal text-base md:text-xl lg:text-2xl text-ink-700 mb-2 tracking-wide">
                   Добро пожаловать во
                 </span>
-                <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] font-medium tracking-tight text-ink-900">
+                <span className="block text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-[1.05] font-medium tracking-tight text-ink-900">
                   Вселенский
                 </span>
-                <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] font-medium tracking-tight text-ink-900">
+                <span className="block text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-[1.05] font-medium tracking-tight text-ink-900">
                   Банк Изобилия
                 </span>
               </h1>
 
               {/* Декоративная линия */}
-              <div className="w-10 sm:w-12 h-px bg-gold-500 mb-4 sm:mb-6" />
+              <div className="w-12 h-px bg-gold-500 mb-5 md:mb-6" />
 
               {/* Цитата */}
-              <p className="font-sans text-ink-700 text-sm sm:text-base md:text-lg leading-relaxed mb-6 sm:mb-10 max-w-md font-normal">
+              <p className="font-sans text-ink-700 text-base md:text-lg leading-relaxed mb-8 md:mb-10 max-w-md font-normal">
                 Бог не знает нехватки. Вселенная знает только одно слово: «ДА». Твой счёт здесь открыт с самого рождения, но пользовался ли ты им?
               </p>
 
               {/* Кнопка */}
               <button
                 onClick={() => navigate('/register')}
-                className="btn-gold inline-flex items-center gap-2 text-[11px] sm:text-sm px-5 sm:px-8 py-3 sm:py-4 w-full sm:w-auto justify-center"
+                className="btn-gold inline-flex items-center justify-center gap-2 text-xs md:text-sm px-6 md:px-8 py-3 md:py-4 w-full sm:w-auto"
               >
                 Открыть мой счёт — это бесплатно
                 <span>→</span>
@@ -114,8 +133,8 @@ export default function Landing() {
             </p>
           </div>
 
-          {/* Шкала прогресса с роскошными золотыми иконками */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 md:gap-2">
+          {/* Шкала прогресса — на мобайле вертикальная цепочка, на десктопе сетка 5 колонок */}
+          <div className="flex flex-col md:grid md:grid-cols-5 gap-3 md:gap-2">
             {[
               {
                 name: 'Мысль',
@@ -191,18 +210,20 @@ export default function Landing() {
                 ),
               },
             ].map((step, i, arr) => (
-              <div key={step.name} className="relative flex flex-col items-center text-center">
-                {/* Иконка в золотом круге — компактнее на мобайле */}
-                <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full border border-gold-500 bg-gold-500/5 flex items-center justify-center text-gold-500 mb-2 sm:mb-3 shadow-gold">
-                  <div className="w-6 h-6 sm:w-9 sm:h-9 md:w-11 md:h-11">
+              <div key={step.name} className="relative flex md:flex-col items-center text-left md:text-center gap-4 md:gap-0">
+                {/* Номер шага (только мобайл) */}
+                <div className="md:hidden font-serif text-2xl text-gold-500 leading-none flex-shrink-0 w-6">{i + 1}</div>
+                {/* Иконка в золотом круге */}
+                <div className="w-12 h-12 md:w-20 md:h-20 rounded-full border border-gold-500 bg-gold-500/5 flex items-center justify-center text-gold-500 md:mb-3 shadow-gold flex-shrink-0">
+                  <div className="w-6 h-6 md:w-11 md:h-11">
                     {step.icon}
                   </div>
                 </div>
                 {/* Название */}
-                <div className="font-sans text-[9px] sm:text-[11px] md:text-xs text-gold-700 tracking-[0.12em] sm:tracking-[0.15em] uppercase font-medium">
+                <div className="font-sans text-xs md:text-xs text-gold-700 tracking-[0.12em] md:tracking-[0.15em] uppercase font-medium flex-1 md:flex-initial">
                   {step.name}
                 </div>
-                {/* Тонкая золотая линия между */}
+                {/* Тонкая золотая линия между (только десктоп) */}
                 {i < arr.length - 1 && (
                   <div className="hidden md:block absolute top-10 -right-1 w-2 h-px bg-gold-400/40" />
                 )}
