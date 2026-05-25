@@ -99,14 +99,21 @@
     padding-right: 38px;
   }
 
-  /* Календарь — золотой стиль, ввод вручную работает */
+  /* Календарь — золотой стиль */
   input[type="date"].input-field {
     color-scheme: light;
+    min-height: 42px;
   }
   input[type="date"].input-field::-webkit-calendar-picker-indicator {
     cursor: pointer;
     filter: invert(58%) sepia(50%) saturate(380%) hue-rotate(0deg) brightness(85%);
     margin-left: 8px;
+    width: 18px;
+    height: 18px;
+  }
+  /* На мобайле обязательно фиксированный layout */
+  input[type="date"].input-field::-webkit-date-and-time-value {
+    text-align: left;
   }
 
   /* Единый контейнер сайта — 12-колоночная сетка, отступы 5% по краям */

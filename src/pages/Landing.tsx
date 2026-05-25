@@ -43,50 +43,32 @@ export default function Landing() {
         </div>
       </nav>
 
-      {/* Hero — mobile-first: на мобайле текстовый hero, на десктопе с картинкой */}
+      {/* Hero — картинка везде, на мобайле полупрозрачная плашка с текстом поверх */}
       <section className="relative w-full overflow-hidden" style={{ minHeight: '100vh', backgroundColor: '#F5EFE6' }}>
 
-        {/* Картинка — только на планшете и десктопе */}
+        {/* Картинка — везде, на мобайле тоже */}
         <img
           src={`${import.meta.env.BASE_URL}hero-cover.png`}
           alt=""
-          className="hidden md:block absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+          className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none hero-image"
           draggable={false}
         />
 
-        {/* Декоративные золотые элементы для мобайла (вместо картинки) */}
-        <div className="md:hidden absolute top-32 right-6 opacity-30">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-            <circle cx="40" cy="40" r="38" stroke="#B89058" strokeWidth="0.5"/>
-            <circle cx="40" cy="40" r="28" stroke="#D4B87A" strokeWidth="0.5"/>
-            {[...Array(12)].map((_, i) => (
-              <line key={i} x1="40" y1="40"
-                x2={40 + 36 * Math.cos(i * 30 * Math.PI / 180)}
-                y2={40 + 36 * Math.sin(i * 30 * Math.PI / 180)}
-                stroke="#B89058" strokeWidth="0.4"/>
-            ))}
-          </svg>
-        </div>
-        <div className="md:hidden absolute bottom-32 left-6 opacity-20">
-          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-            <path d="M30 4 L33 22 L52 24 L36 32 L42 50 L30 38 L18 50 L24 32 L8 24 L27 22 Z" fill="#B89058"/>
-          </svg>
-        </div>
-
         {/* HTML-контент */}
-        <div className="absolute inset-0 flex items-center pt-24 md:pt-20 pb-12 md:pb-0">
+        <div className="absolute inset-0 flex items-center pt-20 md:pt-20 pb-8 md:pb-0">
           <div className="site-container">
-            <div className="max-w-xl text-left">
+            {/* Плашка с полупрозрачным фоном для читаемости на мобайле */}
+            <div className="max-w-xl text-left bg-cream-100/70 md:bg-transparent backdrop-blur-[2px] md:backdrop-blur-0 rounded-2xl md:rounded-none p-6 md:p-0 border border-gold-300/30 md:border-0">
 
               {/* Заголовок */}
               <h1 className="font-serif mb-5 md:mb-6 text-left">
                 <span className="block font-sans font-normal text-base md:text-xl lg:text-2xl text-ink-700 mb-2 tracking-wide">
                   Добро пожаловать во
                 </span>
-                <span className="block text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-[1.05] font-medium tracking-tight text-ink-900">
+                <span className="block text-[2.75rem] sm:text-5xl md:text-5xl lg:text-6xl leading-[1.08] font-medium tracking-normal text-ink-900">
                   Вселенский
                 </span>
-                <span className="block text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-[1.05] font-medium tracking-tight text-ink-900">
+                <span className="block text-[2.75rem] sm:text-5xl md:text-5xl lg:text-6xl leading-[1.08] font-medium tracking-normal text-ink-900">
                   Банк Изобилия
                 </span>
               </h1>
@@ -99,10 +81,10 @@ export default function Landing() {
                 Бог не знает нехватки. Вселенная знает только одно слово: «ДА». Твой счёт здесь открыт с самого рождения, но пользовался ли ты им?
               </p>
 
-              {/* Кнопка */}
+              {/* Кнопка — высокая, как в последнем блоке */}
               <button
                 onClick={() => navigate('/register')}
-                className="btn-gold inline-flex items-center justify-center gap-2 text-xs md:text-sm px-6 md:px-8 py-3 md:py-4 w-full sm:w-auto"
+                className="btn-gold inline-flex items-center justify-center gap-2 text-xs md:text-sm px-6 md:px-8 py-4 md:py-4 w-full sm:w-auto"
               >
                 Открыть мой счёт — это бесплатно
                 <span>→</span>
@@ -133,8 +115,8 @@ export default function Landing() {
             </p>
           </div>
 
-          {/* Шкала прогресса — на мобайле вертикальная цепочка, на десктопе сетка 5 колонок */}
-          <div className="flex flex-col md:grid md:grid-cols-5 gap-3 md:gap-2">
+          {/* Шкала прогресса — на мобайле вертикальная схема с стрелками, на десктопе 5 колонок */}
+          <div className="flex flex-col items-center md:grid md:grid-cols-5 gap-0 md:gap-2">
             {[
               {
                 name: 'Мысль',
@@ -210,22 +192,29 @@ export default function Landing() {
                 ),
               },
             ].map((step, i, arr) => (
-              <div key={step.name} className="relative flex md:flex-col items-center text-left md:text-center gap-4 md:gap-0">
-                {/* Номер шага (только мобайл) */}
-                <div className="md:hidden font-serif text-2xl text-gold-500 leading-none flex-shrink-0 w-6">{i + 1}</div>
-                {/* Иконка в золотом круге */}
-                <div className="w-12 h-12 md:w-20 md:h-20 rounded-full border border-gold-500 bg-gold-500/5 flex items-center justify-center text-gold-500 md:mb-3 shadow-gold flex-shrink-0">
-                  <div className="w-6 h-6 md:w-11 md:h-11">
-                    {step.icon}
+              <div key={step.name} className="contents md:contents">
+                <div className="flex flex-col items-center text-center">
+                  {/* Иконка в золотом круге */}
+                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border border-gold-500 bg-gold-500/5 flex items-center justify-center text-gold-500 mb-2 md:mb-3 shadow-gold">
+                    <div className="w-8 h-8 md:w-11 md:h-11">
+                      {step.icon}
+                    </div>
+                  </div>
+                  {/* Название под иконкой */}
+                  <div className="font-sans text-xs text-gold-700 tracking-[0.15em] uppercase font-medium">
+                    {step.name}
                   </div>
                 </div>
-                {/* Название */}
-                <div className="font-sans text-xs md:text-xs text-gold-700 tracking-[0.12em] md:tracking-[0.15em] uppercase font-medium flex-1 md:flex-initial">
-                  {step.name}
-                </div>
-                {/* Тонкая золотая линия между (только десктоп) */}
+                {/* Стрелка между этапами (только мобайл) */}
                 {i < arr.length - 1 && (
-                  <div className="hidden md:block absolute top-10 -right-1 w-2 h-px bg-gold-400/40" />
+                  <svg className="md:hidden my-2 text-gold-500" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <polyline points="19 12 12 19 5 12" />
+                  </svg>
+                )}
+                {/* Линия между на десктопе */}
+                {i < arr.length - 1 && (
+                  <div className="hidden md:block self-center w-2 h-px bg-gold-400/40 absolute" />
                 )}
               </div>
             ))}
@@ -364,29 +353,20 @@ export default function Landing() {
               ))}
             </div>
 
-            {/* Форма быстрого начала */}
+            {/* Форма быстрого открытия счёта */}
             <div className="glass-card p-8 rounded-2xl">
-              <h3 className="card-title mb-2">Начните транзакцию прямо сейчас</h3>
+              <h3 className="card-title mb-2">Откройте счёт прямо сейчас</h3>
               <p className="body-text mb-6">
                 Ваш безлимитный счёт уже активирован. Вам осталось только «присвоить» его себе.
               </p>
               <div className="space-y-3">
                 <input className="input-field" placeholder="Ваше имя" value={quickName} onChange={e => setQuickName(e.target.value)} />
                 <input className="input-field" placeholder="Email" type="email" value={quickEmail} onChange={e => setQuickEmail(e.target.value)} />
-                <div className="grid grid-cols-2 gap-3">
-                  <input className="input-field" placeholder="Введите сумму" value={quickAmount} onChange={e => setQuickAmount(e.target.value)} />
-                  <select className="input-field" value={quickCurrency} onChange={e => setQuickCurrency(e.target.value)}>
-                    <option value="USD">USD</option>
-                    <option value="EUR">EUR</option>
-                    <option value="CHF">CHF</option>
-                    <option value="RUB">RUB</option>
-                  </select>
-                </div>
                 <button
                   onClick={handleQuickStart}
                   className="w-full btn-gold text-center"
                 >
-                  Активировать перевод →
+                  Открыть счёт →
                 </button>
               </div>
             </div>
@@ -503,18 +483,29 @@ export default function Landing() {
                 return <circle key={`p-${deg}`} cx={x} cy={y} r="2.5" fill="#B89058"/>
               })}
 
-              {/* Золотые монеты — разбросаны на разном расстоянии от центра */}
+              {/* Золотые монеты — больше монет сверху, разбросаны на разном расстоянии */}
               {[
-                { cx: 280, cy: 130, r: 8 },   // близко к центру справа сверху
-                { cx: 380, cy: 95, r: 14 },   // дальше
-                { cx: 60, cy: 80, r: 12 },
-                { cx: 145, cy: 95, r: 7 },    // ближе к центру
-                { cx: 30, cy: 250, r: 16 },   // далеко
-                { cx: 115, cy: 305, r: 9 },   // ближе
+                // Верхняя половина — больше монет
+                { cx: 200, cy: 35, r: 9 },
+                { cx: 145, cy: 50, r: 7 },
+                { cx: 255, cy: 50, r: 8 },
+                { cx: 95, cy: 75, r: 11 },
+                { cx: 305, cy: 75, r: 10 },
+                { cx: 175, cy: 95, r: 6 },
+                { cx: 235, cy: 105, r: 7 },
+                { cx: 45, cy: 110, r: 13 },
+                { cx: 355, cy: 110, r: 12 },
+                { cx: 280, cy: 130, r: 8 },
+                { cx: 145, cy: 145, r: 9 },
+                { cx: 380, cy: 95, r: 14 },
+                { cx: 60, cy: 165, r: 10 },
+                { cx: 360, cy: 175, r: 8 },
+                // Низ
+                { cx: 30, cy: 250, r: 16 },
+                { cx: 115, cy: 305, r: 9 },
                 { cx: 370, cy: 350, r: 13 },
-                { cx: 290, cy: 270, r: 8 },   // ближе
-                { cx: 380, cy: 200, r: 11 },
-                { cx: 50, cy: 165, r: 10 },
+                { cx: 290, cy: 270, r: 8 },
+                { cx: 380, cy: 220, r: 11 },
                 { cx: 230, cy: 365, r: 14 },
                 { cx: 130, cy: 360, r: 9 },
               ].map((c, i) => (

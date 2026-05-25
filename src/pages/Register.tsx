@@ -183,7 +183,7 @@ export default function Register() {
               }`}
               style={{ borderRadius: '15px' }}
             >
-              Бизнес
+              Компания
             </button>
           </div>
 
@@ -266,7 +266,9 @@ export default function Register() {
               value={form.country}
               onChange={e => handleChange('country', e.target.value)}
             >
-              <option value="">Страна проживания *</option>
+              <option value="">
+                {form.accountType === 'company' ? 'Страна регистрации *' : 'Страна проживания *'}
+              </option>
               {COUNTRIES.map(c => (
                 <option key={c} value={c}>{c}</option>
               ))}
