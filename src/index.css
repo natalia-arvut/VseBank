@@ -142,20 +142,18 @@
   animation: shimmer 3s ease-in-out infinite;
 }
 
-/* Hero image — адаптивное позиционирование */
+/* Hero image — mobile-first адаптивное позиционирование */
 .hero-image {
-  /* На мобайле показываем только ЛЕВУЮ (чистую) часть картинки — текст читается */
-  object-position: 0% center;
+  /* На мобайле показываем верхний край с золотыми монетами вверху, текст ниже на чистом фоне */
+  object-position: 35% top;
 }
 @media (min-width: 640px) {
   .hero-image {
-    /* На SM (планшеты) сдвигаемся к центру */
     object-position: 25% center;
   }
 }
 @media (min-width: 768px) {
   .hero-image {
-    /* На MD центрируем */
     object-position: 50% center;
   }
 }

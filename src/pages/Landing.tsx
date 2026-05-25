@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Crown, Brain } from 'lucide-react'
+import VseBankLogo from '../components/VseBankLogo'
 
 export default function Landing() {
   const navigate = useNavigate()
@@ -26,19 +27,10 @@ export default function Landing() {
       {/* Верхняя плашка */}
       <nav className="absolute top-0 left-0 right-0 z-30 py-5 md:py-6">
         <div className="site-container flex items-center justify-between gap-4">
-          <div className="flex items-center gap-4 md:gap-6">
-            {/* Логотип VseBank с золотой бесконечностью — выровнено по центру */}
-            <div className="flex items-center gap-3 flex-shrink-0">
-              <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
-                <path d="M10 12 C 10 5, 17 5, 20 12 C 23 19, 30 19, 30 12 C 30 5, 23 5, 20 12 C 17 19, 10 19, 10 12 Z"
-                  stroke="#B89058" strokeWidth="3" fill="none" strokeLinecap="round"/>
-              </svg>
-              <span className="font-serif text-2xl md:text-3xl text-ink-900 tracking-wide font-medium leading-none">
-                VseBank
-              </span>
-            </div>
-            <div className="hidden md:block w-px h-10 bg-gold-400/40" />
-            <div className="font-sans text-xs md:text-sm text-gold-600 font-medium tracking-[0.2em] uppercase leading-relaxed">
+          <div className="flex items-center gap-3 md:gap-6 min-w-0">
+            <VseBankLogo size="md" />
+            <div className="hidden md:block w-px h-10 bg-gold-400/40 flex-shrink-0" />
+            <div className="hidden md:block font-sans text-xs md:text-sm text-gold-600 font-medium tracking-[0.2em] uppercase leading-relaxed">
               Инструкция по сонастройке<br />с Бесконечным Потоком
             </div>
           </div>
@@ -62,40 +54,36 @@ export default function Landing() {
           draggable={false}
         />
 
-        {/* HTML-контент */}
-        <div className="absolute inset-0 flex items-center pt-16 sm:pt-20">
+        {/* HTML-контент — mobile-first */}
+        <div className="absolute inset-0 flex items-end sm:items-center pt-16 sm:pt-20 pb-8 sm:pb-0">
           <div className="site-container">
-            <div className="max-w-xl text-left">
+            <div className="max-w-xl text-left bg-cream-100/85 sm:bg-transparent backdrop-blur-sm sm:backdrop-blur-0 rounded-2xl sm:rounded-none p-5 sm:p-0">
 
               {/* Заголовок */}
-              <h1 className="font-serif mb-5 sm:mb-6 text-left">
-                <span className="block font-sans font-normal text-base sm:text-lg md:text-xl lg:text-2xl text-ink-700 mb-1 sm:mb-2 tracking-wide">
+              <h1 className="font-serif mb-4 sm:mb-6 text-left">
+                <span className="block font-sans font-normal text-sm sm:text-lg md:text-xl lg:text-2xl text-ink-700 mb-1 sm:mb-2 tracking-wide">
                   Добро пожаловать во
                 </span>
-                <span
-                  className="block text-[2rem] sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] font-medium tracking-tight text-ink-900"
-                >
+                <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] font-medium tracking-tight text-ink-900">
                   Вселенский
                 </span>
-                <span
-                  className="block text-[2rem] sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] font-medium tracking-tight text-ink-900"
-                >
+                <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] font-medium tracking-tight text-ink-900">
                   Банк Изобилия
                 </span>
               </h1>
 
               {/* Декоративная линия */}
-              <div className="w-12 h-px bg-gold-500 mb-5 sm:mb-6" />
+              <div className="w-10 sm:w-12 h-px bg-gold-500 mb-4 sm:mb-6" />
 
-              {/* Цитата — обычный шрифт Inter */}
-              <p className="font-sans text-ink-700 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-md font-normal">
+              {/* Цитата */}
+              <p className="font-sans text-ink-700 text-sm sm:text-base md:text-lg leading-relaxed mb-6 sm:mb-10 max-w-md font-normal">
                 Бог не знает нехватки. Вселенная знает только одно слово: «ДА». Твой счёт здесь открыт с самого рождения, но пользовался ли ты им?
               </p>
 
               {/* Кнопка */}
               <button
                 onClick={() => navigate('/register')}
-                className="btn-gold inline-flex items-center gap-2 text-xs sm:text-sm px-6 sm:px-8 py-3 sm:py-4"
+                className="btn-gold inline-flex items-center gap-2 text-[11px] sm:text-sm px-5 sm:px-8 py-3 sm:py-4 w-full sm:w-auto justify-center"
               >
                 Открыть мой счёт — это бесплатно
                 <span>→</span>
@@ -204,14 +192,14 @@ export default function Landing() {
               },
             ].map((step, i, arr) => (
               <div key={step.name} className="relative flex flex-col items-center text-center">
-                {/* Иконка в золотом круге — всегда выделена */}
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border border-gold-500 bg-gold-500/5 flex items-center justify-center text-gold-500 mb-3 shadow-gold">
-                  <div className="w-9 h-9 md:w-11 md:h-11">
+                {/* Иконка в золотом круге — компактнее на мобайле */}
+                <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full border border-gold-500 bg-gold-500/5 flex items-center justify-center text-gold-500 mb-2 sm:mb-3 shadow-gold">
+                  <div className="w-6 h-6 sm:w-9 sm:h-9 md:w-11 md:h-11">
                     {step.icon}
                   </div>
                 </div>
                 {/* Название */}
-                <div className="font-sans text-[11px] md:text-xs text-gold-700 tracking-[0.15em] uppercase font-medium">
+                <div className="font-sans text-[9px] sm:text-[11px] md:text-xs text-gold-700 tracking-[0.12em] sm:tracking-[0.15em] uppercase font-medium">
                   {step.name}
                 </div>
                 {/* Тонкая золотая линия между */}

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
-import Logo from './Logo'
+import VseBankLogo from './VseBankLogo'
 
 const NAV_ITEMS = [
   { path: '/cabinet', label: 'Главная', icon: '⌂' },
@@ -29,7 +29,7 @@ export default function CabinetLayout({ children }: { children: ReactNode }) {
       {/* Сайдбар */}
       <aside className="hidden lg:flex w-64 bg-stone-800 flex-col py-8 px-6 fixed h-full z-10">
         <div className="mb-10">
-          <Logo size="sm" />
+          <VseBankLogo size="sm" variant="light" />
         </div>
 
         <nav className="flex-1 space-y-1">
@@ -95,7 +95,7 @@ export default function CabinetLayout({ children }: { children: ReactNode }) {
 
       {/* Верхняя панель */}
       <div className="lg:hidden fixed top-0 left-0 right-0 bg-cream-100 border-b border-gold-300/20 px-6 py-4 flex items-center justify-between z-10">
-        <Logo size="sm" />
+        <VseBankLogo size="sm" />
         <button onClick={handleLogout} className="text-stone-400 text-sm">Выход</button>
       </div>
 
