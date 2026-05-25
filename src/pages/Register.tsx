@@ -239,7 +239,7 @@ export default function Register() {
                 />
                 <input
                   className="input-field"
-                  placeholder="Фамилия"
+                  placeholder="Фамилия *"
                   value={form.lastName}
                   onChange={e => handleChange('lastName', e.target.value)}
                 />
@@ -247,7 +247,7 @@ export default function Register() {
             )}
 
             {form.accountType === 'personal' && (
-              <div className="hidden sm:block space-y-2.5">
+              <div className="hidden lg:block space-y-2.5">
                 {/* Дата рождения с лейблом — только desktop */}
                 <div className="relative">
                   <label className="absolute left-4 top-1.5 text-[10px] text-gold-700 tracking-wide uppercase pointer-events-none z-10">

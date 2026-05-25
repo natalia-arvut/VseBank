@@ -111,8 +111,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }
 
   const signIn = (email: string, password: string) => {
-    const found = users.find(u => u.email === email.trim().toLowerCase())
-    if (!found) return { ok: false, error: 'Пользователь не найден. Пожалуйста, откройте счёт.' }
+    const normalizedEmail = email.trim().toLowerCase()
+    const found = users.find(u => u.email === normalizedEmail)
+    if (!found) {
+      const count = users.length
+      return { ok: false, error: count === 0
+        ? 'База пуста. Откройте счёт.'
+        : `Пользователь с email "${normalizedEmail}" не найден. (зарегистрировано: ${count})` }
+    }
+    // Если пароль пустой (старая миграция) — принимаем любой и обновляем
+    if (!found.password) {
+      setUsers(prev => prev.map(u => u.email === found.email ? { ...u, password } : u))
+      setSessionEmail(found.email)
+      return { ok: true }
+    }
     if (found.password !== password) return { ok: false, error: 'Неверный пароль.' }
     setSessionEmail(found.email)
     return { ok: true }

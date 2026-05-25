@@ -23,10 +23,10 @@ export default function Landing() {
       {/* Верхняя плашка */}
       <nav className="absolute top-0 left-0 right-0 z-30 py-4 md:py-6">
         <div className="site-container flex items-start md:items-center justify-between gap-4">
-          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 min-w-0">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-6 min-w-0">
             <VseBankLogo size="md" />
-            <div className="hidden md:block w-px h-10 bg-gold-400/40 flex-shrink-0" />
-            <div className="font-sans text-xs sm:text-sm md:text-sm text-gold-600 font-medium tracking-[0.2em] uppercase leading-snug md:leading-relaxed">
+            <div className="hidden lg:block w-px h-10 bg-gold-400/40 flex-shrink-0" />
+            <div className="font-sans text-xs sm:text-sm text-gold-600 font-medium tracking-[0.2em] uppercase leading-snug lg:leading-relaxed">
               Инструкция по сонастройке<br />с Бесконечным Потоком
             </div>
           </div>
