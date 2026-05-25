@@ -52,8 +52,11 @@ export default function Login() {
   }
 
   return (
-    <div className="h-screen overflow-hidden bg-cream-100 bg-pattern flex items-center justify-center px-8 py-6">
-      <div className="w-full max-w-md">
+    <div className="h-screen overflow-hidden bg-cream-100 flex">
+
+      {/* Левая половина — форма входа */}
+      <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 md:px-12 py-6 overflow-y-auto">
+        <div className="w-full max-w-md mx-auto">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <VseBankLogo size="md" />
@@ -120,6 +123,16 @@ export default function Login() {
             ← Вернуться на главную
           </button>
         </div>
+        </div>
+      </div>
+
+      {/* Правая половина — иллюстрация */}
+      <div className="hidden lg:block lg:w-1/2 relative overflow-hidden">
+        <img
+          src={`${import.meta.env.BASE_URL}login-image.png`}
+          alt="Trust is your currency · Abundance is your natural state"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
       </div>
 
       {/* Модалка восстановления пароля */}
