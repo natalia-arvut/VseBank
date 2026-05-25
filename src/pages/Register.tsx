@@ -119,12 +119,36 @@ export default function Register() {
 
       {/* Левая панель — информационная (ровно 50%) */}
       <div className="hidden lg:flex lg:w-1/2 bg-stone-800 flex-col justify-between p-10 relative overflow-hidden">
-        {/* Фоновые кольца */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-10">
-          <div className="w-96 h-96 rounded-full border border-gold-400" />
-          <div className="absolute w-72 h-72 rounded-full border border-gold-400" />
-          <div className="absolute w-48 h-48 rounded-full border border-gold-400" />
-        </div>
+        {/* Фон — мерцающие золотые звёздочки и ∞ */}
+        <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none" preserveAspectRatio="none" viewBox="0 0 400 600">
+          {/* Большая бесконечность по центру */}
+          <g transform="translate(200 300)" opacity="0.4">
+            <path d="M-60 0 C-60 -30, -25 -30, 0 0 C25 30, 60 30, 60 0 C60 -30, 25 -30, 0 0 C-25 30, -60 30, -60 0 Z"
+              stroke="#D4B87A" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
+          </g>
+          {/* Звёздочки разных размеров и яркости */}
+          {[
+            [50, 80, 4, 0.8], [120, 50, 3, 0.6], [310, 90, 5, 0.9], [350, 180, 3, 0.7],
+            [70, 200, 4, 0.7], [40, 350, 5, 0.8], [340, 380, 4, 0.7], [80, 480, 3, 0.6],
+            [320, 520, 5, 0.9], [180, 480, 3, 0.7], [260, 130, 3, 0.6], [150, 150, 2, 0.5],
+            [380, 280, 3, 0.6], [25, 280, 2, 0.5], [220, 540, 4, 0.7], [110, 410, 2, 0.5],
+            [290, 460, 3, 0.6], [60, 130, 2, 0.5],
+          ].map(([x, y, r, op], i) => (
+            <path key={i}
+              d={`M ${x} ${y-r as number} L ${(x as number)+(r as number)*0.4} ${(y as number)-(r as number)*0.4} L ${(x as number)+r} ${y} L ${(x as number)+(r as number)*0.4} ${(y as number)+(r as number)*0.4} L ${x} ${(y as number)+(r as number)} L ${(x as number)-(r as number)*0.4} ${(y as number)+(r as number)*0.4} L ${(x as number)-(r as number)} ${y} L ${(x as number)-(r as number)*0.4} ${(y as number)-(r as number)*0.4} Z`}
+              fill="#D4B87A" opacity={op as number}>
+              <animate attributeName="opacity" values={`${op};${(op as number) * 0.3};${op}`} dur={`${2 + (i % 3)}s`} repeatCount="indefinite"/>
+            </path>
+          ))}
+          {/* Маленькие бесконечности */}
+          {[[100, 110], [310, 230], [80, 540], [330, 70]].map(([x, y], i) => (
+            <g key={`inf-${i}`} transform={`translate(${x} ${y})`} opacity="0.5">
+              <path d="M-12 0 C-12 -6, -5 -6, 0 0 C5 6, 12 6, 12 0 C12 -6, 5 -6, 0 0 C-5 6, -12 6, -12 0 Z"
+                stroke="#D4B87A" strokeWidth="1" fill="none" strokeLinecap="round"/>
+              <animate attributeName="opacity" values="0.5;0.2;0.5" dur={`${3 + i}s`} repeatCount="indefinite"/>
+            </g>
+          ))}
+        </svg>
 
         {/* VseBank логотип — единый компонент в светлом варианте */}
         <VseBankLogo size="md" variant="light" />
@@ -223,16 +247,22 @@ export default function Register() {
             )}
 
             {form.accountType === 'personal' && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                <input
-                  className="input-field"
-                  placeholder="Дата рождения"
-                  type="date"
-                  value={form.birthDate}
-                  onChange={e => handleChange('birthDate', e.target.value)}
-                />
+              <>
+                {/* Дата рождения с лейблом */}
+                <div className="relative">
+                  <label className="absolute left-4 top-1.5 text-[10px] text-gold-700 tracking-wide uppercase pointer-events-none z-10">
+                    Дата рождения
+                  </label>
+                  <input
+                    className="input-field pt-6 pb-2"
+                    type="date"
+                    value={form.birthDate}
+                    onChange={e => handleChange('birthDate', e.target.value)}
+                  />
+                </div>
+                {/* Пол — скрыт на мобайле */}
                 <select
-                  className="input-field"
+                  className="input-field hidden sm:block"
                   value={form.gender}
                   onChange={e => handleChange('gender', e.target.value)}
                 >
@@ -240,7 +270,7 @@ export default function Register() {
                   <option value="male">Мужской</option>
                   <option value="female">Женский</option>
                 </select>
-              </div>
+              </>
             )}
 
             <input

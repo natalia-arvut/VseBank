@@ -21,12 +21,12 @@ export default function Landing() {
     <div className="min-h-screen bg-cream-100 font-sans">
 
       {/* Верхняя плашка */}
-      <nav className="absolute top-0 left-0 right-0 z-30 py-5 md:py-6">
-        <div className="site-container flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 md:gap-6 min-w-0">
+      <nav className="absolute top-0 left-0 right-0 z-30 py-4 md:py-6">
+        <div className="site-container flex items-start md:items-center justify-between gap-4">
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 min-w-0">
             <VseBankLogo size="md" />
             <div className="hidden md:block w-px h-10 bg-gold-400/40 flex-shrink-0" />
-            <div className="hidden md:block font-sans text-xs md:text-sm text-gold-600 font-medium tracking-[0.2em] uppercase leading-relaxed">
+            <div className="font-sans text-[10px] sm:text-xs md:text-sm text-gold-600 font-medium tracking-[0.2em] uppercase leading-tight md:leading-relaxed">
               Инструкция по сонастройке<br />с Бесконечным Потоком
             </div>
           </div>
@@ -53,8 +53,8 @@ export default function Landing() {
         {/* HTML-контент */}
         <div className="absolute inset-0 flex items-center pt-20 md:pt-20 pb-8 md:pb-0">
           <div className="site-container">
-            {/* Плашка с полупрозрачным фоном для читаемости на мобайле */}
-            <div className="max-w-xl text-left bg-cream-100/70 md:bg-transparent backdrop-blur-[2px] md:backdrop-blur-0 rounded-2xl md:rounded-none p-6 md:p-0 border border-gold-300/30 md:border-0">
+            {/* Плашка с полупрозрачным фоном — на мобайле и планшете */}
+            <div className="max-w-xl text-left bg-cream-100/75 lg:bg-transparent backdrop-blur-[3px] lg:backdrop-blur-0 rounded-2xl lg:rounded-none p-5 md:p-7 lg:p-0 border border-gold-300/30 lg:border-0">
 
               {/* Заголовок */}
               <h1 className="font-serif mb-5 md:mb-6 text-left">
@@ -107,7 +107,7 @@ export default function Landing() {
               Большинство людей живут в иллюзии дефицита. Они верят, что ресурсы ограничены, а деньги нужно «тяжело зарабатывать». Но на квантовом уровне реальности всё, что вы можете себе вообразить, уже существует в виде чистой потенциальности.
             </p>
             <p className="body-text">
-              Этот Банк — <span className="text-gold-700 font-medium">не просто игра</span>. Это тренажёр для вашего сознания, созданный на стыке метафизики изобилия и нейропластичности.
+              Этот Банк — <span className="font-serif italic text-gold-500 text-xl">не просто игра</span>. Это тренажёр для вашего сознания, созданный на стыке метафизики изобилия и нейропластичности.
             </p>
           </div>
 

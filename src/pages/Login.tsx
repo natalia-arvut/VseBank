@@ -62,7 +62,7 @@ export default function Login() {
             <VseBankLogo size="md" />
           </div>
           <div className="w-12 h-px bg-gold-400 mx-auto mb-4" />
-          <p className="font-sans text-stone-500 text-sm">Войдите в ваш кабинет изобилия</p>
+          <p className="font-sans text-stone-600 text-base md:text-lg">Войдите в ваш кабинет изобилия</p>
         </div>
 
         <form onSubmit={handleSubmit} className="glass-card p-6 space-y-3 rounded-2xl">
