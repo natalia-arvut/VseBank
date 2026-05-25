@@ -7,16 +7,12 @@ export default function Landing() {
   const navigate = useNavigate()
   const [quickName, setQuickName] = useState('')
   const [quickEmail, setQuickEmail] = useState('')
-  const [quickAmount, setQuickAmount] = useState('')
-  const [quickCurrency, setQuickCurrency] = useState('USD')
 
   const handleQuickStart = () => {
     // Сохраняем намерение и редиректим на регистрацию
     localStorage.setItem('vbi_intent', JSON.stringify({
       name: quickName.trim(),
       email: quickEmail.trim().toLowerCase(),
-      amount: quickAmount.trim(),
-      currency: quickCurrency,
     }))
     navigate('/register')
   }
