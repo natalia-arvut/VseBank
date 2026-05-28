@@ -2,18 +2,28 @@ import type { ReactNode } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import VseBankLogo from './VseBankLogo'
+import Guilloche from './Guilloche'
 
 const NAV_ITEMS = [
   { path: '/cabinet', label: 'Главная', icon: '⌂' },
-  { path: '/cards', label: 'Карты', icon: '▣' },
   { path: '/transfer', label: 'Переводы', icon: '⇄' },
   { path: '/requisites', label: 'Реквизиты', icon: '≡' },
   { path: '/history', label: 'История', icon: '◷' },
   { path: '/paths', label: 'Благотворительность', icon: '♡' },
-  { path: '/philosophy', label: 'От автора', icon: '✦' },
+  { path: '/reviews', label: 'Отзывы', icon: '✦' },
 ]
 
-export default function CabinetLayout({ children }: { children: ReactNode }) {
+// rightVisual — фоновый декор в правой части main:
+//   'arch' — картинка с золотой аркой (как на странице входа)
+//   'guilloche' — тонкий узор переплетённых золотых нитей
+//   'none' — ничего (для страниц с собственным фоном, например Главная)
+export default function CabinetLayout({
+  children,
+  rightVisual = 'guilloche',
+}: {
+  children: ReactNode
+  rightVisual?: 'arch' | 'guilloche' | 'none'
+}) {
   const navigate = useNavigate()
   const location = useLocation()
   const { user, logout } = useApp()
@@ -28,7 +38,8 @@ export default function CabinetLayout({ children }: { children: ReactNode }) {
 
       {/* Сайдбар */}
       <aside className="hidden lg:flex w-64 bg-stone-800 flex-col py-8 px-6 fixed h-full z-10">
-        <div className="mb-10">
+        {/* Левый край логотипа = левый край иконок меню (учитываем px-4 у кнопок) */}
+        <div className="mb-10 ml-4">
           <VseBankLogo size="sm" variant="light" />
         </div>
 
@@ -99,8 +110,35 @@ export default function CabinetLayout({ children }: { children: ReactNode }) {
         <button onClick={handleLogout} className="text-stone-400 text-sm">Выход</button>
       </div>
 
-      {/* Основной контент */}
-      <main className="flex-1 lg:ml-64 pt-16 lg:pt-0 pb-20 lg:pb-0 overflow-y-auto">
+      {/* Картинка-арка справа — только для Благотворительности на широких экранах.
+          Левая граница совпадает с правым краем max-w-xl контента (контент чуть уже),
+          чтобы картинка стала шире и доходила до той же линии что контент на других вкладках. */}
+      {rightVisual === 'arch' && (
+        <div
+          className="hidden xl:block fixed top-0 bottom-0 right-0 pointer-events-none overflow-hidden"
+          style={{ left: 'calc(50vw + 116px)', zIndex: 0 }}
+        >
+          <img
+            src={`${import.meta.env.BASE_URL}login-image.png`}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover select-none"
+            draggable={false}
+          />
+        </div>
+      )}
+
+      {/* Гильош — на всю область main (исключая сайдбар) */}
+      {rightVisual === 'guilloche' && (
+        <div
+          className="fixed top-0 right-0 bottom-0 left-0 lg:left-64 pointer-events-none overflow-hidden"
+          style={{ zIndex: 0 }}
+        >
+          <Guilloche variant="light" />
+        </div>
+      )}
+
+      {/* Основной контент — над фоновым декором */}
+      <main className="flex-1 lg:ml-64 pt-16 lg:pt-0 pb-20 lg:pb-0 overflow-y-auto relative" style={{ zIndex: 1 }}>
         {children}
       </main>
     </div>

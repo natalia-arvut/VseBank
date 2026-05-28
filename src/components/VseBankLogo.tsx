@@ -13,10 +13,10 @@ export default function VseBankLogo({
   void variant
   const navigate = useNavigate()
   const sizes = {
-    sm: 'h-7',
-    md: 'h-10 md:h-12',
-    lg: 'h-14 md:h-16',
-    xl: 'h-20 md:h-24',
+    sm: 'h-14',                    // ×2 от прошлого sm
+    md: 'h-20 md:h-24',            // ×2 от прошлого md
+    lg: 'h-28 md:h-32',            // ×2 от прошлого lg
+    xl: 'h-40 md:h-48',            // ×2 от прошлого xl
   }
   return (
     <button

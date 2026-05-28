@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Подтверждение открытия счёта · VseBank</title>
+</head>
+<body style="margin:0;padding:0;background:#EFE9DD;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#2A2520;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#EFE9DD;padding:40px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="580" style="max-width:580px;width:100%;background:#FBF7F0;border:1px solid rgba(184,144,88,0.25);border-radius:8px;overflow:hidden;">
+          <!-- Золотая линия сверху -->
+          <tr><td style="height:3px;background:linear-gradient(to right,#D4B87A,#B89058,#D4B87A);font-size:0;line-height:0;">&nbsp;</td></tr>
+
+          <!-- Логотип -->
+          <tr>
+            <td style="padding:36px 40px 8px 40px;" align="left">
+              <span style="font-family:Georgia,'Times New Roman',serif;font-size:22px;color:#2A2520;letter-spacing:0.5px;">
+                <span style="color:#B89058;font-size:26px;vertical-align:-2px;">&infin;</span>&nbsp; VseBank
+              </span>
+            </td>
+          </tr>
+
+          <!-- Тег -->
+          <tr>
+            <td style="padding:24px 40px 0 40px;" align="left">
+              <span style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#9A6F09;font-weight:500;">Открытие счёта</span>
+              <div style="width:32px;height:1px;background:#B89058;margin-top:10px;"></div>
+            </td>
+          </tr>
+
+          <!-- Заголовок -->
+          <tr>
+            <td style="padding:18px 40px 0 40px;" align="left">
+              <h1 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:32px;line-height:1.2;color:#2A2520;">
+                Добро пожаловать во<br>Вселенский Банк Изобилия
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Текст -->
+          <tr>
+            <td style="padding:24px 40px 0 40px;" align="left">
+              <p style="margin:0;font-size:16px;line-height:1.7;color:#4A4138;">
+                Ваш счёт изобилия открыт. Осталось подтвердить email — и личный кабинет ваш.
+              </p>
+              <p style="margin:14px 0 0 0;font-size:15px;line-height:1.7;color:#6A5F52;">
+                С первой секунды вы — Банкир.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Кнопка -->
+          <tr>
+            <td style="padding:32px 40px 8px 40px;" align="center">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td align="center" style="background:#B89058;border-radius:15px;">
+                    <a href="{{ .ConfirmationURL }}"
+                       style="display:inline-block;padding:16px 36px;font-size:13px;letter-spacing:2.5px;text-transform:uppercase;color:#FFFFFF;text-decoration:none;font-weight:500;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
+                      Подтвердить и войти в кабинет
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Подстраховочная ссылка -->
+          <tr>
+            <td style="padding:16px 40px 0 40px;" align="center">
+              <p style="margin:0;font-size:12px;line-height:1.6;color:#8A7F72;">
+                Если кнопка не работает, скопируйте эту ссылку в браузер:<br>
+                <a href="{{ .ConfirmationURL }}" style="color:#9A6F09;word-break:break-all;text-decoration:underline;">{{ .ConfirmationURL }}</a>
+              </p>
+            </td>
+          </tr>
+
+          <!-- Разделитель -->
+          <tr>
+            <td style="padding:32px 40px 0 40px;">
+              <div style="width:48px;height:1px;background:#D4B87A;margin:0 auto;"></div>
+            </td>
+          </tr>
+
+          <!-- Цитата -->
+          <tr>
+            <td style="padding:24px 40px 8px 40px;" align="center">
+              <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:16px;line-height:1.6;color:#4A4138;">
+                «Бог не знает нехватки.<br>Вселенная знает только одно слово: ДА».
+              </p>
+            </td>
+          </tr>
+
+          <!-- Футер -->
+          <tr>
+            <td style="padding:36px 40px;" align="center">
+              <p style="margin:0;font-size:11px;letter-spacing:0.5px;line-height:1.6;color:#A0958A;">
+                Вы получили это письмо, потому что открыли счёт во Вселенском Банке Изобилия.<br>
+                Если это не вы — проигнорируйте это сообщение.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Золотая линия снизу -->
+          <tr><td style="height:3px;background:linear-gradient(to right,#D4B87A,#B89058,#D4B87A);font-size:0;line-height:0;">&nbsp;</td></tr>
+        </table>
+
+        <!-- Подпись бренда -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="580" style="max-width:580px;width:100%;">
+          <tr>
+            <td align="center" style="padding:20px 16px;">
+              <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:13px;letter-spacing:1px;color:#8A7F72;">
+                <span style="color:#B89058;">&infin;</span>&nbsp; VseBank · Вселенский Банк Изобилия
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

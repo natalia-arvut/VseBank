@@ -145,7 +145,7 @@ export default function Register() {
     <div className="h-screen overflow-hidden bg-cream-100 bg-pattern flex">
 
       {/* Левая панель — информационная (ровно 50%) */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between p-10 relative overflow-hidden"
+      <div className="hidden lg:flex lg:w-1/2 flex-col p-10 relative overflow-hidden"
         style={{
           background: 'radial-gradient(120% 80% at 30% 35%, #3a3128 0%, #2a2520 55%, #1f1b17 100%)',
         }}
@@ -194,10 +194,12 @@ export default function Register() {
           }}
         />
 
-        {/* VseBank логотип — единый компонент в светлом варианте */}
-        <VseBankLogo size="md" variant="light" />
+        {/* VseBank логотип — на уровне правой панели */}
+        <div className="mb-8">
+          <VseBankLogo size="md" variant="light" />
+        </div>
 
-        <div className="relative z-10">
+        <div className="relative z-10 flex-1 flex flex-col justify-center">
           <div className="font-sans text-xs text-gold-400 tracking-[0.2em] uppercase mb-4">
             Открытие счёта
           </div>
@@ -211,16 +213,14 @@ export default function Register() {
             Твой счёт изобилия не имеет ограничений.
           </p>
         </div>
-
-        <div />
       </div>
 
       {/* Правая панель — форма (ровно 50%) */}
-      <div className="lg:w-1/2 flex flex-col justify-center px-8 md:px-12 py-6 overflow-y-auto">
+      <div className="lg:w-1/2 flex flex-col px-8 md:px-12 py-10 overflow-y-auto">
         <div className="max-w-md mx-auto w-full">
 
-          {/* Логотип VseBank — выровнен по левому краю формы */}
-          <div className="flex justify-start mb-5">
+          {/* Логотип VseBank — на той же высоте что левый */}
+          <div className="flex justify-start mb-8">
             <VseBankLogo size="md" />
           </div>
 

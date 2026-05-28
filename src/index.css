@@ -19,6 +19,10 @@
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Lining figures — все цифры выровнены по высоте, без скачущих old-style.
+       Применяется ко всему включая Playfair Display заголовки и суммы. */
+    font-variant-numeric: lining-nums;
+    font-feature-settings: "lnum";
   }
 
   #root {

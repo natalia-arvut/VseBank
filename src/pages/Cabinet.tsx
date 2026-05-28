@@ -65,20 +65,24 @@ export default function Cabinet() {
                       Все →
                     </button>
                   </div>
-                  <div className="space-y-2">
-                    {transfers.slice(0, 3).map(t => (
-                      <div key={t.id} className="flex items-center justify-between text-sm">
-                        <div>
+                  <div className="space-y-3">
+                    {transfers.slice(0, 3).map(t => {
+                      const amountNum = parseInt(String(t.amount).replace(/\D/g, ''), 10)
+                      const amountFormatted = isNaN(amountNum)
+                        ? t.amount
+                        : amountNum.toLocaleString('de-DE')
+                      return (
+                        <div key={t.id} className="text-sm">
                           <div className="font-sans text-ink-700">{t.type}</div>
                           <div className="font-sans text-xs text-ink-500">
                             {new Date(t.createdAt).toLocaleDateString('ru')}
                           </div>
+                          <div className="font-serif text-gold-600 mt-0.5">
+                            + {amountFormatted} {t.currency}
+                          </div>
                         </div>
-                        <div className="font-serif text-gold-600">
-                          + {t.amount} {t.currency}
-                        </div>
-                      </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 </div>
               )}
