@@ -64,7 +64,7 @@ export default function ResetPassword() {
   return (
     <div className="h-screen bg-cream-100 bg-pattern flex items-center justify-center p-6">
       <div className="max-w-md w-full">
-        <div className="mb-6 flex justify-center"><VseBankLogo size="lg" /></div>
+        <div className="mb-6 flex justify-center"><VseBankLogo size="md" /></div>
         <div className="glass-card p-8 rounded-2xl">
           <div className="text-center mb-5">
             <div className="tag mb-2 text-sm">Сброс пароля</div>

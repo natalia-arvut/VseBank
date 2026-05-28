@@ -119,7 +119,7 @@ export default function Register() {
     return (
       <div className="h-screen bg-cream-100 bg-pattern flex items-center justify-center p-6">
         <div className="max-w-md w-full text-center">
-          <div className="mb-6 flex justify-center"><VseBankLogo size="lg" /></div>
+          <div className="mb-6 flex justify-center"><VseBankLogo size="md" /></div>
           <div className="glass-card p-10 rounded-2xl">
             <div className="text-5xl text-gold-500 mb-4">✉</div>
             <div className="tag mb-3 text-sm">Счёт открыт</div>
