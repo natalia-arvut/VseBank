@@ -7,6 +7,7 @@ export default function Landing() {
   const navigate = useNavigate()
   const [quickName, setQuickName] = useState('')
   const [quickEmail, setQuickEmail] = useState('')
+  const [rulesOpen, setRulesOpen] = useState(false)
 
   const handleQuickStart = () => {
     // Сохраняем намерение и редиректим на регистрацию
@@ -23,11 +24,10 @@ export default function Landing() {
       {/* Верхняя плашка */}
       <nav className="absolute top-0 left-0 right-0 z-30 py-4 md:py-6">
         <div className="site-container flex items-start md:items-center justify-between gap-4">
-          <div className="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-6 min-w-0">
+          <div className="flex flex-col min-w-0">
             <VseBankLogo size="md" />
-            <div className="hidden lg:block w-px h-10 bg-gold-400/40 flex-shrink-0" />
-            <div className="font-sans text-xs sm:text-sm text-gold-600 font-medium tracking-[0.2em] uppercase leading-snug lg:leading-relaxed">
-              Инструкция по сонастройке<br />с Бесконечным Потоком
+            <div className="font-sans text-xs sm:text-sm text-gold-600 font-medium tracking-[0.2em] uppercase mt-2">
+              Реальность, созданная тобой
             </div>
           </div>
           <button
@@ -103,10 +103,10 @@ export default function Landing() {
           {/* Текст — на всю ширину контейнера */}
           <div className="space-y-5 mb-16">
             <p className="body-text">
-              Большинство людей живут в иллюзии дефицита. Они верят, что ресурсы ограничены, а деньги нужно «тяжело зарабатывать». Но на квантовом уровне реальности всё, что вы можете себе вообразить, уже существует в виде чистой потенциальности.
+              Большинство людей живут в иллюзии дефицита. Они верят, что ресурсы ограничены, а деньги нужно «тяжело зарабатывать». Но на квантовом уровне реальности всё, что ты можешь себе вообразить, уже существует в виде чистой потенциальности.
             </p>
             <p className="body-text">
-              Этот Банк — <span className="font-serif italic text-2xl" style={{ color: "#9A6F09" }}>не просто игра</span>. Это тренажёр для вашего сознания, созданный на стыке метафизики изобилия и нейропластичности.
+              VseBank — <span className="font-serif italic text-2xl" style={{ color: "#9A6F09" }}>не просто игра</span>. Это тренажёр для твоего сознания, созданный на стыке метафизики изобилия и нейропластичности.
             </p>
           </div>
 
@@ -237,7 +237,7 @@ export default function Landing() {
             <div className="tag mb-3">Как это работает</div>
             <h2 className="section-title mb-5">Две ступени к изобилию</h2>
             <div className="w-12 h-px bg-gold-400 mx-auto mb-5" />
-            <p className="body-text italic">Вы не просите. Вы вспоминаете. Вы принимаете.</p>
+            <p className="body-text italic">Ты не просишь. Ты вспоминаешь. Ты принимаешь.</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -266,10 +266,10 @@ export default function Landing() {
               </div>
 
               <p className="body-text">
-                Вы — сотворцы своей реальности, искры Божественного сознания. Вселенский Банк не выдаёт кредиты и не требует залогов. Его баланс — бесконечен, потому что бесконечен Источник.
+                Ты — сотворец своей реальности, искра Божественного сознания. Вселенский Банк не выдаёт кредиты и не требует залогов. Его баланс — бесконечен, потому что бесконечен Источник.
               </p>
               <p className="body-text mt-4">
-                Переводя деньги отсюда на свой «физический» счёт, вы заявляете Вселенной: «Я готов принять то, что уже принадлежит мне по праву рождения».
+                Переводя деньги отсюда на свой «физический» счёт, ты заявляешь Вселенной: «Я готов принять то, что уже принадлежит мне по праву рождения».
               </p>
             </div>
 
@@ -296,10 +296,10 @@ export default function Landing() {
               </div>
 
               <p className="body-text">
-                Наш мозг не отличает реальное событие от воображаемого, если оно подкреплено сильной эмоцией. Каждый раз, когда вы совершаете «виртуальный перевод» и искренне проживаете благодарность, ваш мозг строит новые нейронные связи.
+                Наш мозг не отличает реальное событие от воображаемого, если оно подкреплено сильной эмоцией. Каждый раз, когда ты совершаешь «виртуальный перевод» и искренне проживаешь благодарность, твой мозг строит новые нейронные связи.
               </p>
               <p className="body-text mt-4">
-                Вы перестаёте транслировать в квантовое поле сигнал «мне не хватает» и начинаете излучать частоту «у меня уже есть».
+                Ты перестаёшь транслировать в квантовое поле сигнал «мне не хватает» и начинаешь излучать частоту «у меня уже есть».
               </p>
             </div>
           </div>
@@ -311,7 +311,7 @@ export default function Landing() {
             <div className="w-16 h-px bg-gold-400/40" />
           </div>
           <div className="text-center mt-3 tag">
-            Изменяя внутреннюю программу, вы изменяете внешнюю реальность
+            Изменяя внутреннюю программу, ты изменяешь внешнюю реальность
           </div>
         </div>
       </section>
@@ -326,7 +326,7 @@ export default function Landing() {
             <div className="w-12 h-px bg-gold-400 mx-auto mb-6" />
           </div>
           <p className="body-text mb-12">
-            Чтобы симуляция начала менять вашу физическую реальность, соблюдайте три главных правила Квантового Достатка:
+            Перед тем как активировать перевод, подтверди свою готовность играть по правилам Новой Реальности. Помни: этот интерфейс меняет материю только тогда, когда ты меняешь своё внутреннее состояние.
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 mt-12">
@@ -335,15 +335,15 @@ export default function Landing() {
               {[
                 {
                   n: '01',
-                  text: 'Определите сумму, которая необходима вам сегодня, чтобы почувствовать себя Творцом, которым вы и являетесь.',
+                  text: 'Какую сумму ты намерен материализовать? Назови цифру, которая переключит твоё сознание в режим безусловного изобилия и вернёт тебе статус главного архитектора своей жизни.',
                 },
                 {
                   n: '02',
-                  text: 'Сделайте свой первый перевод. Позвольте невидимому стать видимым.',
+                  text: 'Инициируй свой первый перевод. Дай Вселенной священную команду «Да будет так!» — и позволь пространству ответить взаимностью.',
                 },
                 {
                   n: '03',
-                  text: 'Сохраняйте состояние веры, благодарности и изобилия, как основной валюты вашего счёта.',
+                  text: 'Сохраняй состояние веры, благодарности и изобилия как основной валюты Вселенной. Празднуй триумф до того, как увидишь его на карте, — и материя подчинится.',
                 },
               ].map(({ n, text }) => (
                 <div key={n} className="flex gap-6 items-start">
@@ -356,12 +356,12 @@ export default function Landing() {
 
             {/* Форма быстрого открытия счёта */}
             <div className="glass-card p-8 rounded-2xl">
-              <h3 className="card-title mb-2">Откройте счёт прямо сейчас</h3>
+              <h3 className="card-title mb-2">Открой счёт прямо сейчас</h3>
               <p className="body-text mb-6">
-                Ваш безлимитный счёт уже активирован. Вам осталось только «присвоить» его себе.
+                Твой безлимитный счёт уже активирован. Тебе осталось только «присвоить» его себе.
               </p>
               <div className="space-y-3">
-                <input className="input-field" placeholder="Ваше имя" value={quickName} onChange={e => setQuickName(e.target.value)} />
+                <input className="input-field" placeholder="Твоё имя" value={quickName} onChange={e => setQuickName(e.target.value)} />
                 <input className="input-field" placeholder="Email" type="email" value={quickEmail} onChange={e => setQuickEmail(e.target.value)} />
                 <button
                   onClick={handleQuickStart}
@@ -369,11 +369,100 @@ export default function Landing() {
                 >
                   Открыть счёт →
                 </button>
+                <button
+                  type="button"
+                  onClick={() => setRulesOpen(true)}
+                  className="block w-full text-center font-sans text-sm text-gold-600 hover:text-gold-700 underline tracking-wider pt-2"
+                >
+                  Подробнее: пользовательское соглашение и свод правил
+                </button>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Модалка: полный текст пользовательского соглашения */}
+      {rulesOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/70 backdrop-blur-sm p-4 sm:p-6"
+          onClick={() => setRulesOpen(false)}
+        >
+          <div
+            className="bg-cream-100 max-w-2xl w-full p-6 sm:p-8 md:p-10 rounded-2xl shadow-gold-lg border border-gold-400/40 max-h-[92vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-center mb-6">
+              <div className="tag mb-2 text-sm">Пользовательское соглашение</div>
+              <h3 className="font-serif text-2xl md:text-3xl text-ink-900">Правила Новой Реальности</h3>
+              <div className="w-12 h-px bg-gold-400 mx-auto mt-4" />
+            </div>
+
+            <p className="font-sans text-ink-700 leading-relaxed text-center mb-8 px-2">
+              Перед тем как активировать перевод, подтверди свою готовность играть по правилам Новой Реальности. Помни: этот интерфейс меняет материю только тогда, когда ты меняешь своё внутреннее состояние.
+            </p>
+
+            {/* Оферта Со-Творца */}
+            <div className="border-t border-gold-300/40 pt-6 mb-8">
+              <div className="text-center mb-5">
+                <div className="tag mb-2 text-sm">Оферта Со-Творца</div>
+                <h4 className="font-serif text-xl md:text-2xl text-ink-900">Я согласен и принимаю условия</h4>
+              </div>
+
+              <p className="font-sans text-sm text-ink-700 leading-relaxed mb-5">
+                Нажимая кнопку виртуального перевода, я безоговорочно соглашаюсь со следующими пунктами:
+              </p>
+
+              <div className="space-y-6">
+                {[
+                  ['Признание природы симулятора', 'Я осознаю, что данная страница является цифровым симулятором Квантового Изобилия и тренажёром для моего сознания, а не традиционной финансовой организацией.'],
+                  ['Квантовый закон тождества', 'Я понимаю, что мой мозг не отличает реальное событие от воображаемого, если оно подкреплено сильной эмоцией. Я соглашаюсь использовать эту симуляцию как инструмент нейропластичности для перепрошивки своего дефицитарного мышления на частоту достатка.'],
+                  ['Ответственность за излучаемый сигнал', 'Я соглашаюсь с тем, что Вселенский Банк не выдаёт кредиты — он лишь воплощает то, чему я внутренне соответствую. Я беру на себя обязательство быть Творцом, а не просителем.'],
+                ].map(([title, text]) => (
+                  <div key={title}>
+                    <h5 className="font-serif text-xl md:text-2xl text-gold-600 mb-2 leading-tight">{title}</h5>
+                    <p className="font-sans text-sm text-ink-700 leading-relaxed">{text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Свод обязательных правил */}
+            <div className="border-t border-gold-300/40 pt-6 mb-8">
+              <div className="text-center mb-5">
+                <div className="tag mb-2 text-sm">Свод обязательных правил</div>
+                <h4 className="font-serif text-xl md:text-2xl text-ink-900">Протокол взаимодействия с Банком Вселенной</h4>
+              </div>
+
+              <p className="font-sans text-sm text-ink-700 leading-relaxed mb-5">
+                Чтобы транзакции успешно переносились из невидимого поля в плотную материю, соблюдай протокол взаимодействия с Банком Вселенной:
+              </p>
+
+              <div className="space-y-6">
+                {[
+                  ['Правило целевой материализации', 'Запрещено выводить суммы в пустоту или из чувства жадности. Каждая транзакция должна иметь чёткий вектор намерения (здоровье, расширение пространства, эволюция души и т. п.). Вселенная понимает только конкретные задачи, подкреплённые готовностью действовать.'],
+                  ['Правило биохимического подтверждения', 'В момент нажатия кнопки «Инициировать перевод» ты обязан запустить по венам химию искреннего триумфа. Твоё тело должно физически ощутить мурашки благодарности за то, что деньги уже у тебя. Без этого эмоционального обеспечения транзакция признаётся пустой ментальной концепцией и отклоняется Квантовым полем.'],
+                  ['Правило золотого стандарта', 'Твоя благодарность — главная валюта Вселенной, удерживающая квантовый сигнал. Празднуй триумф до того, как увидишь его на реальной карте, — и материя подчинится.'],
+                  ['Защита от системных ошибок', 'Как только ты включаешь контроль, страх или начинаешь судорожно думать «как именно и откуда эти деньги придут ко мне», система расценивает это как сомнение и выдаёт ошибку. Любая попытка эго диктовать Вселенной сценарии проявления мгновенно замораживает транзакцию. Перевёл? Забудь и доверься Пространству.'],
+                ].map(([title, text]) => (
+                  <div key={title}>
+                    <h5 className="font-serif text-xl md:text-2xl text-gold-600 mb-2 leading-tight">{title}</h5>
+                    <p className="font-sans text-sm text-ink-700 leading-relaxed">{text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <p className="font-sans text-ink-700 leading-relaxed text-center mb-6 px-2">
+              Я подтверждаю, что готов сорвать тумблер сомнений. Я вхожу в Квантовое Поле, принимаю правила игры и позволяю невидимому стать моим осязаемым физическим опытом.
+            </p>
+
+            <button onClick={() => setRulesOpen(false)} className="w-full btn-gold">
+              Принимаю
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Философский блок — фон как у блока 3 */}
       <section className="py-20" style={{ backgroundColor: '#FBF7F0' }}>
@@ -381,21 +470,26 @@ export default function Landing() {
           {/* Заголовок ПО ЦЕНТРУ над колонками */}
           <div className="text-center mb-12">
             <div className="tag mb-3">Философия</div>
-            <h2 className="section-title mb-5">Небесный Отец — Ваш Личный Банкир</h2>
+            <h2 className="section-title mb-5">Источник Изобилия: Вспомни, Кто Ты Есть</h2>
             <div className="w-12 h-px bg-gold-400 mx-auto" />
           </div>
+          {/* Цитата — на всю ширину, без кавычек */}
+          <p className="font-serif italic text-2xl leading-relaxed text-center mb-14" style={{ color: "#9A6F09" }}>
+            Ты не просишь Меня об изобилии. Ты просто вспоминаешь, что ты и есть Изобилие. Я — это ты, а ты — это Я. Мы неразделимы. И всё, что создано в этой Вселенной, уже принадлежит тебе по праву Творца.
+          </p>
+
           <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <p className="body-text mb-4">
-              Представьте, что ваш земной отец — олигарх. Вы его любимый сын, и он всё для вас готов сделать. Вы приходите к нему и говорите, что вам нужна определённая сумма на ваш счёт. Он знает, что вы не наркоман и не алкоголик, что эти деньги вас не погубят, — и потому в доверии переводит вам на ваш банковский счёт всегда, когда вы его просите. У вас будут сомнения, что деньги не зайдут???
+              Представь, что ты перестал быть просто «клиентом» Вселенной или ребёнком, ждущим карманных денег. Осознай монументальную истину: <span className="font-serif italic text-2xl" style={{ color: "#9A6F09" }}>Ты и есть Владелец этой бесконечной империи</span>, а Вселенский Банк — твоё личное, созданное тобой же предприятие.
             </p>
-            <div className="border-l-2 border-gold-400 pl-4 my-6">
-              <p className="body-text font-serif italic text-stone-700">
-                Вот так и наш Небесный Отец переводит нам любые суммы. И всё от нас зависит — сомневаемся мы или нет!
-              </p>
-            </div>
+
+            <p className="body-text mb-4">
+              Ты — земное воплощение Бога. Бог есть ты, а ты есть Бог. Через твои желания Высшее Сознание познаёт радость материального творчества, расширения и красоты. Поэтому, когда тебе нужна определённая сумма на новую земную мечту, ты не идёшь умолять о милости внешние силы. Ты просто заходишь в своё собственное Божественное хранилище и забираешь своё.
+            </p>
+
             <p className="body-text">
-              Если мы Бога представляем как квантовое поле или вселенную — это тоже работает. Разница лишь в том, что вы приходите либо к любящему вас Отцу, либо к богатому инвестору, к которому стоит очередь из таких же, как вы.
+              Могут ли возникнуть сомнения у Хозяина Банка, когда он подписывает чек самому себе? Будет ли он в панике обновлять баланс, проверяя, «одобрил» ли кто-то транзакцию? Конечно нет. Ты абсолютно спокоен, расслаблен и центрирован, потому что точно знаешь: <span className="font-serif italic text-2xl" style={{ color: "#9A6F09" }}>Твоя Воля — это закон материализации</span>.
             </p>
           </div>
           <div className="relative flex justify-center">
@@ -405,8 +499,8 @@ export default function Landing() {
 
           {/* Золотые теги по центру внизу */}
           <div className="flex flex-wrap justify-center gap-8 mt-12 text-base text-gold-600 tracking-widest uppercase font-medium">
-            <span>✦ Доверие — ваша валюта</span>
-            <span>✦ Изобилие — ваша природа</span>
+            <span>✦ Ты и есть Изобилие</span>
+            <span>✦ Твоя Воля — закон материализации</span>
           </div>
         </div>
       </section>
@@ -414,12 +508,12 @@ export default function Landing() {
       {/* CTA финальный — фон как у блока 4 */}
       <section className="pt-16 pb-28 text-center border-t border-gold-300/20" style={{ backgroundColor: '#FDFDFD' }}>
         <div className="site-container">
-          <h2 className="section-title mb-5">Ваш счёт ждёт вас</h2>
+          <h2 className="section-title mb-5">Твой счёт ждёт тебя</h2>
           <div className="w-12 h-px bg-gold-400 mx-auto mb-6" />
           <p className="body-text mb-10">
-            Ваш безлимитный счёт уже активирован. Вам осталось только «присвоить» его себе.
+            Твой безлимитный счёт уже активирован. Тебе осталось только «присвоить» его себе.
             <br />
-            Сделайте свой первый перевод. Позвольте невидимому стать видимым.
+            Сделай свой первый перевод. Позволь невидимому стать видимым.
           </p>
           <button
             onClick={() => navigate('/register')}

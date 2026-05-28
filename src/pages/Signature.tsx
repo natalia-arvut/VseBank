@@ -28,11 +28,11 @@ export default function Signature() {
                 <div className="text-5xl text-gold-400/60 mb-4">✦</div>
                 <div className="tag mb-3">Подпись и выход</div>
                 <h1 className="font-serif text-3xl text-stone-800 mb-4">
-                  Подтвердите своё намерение
+                  Подтверди своё намерение
                 </h1>
                 <div className="gold-divider" />
                 <p className="font-sans text-stone-600 leading-relaxed mt-6">
-                  Нажимая «Подпись», вы заявляете Вселенной:
+                  Нажимая «Подпись», ты заявляешь Вселенной:
                 </p>
                 <p className="font-serif text-xl italic text-stone-700 mt-3">
                   «Я готов принять то, что уже принадлежит мне по праву рождения».
@@ -71,14 +71,14 @@ export default function Signature() {
             <div className="text-center">
               <div className="text-6xl text-gold-400/60 mb-6 animate-float">∞</div>
               <h1 className="font-serif text-4xl text-stone-800 mb-4">
-                Примите поздравление от нашей команды!
+                Прими поздравление от нашей команды!
               </h1>
               <div className="gold-divider" />
               <p className="font-serif text-xl italic text-stone-700 mt-6 mb-4">
-                Завтра на вашем счету уже будет ваш первый миллион.
+                Завтра на твоём счету уже будет твой первый миллион.
               </p>
               <p className="font-sans text-stone-500 text-sm mb-10">
-                Улыбайтесь. Верьте. Радуйтесь. Наслаждайтесь новой реальностью.
+                Улыбайся. Верь. Радуйся. Наслаждайся новой реальностью.
               </p>
               <div className="flex gap-3 justify-center">
                 <button

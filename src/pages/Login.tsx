@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import VseBankLogo from '../components/VseBankLogo'
-import emailjs from '@emailjs/browser'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -11,13 +10,16 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [info, setInfo] = useState('')
+  const [loading, setLoading] = useState(false)
   const [resetOpen, setResetOpen] = useState(false)
   const [resetEmail, setResetEmail] = useState('')
+  const [resetLoading, setResetLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError(''); setInfo('')
-    const result = signIn(email, password)
+    setError(''); setInfo(''); setLoading(true)
+    const result = await signIn(email, password)
+    setLoading(false)
     if (result.ok) {
       navigate('/cabinet')
     } else {
@@ -27,26 +29,12 @@ export default function Login() {
 
   const handleReset = async () => {
     setError(''); setInfo('')
-    if (!resetEmail) { setError('Введите email'); return }
-    const result = resetPassword(resetEmail)
-    if (!result.ok) { setError(result.error || ''); return }
-
-    // Отправляем новый пароль на email через EmailJS
-    try {
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID',
-        import.meta.env.VITE_EMAILJS_TEMPLATE_RESET || 'YOUR_TEMPLATE_RESET',
-        {
-          to_email: resetEmail,
-          new_password: result.newPassword,
-          message: `Ваш новый пароль: ${result.newPassword}`,
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
-      )
-      setInfo(`Новый пароль отправлен на ${resetEmail}`)
-    } catch {
-      setInfo(`Ваш новый пароль: ${result.newPassword} (EmailJS пока не настроен)`)
-    }
+    if (!resetEmail) { setError('Введи email'); return }
+    setResetLoading(true)
+    const result = await resetPassword(resetEmail)
+    setResetLoading(false)
+    if (!result.ok) { setError(result.error || 'Ошибка отправки'); return }
+    setInfo(`Письмо для сброса пароля отправлено на ${resetEmail}. Перейди по ссылке из письма.`)
     setResetOpen(false)
     setResetEmail('')
   }
@@ -62,7 +50,7 @@ export default function Login() {
             <VseBankLogo size="lg" />
           </div>
           <div className="w-12 h-px bg-gold-400 mx-auto mb-4" />
-          <p className="font-sans text-stone-600 text-base md:text-lg">Войдите в ваш кабинет изобилия</p>
+          <p className="font-sans text-stone-600 text-base md:text-lg">Войди в твой кабинет изобилия</p>
         </div>
 
         <form onSubmit={handleSubmit} className="glass-card p-6 space-y-3 rounded-2xl">
@@ -92,8 +80,8 @@ export default function Login() {
             </div>
           )}
 
-          <button type="submit" className="w-full btn-gold">
-            Войти в личный кабинет
+          <button type="submit" disabled={loading} className="w-full btn-gold disabled:opacity-50 flex items-center justify-center gap-2">
+            {loading ? <><span className="animate-spin">⟳</span> Входим...</> : 'Войти в личный кабинет'}
           </button>
 
           <button
@@ -146,7 +134,7 @@ export default function Login() {
             <h2 className="font-serif text-2xl text-stone-800 mb-2 text-center">Восстановление пароля</h2>
             <div className="w-12 h-px bg-gold-400 mx-auto mb-5" />
             <p className="text-sm text-stone-600 mb-5 text-center">
-              Введите email, на который придёт новый пароль
+              Введи email — мы отправим ссылку для установки нового пароля
             </p>
             <input
               type="email"
@@ -156,7 +144,9 @@ export default function Login() {
               onChange={e => setResetEmail(e.target.value)}
             />
             <div className="flex gap-3">
-              <button onClick={handleReset} className="flex-1 btn-gold">Отправить</button>
+              <button onClick={handleReset} disabled={resetLoading} className="flex-1 btn-gold disabled:opacity-50">
+                {resetLoading ? 'Отправляем...' : 'Отправить ссылку'}
+              </button>
               <button onClick={() => setResetOpen(false)} className="flex-1 btn-outline">Отмена</button>
             </div>
           </div>

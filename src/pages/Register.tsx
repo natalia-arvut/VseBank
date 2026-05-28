@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import VseBankLogo from '../components/VseBankLogo'
-import emailjs from '@emailjs/browser'
+import Guilloche from '../components/Guilloche'
 
 const COUNTRIES = [
   'Россия', 'Украина', 'Беларусь', 'Казахстан', 'Германия', 'Швейцария',
@@ -28,6 +28,7 @@ export default function Register() {
   const [rulesOpen, setRulesOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
 
   // Подхватываем намерение с лендинга
   useEffect(() => {
@@ -57,34 +58,18 @@ export default function Register() {
       return
     }
     if (!form.firstName || !form.email || !form.password || !form.country) {
-      setError('Пожалуйста, заполните все обязательные поля')
+      setError('Пожалуйста, заполни все обязательные поля')
+      return
+    }
+    if (form.password.length < 6) {
+      setError('Пароль должен быть не короче 6 символов')
       return
     }
 
     setLoading(true)
     setError('')
 
-    try {
-      // Отправляем письмо подтверждения через EmailJS
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID',
-        import.meta.env.VITE_EMAILJS_TEMPLATE_REGISTER || 'YOUR_TEMPLATE_REGISTER',
-        {
-          to_name: `${form.firstName} ${form.lastName}`,
-          to_email: form.email,
-          from_name: 'Вселенский Банк Изобилия',
-          account_number: `VBI-${Date.now().toString().slice(-8)}`,
-          message: 'Ваш счёт изобилия успешно открыт. С первой секунды вы — Банкир.',
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
-      )
-    } catch {
-      // Если EmailJS не настроен — продолжаем без письма
-      console.log('EmailJS не настроен, продолжаем без письма')
-    }
-
-    // Регистрируем пользователя в базе
-    register({
+    const result = await register({
       firstName: form.firstName,
       lastName: form.lastName,
       companyRegNumber: form.companyRegNumber,
@@ -98,7 +83,22 @@ export default function Register() {
 
     setLoading(false)
 
-    // Если было намерение перевести сумму с лендинга — идём сразу в перевод
+    if (!result.ok) {
+      const msg = (result.error || '').toLowerCase()
+      if (msg.includes('already') || msg.includes('exists') || msg.includes('registered'))
+        setError('Пользователь с таким email уже зарегистрирован. Войдите в кабинет.')
+      else
+        setError(result.error || 'Ошибка регистрации')
+      return
+    }
+
+    // Если включено подтверждение email — показываем экран ожидания
+    if (result.needsConfirmation) {
+      setSuccess(true)
+      return
+    }
+
+    // Иначе — сразу в кабинет (или перевод по намерению с лендинга)
     const intent = localStorage.getItem('vbi_intent')
     if (intent) {
       try {
@@ -114,41 +114,85 @@ export default function Register() {
     navigate('/cabinet')
   }
 
+  // Экран после регистрации — ждём подтверждения email
+  if (success) {
+    return (
+      <div className="h-screen bg-cream-100 bg-pattern flex items-center justify-center p-6">
+        <div className="max-w-md w-full text-center">
+          <div className="mb-6 flex justify-center"><VseBankLogo size="lg" /></div>
+          <div className="glass-card p-10 rounded-2xl">
+            <div className="text-5xl text-gold-500 mb-4">✉</div>
+            <div className="tag mb-3 text-sm">Счёт открыт</div>
+            <h1 className="font-serif text-3xl text-stone-800 mb-3">Проверьте почту</h1>
+            <div className="w-12 h-px bg-gold-400 mx-auto mb-5" />
+            <p className="font-sans text-stone-600 leading-relaxed mb-2">
+              На <span className="text-gold-700">{form.email}</span> отправлено письмо
+              подтверждения открытия счёта.
+            </p>
+            <p className="font-sans text-stone-500 text-sm mb-6">
+              Перейди по ссылке из письма — и ты окажешься в личном кабинете.
+            </p>
+            <button onClick={() => navigate('/login')} className="w-full btn-outline">
+              На страницу входа
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="h-screen overflow-hidden bg-cream-100 bg-pattern flex">
 
       {/* Левая панель — информационная (ровно 50%) */}
-      <div className="hidden lg:flex lg:w-1/2 bg-stone-800 flex-col justify-between p-10 relative overflow-hidden">
-        {/* Фон — мерцающие золотые звёздочки и ∞ */}
-        <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none" preserveAspectRatio="none" viewBox="0 0 400 600">
-          {/* Большая бесконечность по центру */}
-          <g transform="translate(200 300)" opacity="0.4">
-            <path d="M-60 0 C-60 -30, -25 -30, 0 0 C25 30, 60 30, 60 0 C60 -30, 25 -30, 0 0 C-25 30, -60 30, -60 0 Z"
-              stroke="#D4B87A" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
-          </g>
-          {/* Звёздочки разных размеров и яркости */}
-          {[
-            [50, 80, 4, 0.8], [120, 50, 3, 0.6], [310, 90, 5, 0.9], [350, 180, 3, 0.7],
-            [70, 200, 4, 0.7], [40, 350, 5, 0.8], [340, 380, 4, 0.7], [80, 480, 3, 0.6],
-            [320, 520, 5, 0.9], [180, 480, 3, 0.7], [260, 130, 3, 0.6], [150, 150, 2, 0.5],
-            [380, 280, 3, 0.6], [25, 280, 2, 0.5], [220, 540, 4, 0.7], [110, 410, 2, 0.5],
-            [290, 460, 3, 0.6], [60, 130, 2, 0.5],
-          ].map(([x, y, r, op], i) => (
-            <path key={i}
-              d={`M ${x} ${y-r as number} L ${(x as number)+(r as number)*0.4} ${(y as number)-(r as number)*0.4} L ${(x as number)+r} ${y} L ${(x as number)+(r as number)*0.4} ${(y as number)+(r as number)*0.4} L ${x} ${(y as number)+(r as number)} L ${(x as number)-(r as number)*0.4} ${(y as number)+(r as number)*0.4} L ${(x as number)-(r as number)} ${y} L ${(x as number)-(r as number)*0.4} ${(y as number)-(r as number)*0.4} Z`}
-              fill="#D4B87A" opacity={op as number}>
-              <animate attributeName="opacity" values={`${op};${(op as number) * 0.3};${op}`} dur={`${2 + (i % 3)}s`} repeatCount="indefinite"/>
-            </path>
-          ))}
-          {/* Маленькие бесконечности */}
-          {[[100, 110], [310, 230], [80, 540], [330, 70]].map(([x, y], i) => (
-            <g key={`inf-${i}`} transform={`translate(${x} ${y})`} opacity="0.5">
-              <path d="M-12 0 C-12 -6, -5 -6, 0 0 C5 6, 12 6, 12 0 C12 -6, 5 -6, 0 0 C-5 6, -12 6, -12 0 Z"
-                stroke="#D4B87A" strokeWidth="1" fill="none" strokeLinecap="round"/>
-              <animate attributeName="opacity" values="0.5;0.2;0.5" dur={`${3 + i}s`} repeatCount="indefinite"/>
-            </g>
-          ))}
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between p-10 relative overflow-hidden"
+        style={{
+          background: 'radial-gradient(120% 80% at 30% 35%, #3a3128 0%, #2a2520 55%, #1f1b17 100%)',
+        }}
+      >
+        {/* Тёплое золотое сияние за заголовком — мягкий свет */}
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            left: '-10%',
+            top: '20%',
+            width: '70%',
+            height: '60%',
+            background: 'radial-gradient(circle, rgba(212,184,122,0.18) 0%, rgba(212,184,122,0.06) 35%, transparent 70%)',
+            filter: 'blur(20px)',
+          }}
+        />
+
+        {/* Гильош — фирменный узор ценной бумаги (тёмная тема) */}
+        <Guilloche variant="dark" />
+
+        {/* Тонкие золотые corner brackets — классические «уголки ценной бумаги».
+            Каждый bracket повёрнут так, чтобы острый кончик смотрел наружу панели,
+            а раскрытая часть — внутрь, к центру. */}
+        {/* Верхний-правый */}
+        <svg className="absolute pointer-events-none" style={{ top: 24, right: 24, width: 36, height: 36 }} viewBox="0 0 36 36" fill="none">
+          <path d="M36 36 V 4 a4 4 0 0 0 -4 -4 H 0" stroke="#D4B87A" strokeOpacity="0.55" strokeWidth="1" />
         </svg>
+        {/* Нижний-левый */}
+        <svg className="absolute pointer-events-none" style={{ bottom: 24, left: 24, width: 36, height: 36 }} viewBox="0 0 36 36" fill="none">
+          <path d="M0 0 V 32 a4 4 0 0 0 4 4 H 36" stroke="#D4B87A" strokeOpacity="0.55" strokeWidth="1" />
+        </svg>
+        {/* Нижний-правый */}
+        <svg className="absolute pointer-events-none" style={{ bottom: 24, right: 24, width: 36, height: 36 }} viewBox="0 0 36 36" fill="none">
+          <path d="M36 0 V 32 a4 4 0 0 1 -4 4 H 0" stroke="#D4B87A" strokeOpacity="0.55" strokeWidth="1" />
+        </svg>
+
+        {/* Тонкая золотая вертикальная линия по правому краю — раздел панелей */}
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            right: 0,
+            top: '10%',
+            bottom: '10%',
+            width: '1px',
+            background: 'linear-gradient(to bottom, transparent, rgba(212,184,122,0.4), transparent)',
+          }}
+        />
 
         {/* VseBank логотип — единый компонент в светлом варианте */}
         <VseBankLogo size="md" variant="light" />
@@ -158,11 +202,13 @@ export default function Register() {
             Открытие счёта
           </div>
           <h2 className="font-serif text-3xl text-cream-50 leading-tight mb-4">
-            С первой секунды<br />вы — Банкир.
+            С первой секунды<br />ты — Банкир.
           </h2>
           <div className="w-12 h-px bg-gold-500 mb-4" />
-          <p className="font-sans text-stone-400 leading-relaxed text-sm">
-            Можно открыть как личный счёт, так и на компанию. Ваш счёт изобилия не имеет ограничений.
+          <p className="font-sans text-stone-300 leading-relaxed text-base">
+            Можно открыть как личный счёт, так и на компанию.
+            <br /><br />
+            Твой счёт изобилия не имеет ограничений.
           </p>
         </div>
 
@@ -310,10 +356,11 @@ export default function Register() {
               </div>
             )}
 
-            <label className="flex items-start gap-3 cursor-pointer">
+            <label className="flex items-start gap-3 cursor-pointer py-1">
               <input
                 type="checkbox"
-                className="mt-1 accent-gold-500"
+                className="flex-shrink-0 w-5 h-5 mt-0.5 accent-gold-500 border border-gold-400/60 rounded cursor-pointer"
+                style={{ accentColor: '#B89058' }}
                 checked={form.agreed}
                 onChange={e => handleChange('agreed', e.target.checked)}
               />
@@ -360,36 +407,99 @@ export default function Register() {
               <path d="M9 13 C 9 10.5, 10.5 9.5, 12 11 C 13.5 12.5, 15 12.5, 15 11 C 15 9.5, 13.5 9.5, 12 11 C 10.5 12.5, 9 12.5, 9 13 Z"
                 stroke="#B89058" strokeWidth="1" fill="none" strokeLinecap="round"/>
             </svg>
-            <span>Ваши данные защищены квантовым уровнем шифрования. Мы с вами на одной частоте.</span>
+            <span>Твои данные защищены квантовым уровнем шифрования. Мы с тобой на одной частоте.</span>
           </div>
         </div>
       </div>
 
-      {/* Модальное окно с правилами */}
+      {/* Модальное окно с пользовательским соглашением */}
       {rulesOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/70 backdrop-blur-sm p-6"
           onClick={() => setRulesOpen(false)}
         >
-          <div className="bg-cream-100 max-w-lg w-full p-8 rounded-2xl shadow-gold-lg border border-gold-400/40 max-h-[90vh] overflow-y-auto"
+          <div className="bg-cream-100 max-w-2xl w-full p-8 md:p-10 rounded-2xl shadow-gold-lg border border-gold-400/40 max-h-[92vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="text-center mb-6">
-              <div className="tag mb-2 text-sm">Правила</div>
-              <h2 className="font-serif text-2xl text-stone-800">Правила Пользования Вселенским Счётом</h2>
+              <div className="tag mb-2 text-sm">Пользовательское соглашение</div>
+              <h2 className="font-serif text-2xl md:text-3xl text-ink-900">Правила Новой Реальности</h2>
               <div className="w-12 h-px bg-gold-400 mx-auto mt-4" />
             </div>
-            <div className="space-y-5 mb-6">
+
+            <p className="font-sans text-ink-700 leading-relaxed text-center mb-8 px-2">
+              Перед тем как активировать перевод, подтверди свою готовность играть по правилам Новой Реальности. Помни: этот интерфейс меняет материю только тогда, когда ты меняешь своё внутреннее состояние.
+            </p>
+
+            {/* 01–03 — три ключевые шага */}
+            <div className="space-y-5 mb-10">
               {[
-                ['01', 'Определите сумму, которая необходима вам сегодня, чтобы почувствовать себя Творцом, которым вы и являетесь.'],
-                ['02', 'Сделайте свой первый перевод. Позвольте невидимому стать видимым.'],
-                ['03', 'Сохраняйте состояние веры, благодарности и изобилия, как основной валюты вашего счёта.'],
+                ['01', 'Какую сумму ты намерен материализовать? Назови цифру, которая переключит твоё сознание в режим безусловного изобилия и вернёт тебе статус главного архитектора своей жизни.'],
+                ['02', 'Инициируй свой первый перевод. Дай Вселенной священную команду «Да будет так!» — и позволь пространству ответить взаимностью.'],
+                ['03', 'Сохраняй состояние веры, благодарности и изобилия как основной валюты Вселенной. Празднуй триумф до того, как увидишь его на карте, — и материя подчинится.'],
               ].map(([n, text]) => (
                 <div key={n} className="flex gap-4 items-start">
                   <div className="font-serif text-3xl text-gold-500 leading-none flex-shrink-0 w-10">{n}</div>
-                  <p className="text-sm text-stone-700 leading-relaxed pt-1">{text}</p>
+                  <p className="text-sm text-ink-700 leading-relaxed pt-1">{text}</p>
                 </div>
               ))}
             </div>
+
+            {/* Оферта Со-Творца */}
+            <div className="border-t border-gold-300/40 pt-6 mb-8">
+              <div className="text-center mb-5">
+                <div className="tag mb-2 text-sm">Оферта Со-Творца</div>
+                <h3 className="font-serif text-xl md:text-2xl text-ink-900">Я согласен и принимаю условия</h3>
+              </div>
+
+              <p className="font-sans text-sm text-ink-700 leading-relaxed mb-5">
+                Нажимая кнопку виртуального перевода, я безоговорочно соглашаюсь со следующими пунктами:
+              </p>
+
+              <div className="space-y-6">
+                {[
+                  ['Признание природы симулятора', 'Я осознаю, что данная страница является цифровым симулятором Квантового Изобилия и тренажёром для моего сознания, а не традиционной финансовой организацией.'],
+                  ['Квантовый закон тождества', 'Я понимаю, что мой мозг не отличает реальное событие от воображаемого, если оно подкреплено сильной эмоцией. Я соглашаюсь использовать эту симуляцию как инструмент нейропластичности для перепрошивки своего дефицитарного мышления на частоту достатка.'],
+                  ['Ответственность за излучаемый сигнал', 'Я соглашаюсь с тем, что Вселенский Банк не выдаёт кредиты — он лишь воплощает то, чему я внутренне соответствую. Я беру на себя обязательство быть Творцом, а не просителем.'],
+                ].map(([title, text]) => (
+                  <div key={title}>
+                    <h4 className="font-serif text-xl md:text-2xl text-gold-600 mb-2 leading-tight">{title}</h4>
+                    <p className="font-sans text-sm text-ink-700 leading-relaxed">{text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Свод обязательных правил */}
+            <div className="border-t border-gold-300/40 pt-6 mb-8">
+              <div className="text-center mb-5">
+                <div className="tag mb-2 text-sm">Свод обязательных правил</div>
+                <h3 className="font-serif text-xl md:text-2xl text-ink-900">Протокол взаимодействия с Банком Вселенной</h3>
+              </div>
+
+              <p className="font-sans text-sm text-ink-700 leading-relaxed mb-5">
+                Чтобы твои транзакции успешно переносились из невидимого поля в плотную материю, строго соблюдай протокол взаимодействия с Банком Вселенной:
+              </p>
+
+              <div className="space-y-8">
+                {[
+                  ['Правило целевой материализации', 'Шаг 1', 'Запрещено выводить суммы в пустоту или из чувства жадности. Каждая транзакция должна иметь чёткий вектор намерения (здоровье, расширение пространства, эволюция души и т. п.). Вселенная понимает только конкретные задачи, подкреплённые готовностью действовать.'],
+                  ['Правило биохимического подтверждения', 'Шаг 2', 'В момент нажатия кнопки «Инициировать перевод» ты обязан запустить по венам химию искреннего триумфа. Твоё тело должно физически ощутить мурашки благодарности за то, что деньги уже у тебя. Без этого эмоционального обеспечения транзакция признаётся пустой ментальной концепцией и отклоняется Квантовым полем.'],
+                  ['Правило золотого стандарта', 'Шаг 3', 'Твоя благодарность — главная валюта Вселенной, удерживающая квантовый сигнал. Празднуй триумф до того, как увидишь его на реальной карте, — и материя подчинится.'],
+                  ['Защита от системных ошибок', 'Политика конфиденциальности ума', 'Как только ты включаешь контроль, страх или начинаешь судорожно думать «как именно и откуда эти деньги придут ко мне», система расценивает это как сомнение и выдаёт ошибку. Любая попытка эго диктовать Вселенной сценарии проявления мгновенно замораживает транзакцию. Перевёл? Забудь и доверься Пространству.'],
+                ].map(([title, step, text]) => (
+                  <div key={title} className="text-center">
+                    <div className="font-sans text-sm text-gold-600 tracking-[0.25em] uppercase font-semibold mb-2">{step}</div>
+                    <h4 className="font-serif text-xl md:text-2xl text-gold-600 mb-3 leading-tight">{title}</h4>
+                    <p className="font-sans text-sm text-ink-700 leading-relaxed text-left">{text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <p className="font-sans text-ink-700 leading-relaxed text-center mb-6 px-2">
+              Я подтверждаю, что готов сорвать тумблер сомнений. Я вхожу в Квантовое Поле, принимаю правила игры и позволяю невидимому стать моим осязаемым физическим опытом.
+            </p>
+
             <button
               onClick={() => { handleChange('agreed', true); setRulesOpen(false) }}
               className="w-full btn-gold"
