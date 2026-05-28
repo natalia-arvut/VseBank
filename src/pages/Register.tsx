@@ -129,9 +129,16 @@ export default function Register() {
               На <span className="text-gold-700">{form.email}</span> отправлено письмо
               подтверждения открытия счёта.
             </p>
-            <p className="font-sans text-stone-500 text-sm mb-6">
+            <p className="font-sans text-stone-500 text-sm mb-4">
               Перейди по ссылке из письма — и ты окажешься в личном кабинете.
             </p>
+            <div className="bg-gold-500/10 border border-gold-400/40 rounded-md px-4 py-3 mb-6">
+              <p className="font-sans text-xs text-gold-700 leading-relaxed">
+                ✦ Если письма нет во входящих — проверь папку <strong>«Спам»</strong>.
+                Найди — отметь <strong>«Не спам»</strong>, и следующие письма от VseBank
+                будут приходить сразу в Inbox.
+              </p>
+            </div>
             <button onClick={() => navigate('/login')} className="w-full btn-outline">
               На страницу входа
             </button>
