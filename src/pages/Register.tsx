@@ -199,7 +199,7 @@ export default function Register() {
           <VseBankLogo size="sm" variant="light" />
         </div>
 
-        <div className="relative z-10 flex-1 flex flex-col justify-center">
+        <div className="relative z-10 flex-1 flex flex-col justify-center -mt-12">
           <div className="font-sans text-xs text-gold-400 tracking-[0.2em] uppercase mb-4">
             Открытие счёта
           </div>
@@ -224,9 +224,8 @@ export default function Register() {
             <VseBankLogo size="sm" />
           </div>
 
-          <div className="mb-6">
-            <div className="tag mb-2 text-sm">Открытие счёта</div>
-            <div className="w-12 h-px bg-gold-400" />
+          <div className="mb-3">
+            <div className="tag text-sm">Открытие счёта</div>
           </div>
 
           {/* Тип счёта — единый размер с кнопкой submit */}
