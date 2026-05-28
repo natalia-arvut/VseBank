@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { path: '/transfer', label: 'Переводы', icon: '⇄' },
   { path: '/requisites', label: 'Реквизиты', icon: '≡' },
   { path: '/history', label: 'История', icon: '◷' },
-  { path: '/paths', label: 'Благотворительность', icon: '♡' },
+  { path: '/paths', label: 'Донат VseBank', icon: '♡' },
   { path: '/reviews', label: 'Отзывы', icon: '✦' },
 ]
 

@@ -92,7 +92,7 @@ function buildHtml(transfer: Transfer, profile: Profile): string {
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
                   <td style="padding:8px 0;font-size:13px;color:#8A7F72;width:45%;">Сумма</td>
-                  <td style="padding:8px 0;font-size:18px;font-family:Georgia,'Times New Roman',serif;color:#9A6F09;font-weight:500;text-align:right;">
+                  <td style="padding:8px 0;font-size:16px;color:#9A6F09;font-weight:600;text-align:right;letter-spacing:0.5px;">
                     ${amount} ${transfer.currency}
                   </td>
                 </tr>
@@ -106,12 +106,6 @@ function buildHtml(transfer: Transfer, profile: Profile): string {
                   <td style="padding:8px 0;font-size:13px;color:#8A7F72;border-top:1px solid rgba(184,144,88,0.2);">Срок поступления</td>
                   <td style="padding:8px 0;font-size:14px;color:#4A4138;text-align:right;border-top:1px solid rgba(184,144,88,0.2);">
                     ${transfer.timing}
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:8px 0;font-size:13px;color:#8A7F72;border-top:1px solid rgba(184,144,88,0.2);">Код перевода</td>
-                  <td style="padding:8px 0;font-size:12px;color:#4A4138;text-align:right;border-top:1px solid rgba(184,144,88,0.2);font-family:'Courier New',monospace;">
-                    ${transfer.id.substring(0, 8).toUpperCase()}
                   </td>
                 </tr>
               </table>
