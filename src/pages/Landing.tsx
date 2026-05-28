@@ -24,7 +24,7 @@ export default function Landing() {
       {/* Верхняя плашка */}
       <nav className="absolute top-0 left-0 right-0 z-30 py-4 md:py-6">
         <div className="site-container flex items-start justify-between gap-4">
-          <div className="flex flex-col min-w-0">
+          <div className="flex flex-col min-w-0 -mt-2">
             {/* Отрицательный margin-left сдвигает PNG-логотип так, чтобы
                 буква «V» оказалась на одной линии с «Р» в тексте ниже */}
             <div className="-ml-2 md:-ml-3">
