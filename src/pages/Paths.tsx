@@ -17,46 +17,43 @@ export default function Paths() {
               <div className="w-12 h-px bg-gold-500" />
             </div>
 
-            <p className="font-sans text-ink-700 leading-relaxed mb-5">
+            <p className="font-sans text-ink-700 leading-relaxed mb-8">
               Если ты держишь кулак сжатым, в него невозможно вложить ничего нового. Но стоит тебе открыть ладонь, чтобы отдать, как Вселенная начинает стремиться наполнить её.
             </p>
+
+            {/* Второй заголовок — того же размера что и первый */}
+            <h2 className="font-serif text-2xl md:text-3xl text-ink-900 mb-2">
+              Зафиксируй свой результат
+            </h2>
+            <div className="w-12 h-px bg-gold-500 mb-5" />
 
             {/* Ссылка — открывает модалку с длинным текстом */}
             <button
               type="button"
               onClick={() => setWhyOpen(true)}
-              className="font-sans text-sm text-gold-600 hover:text-gold-700 underline tracking-wide mb-8 text-left"
+              className="font-sans text-sm text-gold-600 hover:text-gold-700 underline tracking-wide mb-6 text-left"
             >
               Почему щедрость — самый выгодный финтех-инструмент? →
             </button>
 
-            {/* Закрытие квантовой сделки */}
-            <div className="mb-8 mt-4">
-              <div className="tag mb-2 text-sm">Закрытие квантовой сделки</div>
-              <h2 className="font-serif text-xl md:text-2xl text-ink-900 mb-3">
-                Зафиксируй свой результат
-              </h2>
-              <div className="w-12 h-px bg-gold-400 mb-5" />
+            <p className="font-sans text-ink-700 leading-relaxed mb-3">
+              Наш симулятор Вселенского Банка помог тебе перепрошить твой разум на виртуальном уровне. И в тот момент, когда Магия случилась и ты увидел, что ты Творец своей реальности, пришло время для финального акта сотворчества.
+            </p>
+            <p className="font-sans text-ink-700 leading-relaxed mb-6">
+              Когда завершён твой квантовый сигнал изобилия в реальные цифры на твоей физической карте, завершается сакральный цикл изобилия. Направь от всего своего сердца…
+            </p>
 
-              <p className="font-sans text-ink-700 leading-relaxed mb-3">
-                Наш симулятор Вселенского Банка помог тебе перепрошить твой разум на виртуальном уровне. И в тот момент, когда Магия случилась и ты увидел, что ты Творец своей реальности, пришло время для финального акта сотворчества.
+            <div className="flex flex-col gap-3 max-w-xs mb-8">
+              <button className="btn-gold text-sm px-6 py-2.5">
+                Активировать Циркуляцию
+              </button>
+              <p className="font-sans text-xs text-ink-500 leading-relaxed text-center">
+                или напиши нам на{' '}
+                <a href="mailto:vsebank.space@gmail.com" className="text-gold-600 underline">
+                  vsebank.space@gmail.com
+                </a>
+                <br />и мы пришлём реквизиты
               </p>
-              <p className="font-sans text-ink-700 leading-relaxed mb-6">
-                Когда завершён твой квантовый сигнал изобилия в реальные цифры на твоей физической карте, завершается сакральный цикл изобилия. Направь от всего своего сердца…
-              </p>
-
-              <div className="flex flex-col gap-3 max-w-xs">
-                <button className="btn-gold text-sm px-6 py-2.5">
-                  Активировать Циркуляцию
-                </button>
-                <p className="font-sans text-xs text-ink-500 leading-relaxed text-center">
-                  или напиши нам на{' '}
-                  <a href="mailto:vsebank.space@gmail.com" className="text-gold-600 underline">
-                    vsebank.space@gmail.com
-                  </a>
-                  <br />и мы пришлём реквизиты
-                </p>
-              </div>
             </div>
 
             <div className="pt-6 border-t border-gold-300/30">
