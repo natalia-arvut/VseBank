@@ -38,8 +38,8 @@ export default function CabinetLayout({
 
       {/* Сайдбар */}
       <aside className="hidden lg:flex w-64 bg-stone-800 flex-col py-8 px-6 fixed h-full z-10">
-        {/* Левый край логотипа = левый край иконок меню (учитываем px-4 у кнопок) */}
-        <div className="mb-4 ml-4">
+        {/* Левый край логотипа = левый край золотой плашки активного пункта меню и аватарки внизу */}
+        <div className="mb-4">
           <VseBankLogo size="sm" variant="light" />
         </div>
 
