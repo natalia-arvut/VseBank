@@ -9,58 +9,55 @@ export default function Paths() {
       <div className="p-4 md:p-10">
         <div className="xl:grid xl:grid-cols-2 xl:gap-6 xl:items-start">
           <div>
-            <div className="mb-8">
-              <div className="tag mb-2">Донат VseBank</div>
+            <div className="mb-4">
+              <div className="tag mb-1">Донат VseBank</div>
               <h1 className="font-serif text-2xl md:text-3xl text-ink-900 mb-2">
                 Запусти квантовую циркуляцию
               </h1>
               <div className="w-12 h-px bg-gold-500" />
             </div>
 
-            <p className="font-sans text-ink-700 leading-relaxed mb-8">
+            <p className="font-sans text-sm text-ink-700 leading-relaxed mb-3">
               Если ты держишь кулак сжатым, в него невозможно вложить ничего нового. Но стоит тебе открыть ладонь, чтобы отдать, как Вселенная начинает стремиться наполнить её.
             </p>
 
-            {/* Второй заголовок — того же размера что и первый */}
-            <h2 className="font-serif text-2xl md:text-3xl text-ink-900 mb-2">
-              Зафиксируй свой результат
-            </h2>
-            <div className="w-12 h-px bg-gold-500 mb-5" />
-
-            {/* Ссылка — открывает модалку с длинным текстом */}
+            {/* Ссылка относится к параграфу выше */}
             <button
               type="button"
               onClick={() => setWhyOpen(true)}
-              className="font-sans text-sm text-gold-600 hover:text-gold-700 underline tracking-wide mb-6 text-left"
+              className="font-sans text-sm text-gold-600 hover:text-gold-700 underline tracking-wide mb-5 text-left"
             >
               Почему щедрость — самый выгодный финтех-инструмент? →
             </button>
 
-            <p className="font-sans text-ink-700 leading-relaxed mb-3">
-              Наш симулятор Вселенского Банка помог тебе перепрошить твой разум на виртуальном уровне. И в тот момент, когда Магия случилась и ты увидел, что ты Творец своей реальности, пришло время для финального акта сотворчества.
+            {/* Второй заголовок — того же размера */}
+            <h2 className="font-serif text-2xl md:text-3xl text-ink-900 mb-2">
+              Зафиксируй свой результат
+            </h2>
+            <div className="w-12 h-px bg-gold-500 mb-4" />
+
+            <p className="font-sans text-sm text-ink-700 leading-relaxed mb-2">
+              Наш симулятор Вселенского Банка помог тебе перепрошить твой разум на виртуальном уровне. В момент, когда Магия случилась и ты увидел, что ты Творец своей реальности, пришло время для финального акта сотворчества.
             </p>
-            <p className="font-sans text-ink-700 leading-relaxed mb-6">
-              Когда завершён твой квантовый сигнал изобилия в реальные цифры на твоей физической карте, завершается сакральный цикл изобилия. Направь от всего своего сердца…
+            <p className="font-sans text-sm text-ink-700 leading-relaxed mb-4">
+              Когда квантовый сигнал изобилия завершён в реальные цифры на твоей физической карте, завершается сакральный цикл. Направь от всего своего сердца…
             </p>
 
-            <div className="flex flex-col gap-3 max-w-xs mb-8">
+            <div className="flex flex-col gap-2 max-w-xs mb-4">
               <button className="btn-gold text-sm px-6 py-2.5">
                 Активировать Циркуляцию
               </button>
               <p className="font-sans text-xs text-ink-500 leading-relaxed text-center">
-                или напиши нам на{' '}
+                или{' '}
                 <a href="mailto:vsebank.space@gmail.com" className="text-gold-600 underline">
                   vsebank.space@gmail.com
-                </a>
-                <br />и мы пришлём реквизиты
+                </a>{' '}— пришлём реквизиты
               </p>
             </div>
 
-            <div className="pt-6 border-t border-gold-300/30">
-              <p className="font-serif italic text-ink-700 leading-relaxed">
-                И обязательно поделись своим результатом в отзывах — вдохновляя других людей на такие же победы и запуская поток изобилия дальше.
-              </p>
-            </div>
+            <p className="font-sans italic text-xs text-ink-500 leading-relaxed pt-3 border-t border-gold-300/30">
+              Поделись своим результатом в отзывах — вдохнови других и запусти поток изобилия дальше.
+            </p>
           </div>
 
           {/* Правая колонка — картинка-арка через CabinetLayout */}
