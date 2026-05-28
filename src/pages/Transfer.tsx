@@ -203,11 +203,11 @@ export default function Transfer() {
   // ───────── Форма перевода ─────────
   return (
     <CabinetLayout>
-      <div className="p-6 md:p-10">
+      <div className="p-4 md:p-10">
         {/* Один общий заголовок над всей страницей */}
         <div className="mb-8">
           <div className="tag mb-2">Давай выполним твой перевод</div>
-          <h1 className="font-serif text-3xl text-ink-900 mb-2">
+          <h1 className="font-serif text-2xl md:text-3xl text-ink-900 mb-2">
             Заполни форму для перевода
           </h1>
           <div className="w-12 h-px bg-gold-500" />

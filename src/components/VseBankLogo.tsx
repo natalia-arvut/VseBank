@@ -6,17 +6,18 @@ export default function VseBankLogo({
   size = 'md',
   variant = 'dark',
 }: {
-  size?: 'sm' | 'md' | 'lg' | 'xl'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   variant?: 'dark' | 'light'
 }) {
   // variant сохранён для обратной совместимости (вызовов с light/dark много), но не используется
   void variant
   const navigate = useNavigate()
   const sizes = {
-    sm: 'h-14',                    // ×2 от прошлого sm
-    md: 'h-20 md:h-24',            // ×2 от прошлого md
-    lg: 'h-28 md:h-32',            // ×2 от прошлого lg
-    xl: 'h-40 md:h-48',            // ×2 от прошлого xl
+    xs: 'h-8',                     // компактный — для мобильного top-bar
+    sm: 'h-14',
+    md: 'h-20 md:h-24',
+    lg: 'h-28 md:h-32',
+    xl: 'h-40 md:h-48',
   }
   return (
     <button

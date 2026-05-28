@@ -28,27 +28,27 @@ export default function Cabinet() {
             outer p-6 md:p-10 + grid 2 равных колонок + gap-6.
             Плашка лежит в левой колонке → её визуальные left/right совпадают
             с левой колонкой на /transfer пиксель-в-пиксель. */}
-        <div className="relative p-6 md:p-10 min-h-screen">
-          <div className="xl:grid xl:grid-cols-2 xl:gap-6 xl:items-stretch min-h-[calc(100vh-3rem)] md:min-h-[calc(100vh-5rem)]">
-            {/* Левая колонка — плашка приветствия (полная высота) */}
+        <div className="relative p-4 md:p-10">
+          <div className="xl:grid xl:grid-cols-2 xl:gap-6 xl:items-stretch xl:min-h-[calc(100vh-5rem)]">
+            {/* Левая колонка — плашка приветствия */}
             <div className="bg-cream-100/85 lg:bg-cream-100/75 backdrop-blur-[3px] border border-gold-300/30 rounded-2xl flex flex-col">
-              <div className="flex-1 p-6 md:p-8 flex flex-col">
+              <div className="flex-1 p-5 md:p-8 flex flex-col">
 
-              <div className="tag mb-2">Добро пожаловать в банк</div>
+              <div className="tag text-xs md:text-sm mb-2">Добро пожаловать в банк</div>
 
-              <h1 className="font-serif text-3xl text-ink-900 mb-2">
+              <h1 className="font-serif text-2xl md:text-3xl text-ink-900 mb-2">
                 {greeting}{user?.firstName ? `, ${user.firstName}` : ''}!
               </h1>
 
-              <div className="w-12 h-px bg-gold-500 mt-2 mb-5" />
+              <div className="w-12 h-px bg-gold-500 mt-2 mb-4" />
 
-              <p className="font-sans text-ink-700 text-base leading-relaxed mb-6">
+              <p className="font-sans text-ink-700 text-sm md:text-base leading-relaxed mb-5">
                 Твой счёт изобилия активен. Твой лимит безграничен.
               </p>
 
               <button
                 onClick={() => navigate('/transfer')}
-                className="btn-gold inline-flex items-center gap-2 text-sm px-6 py-2.5 self-start"
+                className="btn-gold inline-flex items-center gap-2 text-xs md:text-sm px-5 md:px-6 py-2.5 self-start"
               >
                 Совершить перевод →
               </button>

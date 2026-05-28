@@ -110,7 +110,7 @@ export default function Landing() {
               Большинство людей живут в иллюзии дефицита. Они верят, что ресурсы ограничены, а деньги нужно «тяжело зарабатывать». Но на квантовом уровне реальности всё, что ты можешь себе вообразить, уже существует в виде чистой потенциальности.
             </p>
             <p className="body-text">
-              VseBank — <span className="font-serif italic text-2xl" style={{ color: "#9A6F09" }}>не просто игра</span>. Это тренажёр для твоего сознания, созданный на стыке метафизики изобилия и нейропластичности.
+              VseBank — <span className="font-serif italic text-lg md:text-2xl" style={{ color: "#9A6F09" }}>не просто игра</span>. Это тренажёр для твоего сознания, созданный на стыке метафизики изобилия и нейропластичности.
             </p>
           </div>
 
@@ -477,15 +477,15 @@ export default function Landing() {
             <h2 className="section-title mb-5">Источник Изобилия: Вспомни, Кто Ты Есть</h2>
             <div className="w-12 h-px bg-gold-400 mx-auto" />
           </div>
-          {/* Цитата — на всю ширину, без кавычек */}
-          <p className="font-serif italic text-2xl leading-relaxed text-center mb-14" style={{ color: "#9A6F09" }}>
+          {/* Цитата — на mobile в размер body-text, на десктопе крупнее */}
+          <p className="font-serif italic text-lg md:text-2xl leading-relaxed text-center mb-10 md:mb-14" style={{ color: "#9A6F09" }}>
             Ты не просишь Меня об изобилии. Ты просто вспоминаешь, что ты и есть Изобилие. Я — это ты, а ты — это Я. Мы неразделимы. И всё, что создано в этой Вселенной, уже принадлежит тебе по праву Творца.
           </p>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <p className="body-text mb-4">
-              Представь, что ты перестал быть просто «клиентом» Вселенной или ребёнком, ждущим карманных денег. Осознай монументальную истину: <span className="font-serif italic text-2xl" style={{ color: "#9A6F09" }}>Ты и есть Владелец этой бесконечной империи</span>, а Вселенский Банк — твоё личное, созданное тобой же предприятие.
+              Представь, что ты перестал быть просто «клиентом» Вселенной или ребёнком, ждущим карманных денег. Осознай монументальную истину: <span className="font-serif italic text-lg md:text-2xl" style={{ color: "#9A6F09" }}>Ты и есть Владелец этой бесконечной империи</span>, а Вселенский Банк — твоё личное, созданное тобой же предприятие.
             </p>
 
             <p className="body-text mb-4">
@@ -493,7 +493,7 @@ export default function Landing() {
             </p>
 
             <p className="body-text">
-              Могут ли возникнуть сомнения у Хозяина Банка, когда он подписывает чек самому себе? Будет ли он в панике обновлять баланс, проверяя, «одобрил» ли кто-то транзакцию? Конечно нет. Ты абсолютно спокоен, расслаблен и центрирован, потому что точно знаешь: <span className="font-serif italic text-2xl" style={{ color: "#9A6F09" }}>Твоя Воля — это закон материализации</span>.
+              Могут ли возникнуть сомнения у Хозяина Банка, когда он подписывает чек самому себе? Будет ли он в панике обновлять баланс, проверяя, «одобрил» ли кто-то транзакцию? Конечно нет. Ты абсолютно спокоен, расслаблен и центрирован, потому что точно знаешь: <span className="font-serif italic text-lg md:text-2xl" style={{ color: "#9A6F09" }}>Твоя Воля — это закон материализации</span>.
             </p>
           </div>
           <div className="relative flex justify-center">
@@ -501,8 +501,8 @@ export default function Landing() {
           </div>
           </div>
 
-          {/* Золотые теги по центру внизу */}
-          <div className="flex flex-wrap justify-center gap-8 mt-12 text-base text-gold-600 tracking-widest uppercase font-medium">
+          {/* Золотые теги по центру внизу. На mobile — каждая строка центрирована отдельно */}
+          <div className="flex flex-col md:flex-row md:flex-wrap items-center justify-center gap-4 md:gap-8 mt-12 text-base text-gold-600 tracking-widest uppercase font-medium text-center">
             <span>✦ Ты и есть Изобилие</span>
             <span>✦ Твоя Воля — закон материализации</span>
           </div>
