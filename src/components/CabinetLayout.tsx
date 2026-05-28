@@ -123,7 +123,7 @@ export default function CabinetLayout({
       {rightVisual === 'arch' && (
         <div
           className="hidden xl:block fixed top-0 bottom-0 right-0 pointer-events-none overflow-hidden"
-          style={{ left: 'calc(50vw + 116px)', zIndex: 0 }}
+          style={{ left: 'calc(50vw + 156px)', zIndex: 0 }}
         >
           <img
             src={`${import.meta.env.BASE_URL}login-image.png`}

@@ -47,7 +47,7 @@ export default function Paths() {
               <button className="btn-gold text-sm px-6 py-2.5">
                 Активировать Циркуляцию
               </button>
-              <p className="font-sans text-xs text-ink-500 leading-relaxed text-center">
+              <p className="font-sans text-sm text-ink-500 leading-relaxed text-center">
                 или{' '}
                 <a href="mailto:vsebank.space@gmail.com" className="text-gold-600 underline">
                   vsebank.space@gmail.com
@@ -55,7 +55,7 @@ export default function Paths() {
               </p>
             </div>
 
-            <p className="font-sans italic text-xs text-ink-500 leading-relaxed pt-3 border-t border-gold-300/30">
+            <p className="font-sans italic text-sm text-ink-500 leading-relaxed pt-3 border-t border-gold-300/30">
               Поделись своим результатом в отзывах — вдохнови других и запусти поток изобилия дальше.
             </p>
           </div>
