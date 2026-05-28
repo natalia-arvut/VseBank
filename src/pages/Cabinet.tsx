@@ -77,7 +77,7 @@ export default function Cabinet() {
                           <div className="font-sans text-xs text-ink-500">
                             {new Date(t.createdAt).toLocaleDateString('ru')}
                           </div>
-                          <div className="font-serif text-gold-600 mt-0.5">
+                          <div className="font-sans text-lg text-gold-600 tracking-[0.05em] mt-1">
                             + {amountFormatted} {t.currency}
                           </div>
                         </div>

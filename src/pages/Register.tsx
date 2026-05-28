@@ -196,7 +196,7 @@ export default function Register() {
 
         {/* VseBank логотип — на уровне правой панели */}
         <div className="mb-8">
-          <VseBankLogo size="md" variant="light" />
+          <VseBankLogo size="sm" variant="light" />
         </div>
 
         <div className="relative z-10 flex-1 flex flex-col justify-center">
@@ -221,7 +221,7 @@ export default function Register() {
 
           {/* Логотип VseBank — на той же высоте что левый */}
           <div className="flex justify-start mb-8">
-            <VseBankLogo size="md" />
+            <VseBankLogo size="sm" />
           </div>
 
           <div className="mb-6">

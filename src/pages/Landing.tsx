@@ -23,9 +23,13 @@ export default function Landing() {
 
       {/* Верхняя плашка */}
       <nav className="absolute top-0 left-0 right-0 z-30 py-4 md:py-6">
-        <div className="site-container flex items-start md:items-center justify-between gap-4">
+        <div className="site-container flex items-start justify-between gap-4">
           <div className="flex flex-col min-w-0">
-            <VseBankLogo size="md" />
+            {/* Отрицательный margin компенсирует прозрачное поле слева у PNG-логотипа,
+                чтобы буква «V» совпала с левым краем текста ниже */}
+            <div className="-ml-4 md:-ml-5">
+              <VseBankLogo size="md" />
+            </div>
             <div className="font-sans text-xs sm:text-sm text-gold-600 font-medium tracking-[0.2em] uppercase mt-2">
               Реальность, созданная тобой
             </div>
