@@ -1,0 +1,61 @@
+name: Deploy to vsebank.space
+
+# Auto-deploy на arvut Paris server (163.172.33.136).
+# Запускается на push в main и вручную из UI GitHub.
+#
+# Адаптировано из docs/deploy-workflow.yml под реальность:
+#   - Node 22 (не 20) — Vite 8 требует ≥22.12
+#   - package.json в корне репо (не в app/)
+#   - SSH порт 4848 (не дефолтный 22)
+#   - DEPLOY_PATH = /var/www/vsebank/dist/ на сервере
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (VITE_BASE=/)
+        env:
+          VITE_BASE: /
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+        run: npm run build
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p 4848 -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Upload to server via rsync (port 4848)
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -p 4848 -o StrictHostKeyChecking=accept-new" \
+            dist/ \
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}
+
+      - name: Purge Cloudflare cache (если настроены secrets)
+        if: ${{ vars.CLOUDFLARE_ENABLED == 'true' }}
+        run: |
+          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}'
