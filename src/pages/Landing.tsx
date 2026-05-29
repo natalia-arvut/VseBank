@@ -2,12 +2,17 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import VseBankLogo from '../components/VseBankLogo'
+import LandingReviews from '../components/LandingReviews'
 
 export default function Landing() {
   const navigate = useNavigate()
   const [quickName, setQuickName] = useState('')
   const [quickEmail, setQuickEmail] = useState('')
   const [rulesOpen, setRulesOpen] = useState(false)
+  // Есть ли одобренные отзывы — нужно для сохранения цветового ритма:
+  // если блок Отзывов рендерится, финальный CTA становится тёплым (#FBF7F0).
+  // Если нет — CTA остаётся светлым (#FDFDFD), как было.
+  const [hasReviews, setHasReviews] = useState(false)
 
   const handleQuickStart = () => {
     // Сохраняем намерение и редиректим на регистрацию
@@ -509,8 +514,17 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* CTA финальный — фон как у блока 4 */}
-      <section className="pt-16 pb-28 text-center border-t border-gold-300/20" style={{ backgroundColor: '#FDFDFD' }}>
+      {/* Блок «Отзывы» — появляется только если есть одобренные отзывы.
+          Фон #FDFDFD сохраняет чередование после Философии (#FBF7F0). */}
+      <LandingReviews onLoad={setHasReviews} />
+
+      {/* CTA финальный.
+          Если блок отзывов есть → CTA становится тёплым (#FBF7F0).
+          Если нет → CTA остаётся светлым (#FDFDFD), как было раньше. */}
+      <section
+        className="pt-16 pb-28 text-center border-t border-gold-300/20"
+        style={{ backgroundColor: hasReviews ? '#FBF7F0' : '#FDFDFD' }}
+      >
         <div className="site-container">
           <h2 className="section-title mb-5">Твой счёт ждёт тебя</h2>
           <div className="w-12 h-px bg-gold-400 mx-auto mb-6" />
