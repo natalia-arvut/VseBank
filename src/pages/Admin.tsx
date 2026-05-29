@@ -42,6 +42,19 @@ const PRESETS: { id: Preset; label: string }[] = [
   { id: 'custom', label: 'Произвольный' },
 ]
 
+// Предустановленные цели переводов из формы (src/pages/Transfer.tsx).
+// Всё, что пользователь ввёл вручную через «Свой вариант…», группируется
+// в «Другое» — чтобы личные формулировки не попадали в аналитику.
+const ALLOWED_PURPOSES = [
+  'Решение жилищного вопроса',
+  'Развитие бизнеса',
+  'Образование и развитие',
+  'Здоровье и благополучие',
+  'Путешествия и впечатления',
+  'Помощь близким',
+  'Творческие проекты',
+]
+
 export default function Admin() {
   const { user, logout } = useApp()
   const [profiles, setProfiles] = useState<ProfileData[]>([])
@@ -167,10 +180,13 @@ export default function Admin() {
   }, [profilesInPeriod, transfersInPeriod, profiles])
 
   // ───── Топ целей ─────
+  // Свои формулировки (через «Свой вариант…») группируем в «Другое»,
+  // чтобы личные данные не попадали в аналитику.
   const topPurposes = useMemo(() => {
     const map = new Map<string, number>()
     transfersInPeriod.forEach(t => {
-      map.set(t.type, (map.get(t.type) || 0) + 1)
+      const key = ALLOWED_PURPOSES.includes(t.type) ? t.type : 'Другое'
+      map.set(key, (map.get(key) || 0) + 1)
     })
     const total = transfersInPeriod.length || 1
     return [...map.entries()]

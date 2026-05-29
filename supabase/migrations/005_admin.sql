@@ -18,7 +18,7 @@ alter table public.profiles
 -- При добавлении нового админа: дописать email сюда И в handle_new_user ниже.
 update public.profiles
    set is_admin = true
- where lower(email) in ('nk@arvut.ch', 'genzel@energy-tec.org');
+ where lower(email) in ('nk@arvut.ch', 'genzel@energy-tec.org', 'gv1970@gmail.com');
 
 -- ---------- Хелпер is_admin() ----------
 -- SECURITY DEFINER нужен, чтобы политики RLS на profiles не зацикливались
@@ -81,7 +81,7 @@ begin
       new.raw_user_meta_data->>'account_number',
       'VBI-' || to_char(extract(epoch from now())::bigint, 'FM0000000000')
     ),
-    lower(new.email) in ('nk@arvut.ch', 'genzel@energy-tec.org')
+    lower(new.email) in ('nk@arvut.ch', 'genzel@energy-tec.org', 'gv1970@gmail.com')
   );
   return new;
 end;
