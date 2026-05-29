@@ -9,8 +9,6 @@ import {
   type Requisite,
 } from '../lib/requisites'
 
-const LEGACY_KEY = 'vbi_saved_requisites'
-
 export default function Requisites() {
   const navigate = useNavigate()
   const [savedRequisites, setSavedRequisites] = useState<Requisite[]>([])
@@ -30,36 +28,9 @@ export default function Requisites() {
     setSavedRequisites(list)
   }
 
-  // Загрузка + миграция старых localStorage реквизитов в БД (один раз)
+  // Загрузка реквизитов из локального хранилища браузера
   useEffect(() => {
-    const init = async () => {
-      const list = await fetchRequisites()
-      setSavedRequisites(list)
-
-      // Миграция legacy localStorage → БД
-      const legacyRaw = localStorage.getItem(LEGACY_KEY)
-      if (legacyRaw) {
-        try {
-          const arr = JSON.parse(legacyRaw)
-          if (Array.isArray(arr) && arr.length > 0 && list.length === 0) {
-            for (const r of arr) {
-              if (r.iban && r.recipientName) {
-                await saveRequisite({
-                  label: r.label || r.recipientName,
-                  recipientName: r.recipientName,
-                  bankName: r.bankName || '',
-                  iban: r.iban,
-                  bic: r.bic || '',
-                })
-              }
-            }
-            await loadAll()
-          }
-          localStorage.removeItem(LEGACY_KEY)
-        } catch {}
-      }
-    }
-    init()
+    loadAll()
   }, [])
 
   const handle = (field: string, value: string) =>
@@ -263,7 +234,16 @@ export default function Requisites() {
                 <p className="font-sans text-sm text-ink-500 leading-relaxed">
                   Заполни форму слева — сохранённые реквизиты появятся здесь и будут доступны при следующих переводах.
                 </p>
-              ) : (
+              ) : null}
+
+              {/* Подсказка о локальном хранении — всегда видна */}
+              <div className="mt-6 pt-5 border-t border-gold-300/30">
+                <p className="font-sans text-xs text-ink-500 leading-relaxed">
+                  <span className="text-gold-700 font-medium">Приватность по умолчанию.</span> Твои реквизиты хранятся только в этом браузере, на твоём устройстве. Мы их не видим и нигде не сохраняем. При смене устройства или очистке кэша их нужно будет ввести заново.
+                </p>
+              </div>
+
+              {savedRequisites.length > 0 && (
                 <div className="space-y-3">
                   {savedRequisites.map(r => (
                     <div key={r.id} className="border border-gold-300/30 rounded-xl p-4 flex items-start justify-between gap-3">
