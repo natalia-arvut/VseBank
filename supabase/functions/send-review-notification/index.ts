@@ -21,10 +21,13 @@ interface Review {
 }
 
 // Куда шлём уведомление о новом отзыве.
-// Здесь же — vsebank.space@gmail.com (общий ящик) + nk@arvut.ch (Натали лично).
+// vsebank.space@gmail.com — общий ящик проекта
+// nk@arvut.ch — Натали лично
+// gv1970@gmail.com — партнёр (тоже админ)
 const ADMIN_RECIPIENTS = [
   'vsebank.space@gmail.com',
   'nk@arvut.ch',
+  'gv1970@gmail.com',
 ]
 
 const MODERATION_URL = 'https://vsebank.space/#/admin/reviews'
