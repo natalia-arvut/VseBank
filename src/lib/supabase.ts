@@ -29,6 +29,7 @@ export interface ProfileRow {
   account_type: 'personal' | 'company'
   account_number: string
   registered_at: string
+  is_admin: boolean
 }
 
 export interface TransferRow {

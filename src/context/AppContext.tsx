@@ -15,6 +15,7 @@ export interface User {
   accountType: 'personal' | 'company'
   registeredAt: string
   accountNumber: string
+  isAdmin: boolean
 }
 
 export interface Transfer {
@@ -72,6 +73,7 @@ function profileFromRow(row: ProfileRow): User {
     accountType: row.account_type,
     registeredAt: row.registered_at,
     accountNumber: row.account_number,
+    isAdmin: row.is_admin === true,
   }
 }
 

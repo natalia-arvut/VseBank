@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AppProvider, useApp } from './context/AppContext'
 
 import Landing from './pages/Landing'
@@ -13,9 +13,11 @@ import Transfer from './pages/Transfer'
 import Signature from './pages/Signature'
 import Reviews from './pages/Reviews'
 import History from './pages/History'
+import Admin from './pages/Admin'
 import Maintenance from './pages/Maintenance'
 
-// MAINTENANCE = true — показываем заглушку на всех страницах.
+// MAINTENANCE = true — показываем заглушку на всех страницах,
+// КРОМЕ /admin — он остаётся рабочим инструментом для админов.
 // Чтобы вернуть сайт — заменить на false и закоммитить (автодеплой подхватит).
 const MAINTENANCE = true
 
@@ -38,7 +40,33 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
   return isLoggedIn ? <>{children}</> : <Navigate to="/login" replace />
 }
 
+// Маршрут только для админов — проверяет user.isAdmin
+function AdminRoute({ children }: { children: React.ReactNode }) {
+  const { isLoggedIn, isLoading, user } = useApp()
+  if (isLoading) return <AppLoading />
+  if (!isLoggedIn) return <Navigate to="/login" replace />
+  // Профиль (включая is_admin) грузится фоном — даём ему время
+  if (!user) return <AppLoading />
+  if (!user.isAdmin) return <Navigate to="/" replace />
+  return <>{children}</>
+}
+
+// В maintenance остаются доступны:
+//  /admin           — сама админ-панель
+//  /login           — чтобы админ мог авторизоваться
+//  /auth/callback   — чтобы магические ссылки/подтверждения работали
+//  /reset-password  — на случай сброса пароля админа
+const MAINTENANCE_ALLOWED = ['/admin', '/login', '/auth/callback', '/reset-password']
+
 function AppRoutes() {
+  const location = useLocation()
+  const isAllowedDuringMaintenance = MAINTENANCE_ALLOWED.some(p =>
+    location.pathname.startsWith(p)
+  )
+
+  // В maintenance режиме — заглушка на всё, кроме админских путей
+  if (MAINTENANCE && !isAllowedDuringMaintenance) return <Maintenance />
+
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
@@ -56,6 +84,9 @@ function AppRoutes() {
       <Route path="/reviews" element={<PrivateRoute><Reviews /></PrivateRoute>} />
       <Route path="/history" element={<PrivateRoute><History /></PrivateRoute>} />
 
+      {/* Админка — только для пользователей с is_admin = true */}
+      <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
+
       {/* Редирект для неизвестных путей */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
@@ -63,8 +94,6 @@ function AppRoutes() {
 }
 
 export default function App() {
-  if (MAINTENANCE) return <Maintenance />
-
   return (
     <HashRouter>
       <AppProvider>
