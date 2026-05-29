@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import { supabase } from '../lib/supabase'
 import VseBankLogo from '../components/VseBankLogo'
 
 export default function Login() {
@@ -19,10 +20,30 @@ export default function Login() {
     e.preventDefault()
     setError(''); setInfo(''); setLoading(true)
     const result = await signIn(email, password)
-    setLoading(false)
     if (result.ok) {
+      // Админов сразу ведём в админ-панель — иначе попадут на /cabinet,
+      // которая может быть скрыта под maintenance-заглушкой.
+      try {
+        const { data: authData } = await supabase.auth.getUser()
+        if (authData.user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('is_admin')
+            .eq('id', authData.user.id)
+            .maybeSingle()
+          setLoading(false)
+          if (profile?.is_admin) {
+            navigate('/admin')
+            return
+          }
+        }
+      } catch {
+        // если проверка не удалась — просто едем в кабинет
+      }
+      setLoading(false)
       navigate('/cabinet')
     } else {
+      setLoading(false)
       setError(result.error || 'Ошибка входа')
     }
   }
