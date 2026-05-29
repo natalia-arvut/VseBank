@@ -349,7 +349,13 @@ export default function Admin() {
                 value={`${conversion}%`}
                 hint="зарегистрированных сделали перевод"
               />
-              <Kpi label="Отзывы на модерации" value={pendingReviews} hint="всего, требуют проверки" />
+              <Link to="/admin/reviews" className="block transition-transform hover:-translate-y-0.5">
+                <Kpi
+                  label="Отзывы на модерации"
+                  value={pendingReviews}
+                  hint={pendingReviews > 0 ? 'открыть модерацию →' : 'всё проверено, очередь пуста'}
+                />
+              </Link>
             </div>
 
             {/* Сумма переводов по валютам */}

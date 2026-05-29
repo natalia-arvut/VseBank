@@ -14,6 +14,7 @@ import Signature from './pages/Signature'
 import Reviews from './pages/Reviews'
 import History from './pages/History'
 import Admin from './pages/Admin'
+import AdminReviews from './pages/AdminReviews'
 import Maintenance from './pages/Maintenance'
 
 // MAINTENANCE = true — показываем заглушку на всех страницах,
@@ -86,6 +87,7 @@ function AppRoutes() {
 
       {/* Админка — только для пользователей с is_admin = true */}
       <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
+      <Route path="/admin/reviews" element={<AdminRoute><AdminReviews /></AdminRoute>} />
 
       {/* Редирект для неизвестных путей */}
       <Route path="*" element={<Navigate to="/" replace />} />
