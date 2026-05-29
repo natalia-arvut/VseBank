@@ -13,6 +13,11 @@ import Transfer from './pages/Transfer'
 import Signature from './pages/Signature'
 import Reviews from './pages/Reviews'
 import History from './pages/History'
+import Maintenance from './pages/Maintenance'
+
+// Если VITE_MAINTENANCE_MODE=true при сборке — показываем только заглушку.
+// Чтобы вернуть сайт — пересобрать без этой переменной (или VITE_MAINTENANCE_MODE=false).
+const MAINTENANCE = String(import.meta.env.VITE_MAINTENANCE_MODE).toLowerCase() === 'true'
 
 // Заглушка пока проверяется сессия — иначе будет вспышка редиректа на /login
 function AppLoading() {
@@ -58,6 +63,8 @@ function AppRoutes() {
 }
 
 export default function App() {
+  if (MAINTENANCE) return <Maintenance />
+
   return (
     <HashRouter>
       <AppProvider>
