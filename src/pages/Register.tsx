@@ -406,18 +406,18 @@ export default function Register() {
                   Пользовательским соглашением
                 </button>
                 {', '}
+                <button type="button" onClick={() => setOpenLegal('disclaimer')} className="text-gold-700 underline underline-offset-2 hover:text-gold-900 cursor-pointer">
+                  Дисклеймером
+                </button>
+                {', '}
                 <button type="button" onClick={() => setOpenLegal('privacy')} className="text-gold-700 underline underline-offset-2 hover:text-gold-900 cursor-pointer">
                   Политикой конфиденциальности
                 </button>
                 {' и '}
-                <button type="button" onClick={() => setOpenLegal('disclaimer')} className="text-gold-700 underline underline-offset-2 hover:text-gold-900 cursor-pointer">
-                  Дисклеймером
-                </button>
-                {'. С '}
                 <button type="button" onClick={() => setRulesOpen(true)} className="text-gold-700 underline underline-offset-2 hover:text-gold-900 cursor-pointer">
                   Манифестом Со-Творца
                 </button>
-                {' тоже ознакомился.'}
+                .
               </span>
             </label>
 
