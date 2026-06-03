@@ -26,7 +26,7 @@ import CookieBanner from './components/CookieBanner'
 // MAINTENANCE = true — показываем заглушку на всех страницах,
 // КРОМЕ /admin — он остаётся рабочим инструментом для админов.
 // Чтобы вернуть сайт — заменить на false и закоммитить (автодеплой подхватит).
-const MAINTENANCE = true
+const MAINTENANCE = false
 
 // Заглушка пока проверяется сессия — иначе будет вспышка редиректа на /login
 function AppLoading() {

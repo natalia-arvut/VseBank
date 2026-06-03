@@ -40,20 +40,12 @@ export default function Paths() {
               Наш симулятор Вселенского Банка помог тебе перепрошить твой разум на виртуальном уровне. В момент, когда Магия случилась и ты увидел, что ты Творец своей реальности, пришло время для финального акта сотворчества.
             </p>
             <p className="font-sans text-sm text-ink-700 leading-relaxed mb-4">
-              Когда квантовый сигнал изобилия завершён в реальные цифры на твоей физической карте, завершается сакральный цикл. Направь от всего своего сердца…
+              Когда квантовый сигнал изобилия завершён в реальные цифры на твоей физической карте, завершается сакральный цикл. Напиши на электронную почту{' '}
+              <a href="mailto:vsebank.space@gmail.com" className="text-gold-700 underline underline-offset-2 hover:text-gold-900">
+                vsebank.space@gmail.com
+              </a>
+              {' '}— пришлём реквизиты.
             </p>
-
-            <div className="flex flex-col gap-2 max-w-xs mb-4">
-              <button className="btn-gold text-sm px-6 py-2.5">
-                Активировать Циркуляцию
-              </button>
-              <p className="font-sans text-sm text-ink-500 leading-relaxed text-center">
-                или{' '}
-                <a href="mailto:vsebank.space@gmail.com" className="text-gold-600 underline">
-                  vsebank.space@gmail.com
-                </a>{' '}— пришлём реквизиты
-              </p>
-            </div>
 
             <p className="font-sans italic text-sm text-ink-500 leading-relaxed pt-3 border-t border-gold-300/30">
               Поделись своим результатом в отзывах — вдохнови других и запусти поток изобилия дальше.
