@@ -41,7 +41,7 @@ export default function Paths() {
             </p>
             <p className="font-sans text-sm text-ink-700 leading-relaxed mb-4">
               Когда квантовый сигнал изобилия завершён в реальные цифры на твоей физической карте, завершается сакральный цикл. Напиши на электронную почту{' '}
-              <a href="mailto:vsebank.space@gmail.com" className="text-gold-700 underline underline-offset-2 hover:text-gold-900">
+              <a href="mailto:vsebank.space@gmail.com" className="text-gold-600 underline underline-offset-2 hover:text-gold-700">
                 vsebank.space@gmail.com
               </a>
               {' '}— пришлём реквизиты.

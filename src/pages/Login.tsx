@@ -122,13 +122,13 @@ export default function Login() {
           </button>
 
           {/* Юридическая подпись под кнопкой входа — ссылки открывают модалки */}
-          <p className="font-sans text-[11px] text-ink-500 text-center leading-relaxed pt-2">
+          <p className="font-sans text-[11px] text-gold-600 text-center leading-relaxed pt-2">
             Нажимая кнопку, ты подтверждаешь актуальные условия{' '}
-            <button type="button" onClick={() => setOpenLegal('terms')} className="text-gold-700 hover:text-gold-900 underline-offset-2 hover:underline cursor-pointer">
+            <button type="button" onClick={() => setOpenLegal('terms')} className="text-gold-600 hover:text-gold-700 underline underline-offset-2 cursor-pointer">
               Пользовательского соглашения
             </button>{' '}
             и{' '}
-            <button type="button" onClick={() => setOpenLegal('privacy')} className="text-gold-700 hover:text-gold-900 underline-offset-2 hover:underline cursor-pointer">
+            <button type="button" onClick={() => setOpenLegal('privacy')} className="text-gold-600 hover:text-gold-700 underline underline-offset-2 cursor-pointer">
               Политики конфиденциальности
             </button>
             .

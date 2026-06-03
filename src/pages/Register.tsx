@@ -400,21 +400,21 @@ export default function Register() {
                   </svg>
                 )}
               </span>
-              <span className="font-sans text-xs text-stone-500 leading-relaxed">
+              <span className="font-sans text-xs text-gold-600 leading-relaxed">
                 Я согласен с{' '}
-                <button type="button" onClick={() => setOpenLegal('terms')} className="text-gold-700 underline underline-offset-2 hover:text-gold-900 cursor-pointer">
+                <button type="button" onClick={() => setOpenLegal('terms')} className="text-gold-600 underline underline-offset-2 hover:text-gold-700 cursor-pointer">
                   Пользовательским соглашением
                 </button>
                 {', '}
-                <button type="button" onClick={() => setOpenLegal('disclaimer')} className="text-gold-700 underline underline-offset-2 hover:text-gold-900 cursor-pointer">
+                <button type="button" onClick={() => setOpenLegal('disclaimer')} className="text-gold-600 underline underline-offset-2 hover:text-gold-700 cursor-pointer">
                   Дисклеймером
                 </button>
                 {', '}
-                <button type="button" onClick={() => setOpenLegal('privacy')} className="text-gold-700 underline underline-offset-2 hover:text-gold-900 cursor-pointer">
+                <button type="button" onClick={() => setOpenLegal('privacy')} className="text-gold-600 underline underline-offset-2 hover:text-gold-700 cursor-pointer">
                   Политикой конфиденциальности
                 </button>
                 {' и '}
-                <button type="button" onClick={() => setRulesOpen(true)} className="text-gold-700 underline underline-offset-2 hover:text-gold-900 cursor-pointer">
+                <button type="button" onClick={() => setRulesOpen(true)} className="text-gold-600 underline underline-offset-2 hover:text-gold-700 cursor-pointer">
                   Манифестом Со-Творца
                 </button>
                 .

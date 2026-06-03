@@ -29,7 +29,7 @@ export default function LegalFooter({ rightAction }: LegalFooterProps) {
         <div className="max-w-6xl mx-auto">
           {/* Верхняя строка: копирайт слева, опциональный action справа */}
           <div className="flex items-start gap-4 flex-wrap">
-            <p className="font-sans text-[11px] md:text-xs text-ink-500 leading-relaxed text-center md:text-left flex-1 min-w-[200px]">
+            <p className="font-sans text-[11px] md:text-xs text-gold-600 leading-relaxed text-center md:text-left flex-1 min-w-[200px]">
               © {new Date().getFullYear()} VseBank. Все права защищены. Сайт является интерактивной игрой-симулятором.
             </p>
             {rightAction && (
@@ -38,13 +38,13 @@ export default function LegalFooter({ rightAction }: LegalFooterProps) {
           </div>
 
           {/* Ссылки на документы — открываются модалкой */}
-          <div className="mt-3 flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-2 font-sans text-[11px] md:text-xs text-ink-500">
+          <div className="mt-3 flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-2 font-sans text-[11px] md:text-xs text-gold-600">
             {ORDER.map((key, i) => (
               <span key={key} className="flex items-center gap-3">
                 <button
                   type="button"
                   onClick={() => setOpenDoc(key)}
-                  className="text-gold-700 hover:text-gold-900 underline-offset-2 hover:underline transition-colors"
+                  className="text-gold-600 hover:text-gold-700 underline underline-offset-2 transition-colors"
                 >
                   {LEGAL_DOCS[key].label}
                 </button>
@@ -56,7 +56,7 @@ export default function LegalFooter({ rightAction }: LegalFooterProps) {
               Связь:{' '}
               <a
                 href="mailto:vsebank.space@gmail.com"
-                className="text-gold-700 hover:text-gold-900 underline-offset-2 hover:underline"
+                className="text-gold-600 hover:text-gold-700 underline underline-offset-2"
               >
                 vsebank.space@gmail.com
               </a>
