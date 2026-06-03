@@ -148,7 +148,7 @@ export default function CabinetLayout({
       {/* Основной контент — над фоновым декором.
           pt-12 mobile — высота нашего top-bar; pb-16 mobile — высота bottom-nav */}
       <main
-        className="flex-1 lg:ml-64 pt-12 lg:pt-0 pb-16 lg:pb-0 overflow-y-auto relative flex flex-col min-h-screen"
+        className="flex-1 lg:ml-64 pt-12 lg:pt-0 pb-16 lg:pb-0 relative flex flex-col min-h-screen"
         style={{ zIndex: 1 }}
       >
         {/* Контент страницы растягивается, чтобы футер всегда был прижат к низу

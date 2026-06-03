@@ -369,29 +369,52 @@ export default function Register() {
               </div>
             )}
 
-            <label className="flex items-start gap-3 cursor-pointer py-1">
+            <label className="flex items-start gap-3 cursor-pointer py-1 group">
+              {/* Скрытый нативный input, видимый чекбокс — кастомный */}
               <input
                 type="checkbox"
-                className="flex-shrink-0 w-5 h-5 mt-0.5 accent-gold-500 border border-gold-400/60 rounded cursor-pointer"
-                style={{ accentColor: '#B89058' }}
+                className="peer sr-only"
                 checked={form.agreed}
                 onChange={e => handleChange('agreed', e.target.checked)}
               />
+              <span
+                className="
+                  flex-shrink-0 w-5 h-5 mt-0.5
+                  border border-gold-400 rounded-md bg-cream-50
+                  flex items-center justify-center
+                  transition-colors
+                  peer-checked:bg-gold-500 peer-checked:border-gold-500
+                  peer-focus-visible:ring-2 peer-focus-visible:ring-gold-400/40
+                  group-hover:border-gold-500
+                "
+              >
+                {form.agreed && (
+                  <svg className="w-3 h-3 text-white" viewBox="0 0 16 16" fill="none">
+                    <path
+                      d="M3 8.5l3.5 3.5L13 5"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                )}
+              </span>
               <span className="font-sans text-xs text-stone-500 leading-relaxed">
                 Я согласен с{' '}
-                <button type="button" onClick={() => setOpenLegal('terms')} className="text-gold-700 underline-offset-2 hover:underline cursor-pointer">
+                <button type="button" onClick={() => setOpenLegal('terms')} className="text-gold-700 underline underline-offset-2 hover:text-gold-900 cursor-pointer">
                   Пользовательским соглашением
                 </button>
                 {', '}
-                <button type="button" onClick={() => setOpenLegal('privacy')} className="text-gold-700 underline-offset-2 hover:underline cursor-pointer">
+                <button type="button" onClick={() => setOpenLegal('privacy')} className="text-gold-700 underline underline-offset-2 hover:text-gold-900 cursor-pointer">
                   Политикой конфиденциальности
                 </button>
                 {' и '}
-                <button type="button" onClick={() => setOpenLegal('disclaimer')} className="text-gold-700 underline-offset-2 hover:underline cursor-pointer">
+                <button type="button" onClick={() => setOpenLegal('disclaimer')} className="text-gold-700 underline underline-offset-2 hover:text-gold-900 cursor-pointer">
                   Дисклеймером
                 </button>
                 {'. С '}
-                <button type="button" onClick={() => setRulesOpen(true)} className="text-gold-600 underline-offset-2 hover:underline cursor-pointer">
+                <button type="button" onClick={() => setRulesOpen(true)} className="text-gold-700 underline underline-offset-2 hover:text-gold-900 cursor-pointer">
                   Манифестом Со-Творца
                 </button>
                 {' тоже ознакомился.'}

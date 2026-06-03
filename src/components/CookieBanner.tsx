@@ -52,9 +52,9 @@ export default function CookieBanner() {
         <div className="h-24 bg-gradient-to-t from-stone-900/15 to-transparent" />
       </div>
 
-      {/* Сам баннер */}
+      {/* Сам баннер — справа снизу на десктопе, во всю ширину снизу на mobile */}
       <div
-        className="fixed left-3 right-3 bottom-3 md:left-5 md:right-auto md:bottom-5 md:max-w-md z-[60]"
+        className="fixed left-3 right-3 bottom-3 md:left-auto md:right-5 md:bottom-5 md:max-w-md z-[60]"
         role="dialog"
         aria-label="Согласие на cookie"
       >
@@ -84,18 +84,18 @@ export default function CookieBanner() {
             </button>
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex flex-row gap-2">
             <button
               onClick={() => setChoice('accepted')}
-              className="flex-1 btn-gold text-sm py-2.5 px-5"
+              className="flex-1 btn-gold text-sm py-2.5 px-4 whitespace-nowrap"
             >
               Принять
             </button>
             <button
               onClick={() => setChoice('declined')}
-              className="flex-1 btn-outline text-sm py-2.5 px-5"
+              className="flex-1 btn-outline text-sm py-2.5 px-4 whitespace-nowrap"
             >
-              Только необходимые
+              Отклонить
             </button>
           </div>
         </div>
