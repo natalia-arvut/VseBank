@@ -15,6 +15,10 @@ import Reviews from './pages/Reviews'
 import History from './pages/History'
 import Admin from './pages/Admin'
 import AdminReviews from './pages/AdminReviews'
+import Terms from './pages/Terms'
+import Privacy from './pages/Privacy'
+import Cookies from './pages/Cookies'
+import Disclaimer from './pages/Disclaimer'
 import Maintenance from './pages/Maintenance'
 
 // MAINTENANCE = true — показываем заглушку на всех страницах,
@@ -57,7 +61,18 @@ function AdminRoute({ children }: { children: React.ReactNode }) {
 //  /login           — чтобы админ мог авторизоваться
 //  /auth/callback   — чтобы магические ссылки/подтверждения работали
 //  /reset-password  — на случай сброса пароля админа
-const MAINTENANCE_ALLOWED = ['/admin', '/login', '/auth/callback', '/reset-password']
+//  /terms /privacy /cookies /disclaimer — юридические документы должны быть
+//    доступны всегда, даже когда сайт под заглушкой (для проверок).
+const MAINTENANCE_ALLOWED = [
+  '/admin',
+  '/login',
+  '/auth/callback',
+  '/reset-password',
+  '/terms',
+  '/privacy',
+  '/cookies',
+  '/disclaimer',
+]
 
 function AppRoutes() {
   const location = useLocation()
@@ -84,6 +99,12 @@ function AppRoutes() {
       <Route path="/signature" element={<PrivateRoute><Signature /></PrivateRoute>} />
       <Route path="/reviews" element={<PrivateRoute><Reviews /></PrivateRoute>} />
       <Route path="/history" element={<PrivateRoute><History /></PrivateRoute>} />
+
+      {/* Юридические документы — публично доступны всегда */}
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/cookies" element={<Cookies />} />
+      <Route path="/disclaimer" element={<Disclaimer />} />
 
       {/* Админка — только для пользователей с is_admin = true */}
       <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />

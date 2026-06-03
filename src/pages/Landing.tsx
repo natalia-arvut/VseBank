@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import VseBankLogo from '../components/VseBankLogo'
 import LandingReviews from '../components/LandingReviews'
+import LegalFooter from '../components/LegalFooter'
 
 export default function Landing() {
   const navigate = useNavigate()
@@ -542,12 +543,9 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Футер */}
-      <footer className="py-8 border-t border-gold-300/20">
-        <div className="site-container flex items-center justify-between gap-4">
-          <div className="font-sans text-sm text-stone-500">
-            © Вселенский Банк Изобилия
-          </div>
+      {/* Тонкая полоса с кнопкой «Далее» — оставляем как маленький переход к регистрации */}
+      <div className="py-6 border-t border-gold-300/20">
+        <div className="site-container flex items-center justify-end gap-4">
           <button
             onClick={() => navigate('/register')}
             className="font-sans text-sm text-gold-600 hover:text-gold-700 transition-colors"
@@ -555,7 +553,10 @@ export default function Landing() {
             Далее →
           </button>
         </div>
-      </footer>
+      </div>
+
+      {/* Сквозной юридический футер — ссылки на документы */}
+      <LegalFooter />
 
     </div>
   )

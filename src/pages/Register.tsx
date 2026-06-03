@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import VseBankLogo from '../components/VseBankLogo'
 import Guilloche from '../components/Guilloche'
+import LegalFooter from '../components/LegalFooter'
 
 const COUNTRIES = [
   'Россия', 'Украина', 'Беларусь', 'Казахстан', 'Германия', 'Швейцария',
@@ -149,7 +150,10 @@ export default function Register() {
   }
 
   return (
-    <div className="h-screen overflow-hidden bg-cream-100 bg-pattern flex">
+    <div className="min-h-screen bg-cream-100 bg-pattern flex flex-col">
+
+      {/* Главная зона: информационная панель + форма */}
+      <div className="flex-1 flex flex-col lg:flex-row">
 
       {/* Левая панель — информационная (ровно 50%) */}
       <div className="hidden lg:flex lg:w-1/2 flex-col px-10 pt-6 pb-10 relative overflow-hidden"
@@ -223,7 +227,7 @@ export default function Register() {
       </div>
 
       {/* Правая панель — форма (ровно 50%) */}
-      <div className="lg:w-1/2 flex flex-col px-8 md:px-12 pt-6 pb-4 overflow-y-auto">
+      <div className="lg:w-1/2 flex flex-col px-8 md:px-12 pt-6 pb-8">
         <div className="max-w-md mx-auto w-full">
 
           {/* Логотип VseBank — на той же высоте что левый */}
@@ -371,11 +375,23 @@ export default function Register() {
                 onChange={e => handleChange('agreed', e.target.checked)}
               />
               <span className="font-sans text-xs text-stone-500 leading-relaxed">
-                Я прочитал и ознакомился с{' '}
-                <button type="button" onClick={() => setRulesOpen(true)} className="text-gold-600 underline cursor-pointer">
-                  правилами платформы
+                Я согласен с{' '}
+                <Link to="/terms" target="_blank" rel="noopener" className="text-gold-700 underline-offset-2 hover:underline">
+                  Пользовательским соглашением
+                </Link>
+                {', '}
+                <Link to="/privacy" target="_blank" rel="noopener" className="text-gold-700 underline-offset-2 hover:underline">
+                  Политикой конфиденциальности
+                </Link>
+                {' и '}
+                <Link to="/disclaimer" target="_blank" rel="noopener" className="text-gold-700 underline-offset-2 hover:underline">
+                  Дисклеймером
+                </Link>
+                {'. С '}
+                <button type="button" onClick={() => setRulesOpen(true)} className="text-gold-600 underline-offset-2 hover:underline cursor-pointer">
+                  Манифестом Со-Творца
                 </button>
-                {' '}и Политикой конфиденциальности
+                {' тоже ознакомился.'}
               </span>
             </label>
 
@@ -417,6 +433,11 @@ export default function Register() {
           </div>
         </div>
       </div>
+
+      </div>
+
+      {/* Сквозной юридический футер */}
+      <LegalFooter />
 
       {/* Модальное окно с пользовательским соглашением */}
       {rulesOpen && (

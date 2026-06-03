@@ -2,14 +2,18 @@
 // Включается через VITE_MAINTENANCE_MODE=true при сборке.
 
 import Guilloche from '../components/Guilloche'
+import LegalFooter from '../components/LegalFooter'
 
 export default function Maintenance() {
   return (
     <div
-      className="min-h-screen flex items-center justify-center relative overflow-hidden px-6 py-12"
+      className="min-h-screen flex flex-col"
       style={{
         background: 'radial-gradient(120% 80% at 30% 30%, #FBF7F0 0%, #F5EFE6 60%, #EFE9DD 100%)',
       }}
+    >
+    <div
+      className="flex-1 flex items-center justify-center relative overflow-hidden px-6 py-12"
     >
       {/* Гильош — тонкий фоновый узор, как на ценной бумаге */}
       <div className="absolute inset-0 pointer-events-none opacity-60">
@@ -78,6 +82,10 @@ export default function Maintenance() {
           </p>
         </div>
       </div>
+    </div>
+
+      {/* Сквозной юридический футер — даже на заглушке ссылки на документы доступны */}
+      <LegalFooter />
     </div>
   )
 }

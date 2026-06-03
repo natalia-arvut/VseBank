@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import { supabase } from '../lib/supabase'
 import VseBankLogo from '../components/VseBankLogo'
+import LegalFooter from '../components/LegalFooter'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -61,10 +62,13 @@ export default function Login() {
   }
 
   return (
-    <div className="h-screen overflow-hidden bg-cream-100 flex">
+    <div className="min-h-screen bg-cream-100 flex flex-col">
+
+      {/* Главная зона: форма + иллюстрация в две колонки на десктопе */}
+      <div className="flex-1 flex flex-col lg:flex-row">
 
       {/* Левая половина — форма входа */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 md:px-12 py-6 overflow-y-auto">
+      <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 md:px-12 py-10 lg:py-6">
         <div className="w-full max-w-md mx-auto">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
@@ -112,6 +116,19 @@ export default function Login() {
           >
             Забыли пароль?
           </button>
+
+          {/* Юридическая подпись под кнопкой входа */}
+          <p className="font-sans text-[11px] text-ink-500 text-center leading-relaxed pt-2">
+            Нажимая кнопку, ты подтверждаешь актуальные условия{' '}
+            <Link to="/terms" className="text-gold-700 hover:text-gold-900 underline-offset-2 hover:underline">
+              Пользовательского соглашения
+            </Link>{' '}
+            и{' '}
+            <Link to="/privacy" className="text-gold-700 hover:text-gold-900 underline-offset-2 hover:underline">
+              Политики конфиденциальности
+            </Link>
+            .
+          </p>
         </form>
 
         <div className="text-center mt-4">
@@ -143,6 +160,11 @@ export default function Login() {
           className="absolute inset-0 w-full h-full object-cover"
         />
       </div>
+
+      </div>
+
+      {/* Сквозной юридический футер */}
+      <LegalFooter />
 
       {/* Модалка восстановления пароля */}
       {resetOpen && (

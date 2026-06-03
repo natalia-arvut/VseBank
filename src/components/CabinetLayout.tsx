@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import VseBankLogo from './VseBankLogo'
 import Guilloche from './Guilloche'
+import LegalFooter from './LegalFooter'
 
 const NAV_ITEMS = [
   { path: '/cabinet', label: 'Главная', icon: '⌂' },
@@ -148,6 +149,9 @@ export default function CabinetLayout({
           pt-12 mobile — высота нашего top-bar; pb-16 mobile — высота bottom-nav */}
       <main className="flex-1 lg:ml-64 pt-12 lg:pt-0 pb-16 lg:pb-0 overflow-y-auto relative" style={{ zIndex: 1 }}>
         {children}
+        {/* Сквозной юридический футер — внутри скролла, чтобы на mobile его
+            не перекрывала фиксированная bottom-nav (внешний pb-16 уже даёт зазор). */}
+        <LegalFooter />
       </main>
     </div>
   )
