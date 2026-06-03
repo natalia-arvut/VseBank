@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import VseBankLogo from '../components/VseBankLogo'
 import Guilloche from '../components/Guilloche'
 import LegalFooter from '../components/LegalFooter'
+import LegalModal from '../components/LegalModal'
+import { LEGAL_DOCS, type LegalDocKey } from '../components/legalContent'
 
 const COUNTRIES = [
   'Россия', 'Украина', 'Беларусь', 'Казахстан', 'Германия', 'Швейцария',
@@ -27,6 +29,7 @@ export default function Register() {
     agreed: false,
   })
   const [rulesOpen, setRulesOpen] = useState(false)
+  const [openLegal, setOpenLegal] = useState<LegalDocKey | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
@@ -376,17 +379,17 @@ export default function Register() {
               />
               <span className="font-sans text-xs text-stone-500 leading-relaxed">
                 Я согласен с{' '}
-                <Link to="/terms" target="_blank" rel="noopener" className="text-gold-700 underline-offset-2 hover:underline">
+                <button type="button" onClick={() => setOpenLegal('terms')} className="text-gold-700 underline-offset-2 hover:underline cursor-pointer">
                   Пользовательским соглашением
-                </Link>
+                </button>
                 {', '}
-                <Link to="/privacy" target="_blank" rel="noopener" className="text-gold-700 underline-offset-2 hover:underline">
+                <button type="button" onClick={() => setOpenLegal('privacy')} className="text-gold-700 underline-offset-2 hover:underline cursor-pointer">
                   Политикой конфиденциальности
-                </Link>
+                </button>
                 {' и '}
-                <Link to="/disclaimer" target="_blank" rel="noopener" className="text-gold-700 underline-offset-2 hover:underline">
+                <button type="button" onClick={() => setOpenLegal('disclaimer')} className="text-gold-700 underline-offset-2 hover:underline cursor-pointer">
                   Дисклеймером
-                </Link>
+                </button>
                 {'. С '}
                 <button type="button" onClick={() => setRulesOpen(true)} className="text-gold-600 underline-offset-2 hover:underline cursor-pointer">
                   Манифестом Со-Творца
@@ -439,7 +442,24 @@ export default function Register() {
       {/* Сквозной юридический футер */}
       <LegalFooter />
 
-      {/* Модальное окно с пользовательским соглашением */}
+      {/* Модалки с юридическими документами — открываются по ссылкам из чекбокса */}
+      {openLegal && (() => {
+        const doc = LEGAL_DOCS[openLegal]
+        const Content = doc.Content
+        return (
+          <LegalModal
+            open={true}
+            onClose={() => setOpenLegal(null)}
+            tag={doc.meta.tag}
+            title={doc.meta.title}
+            intro={doc.meta.intro}
+          >
+            <Content />
+          </LegalModal>
+        )
+      })()}
+
+      {/* Модальное окно «Манифест Со-Творца» */}
       {rulesOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/70 backdrop-blur-sm p-6"
           onClick={() => setRulesOpen(false)}

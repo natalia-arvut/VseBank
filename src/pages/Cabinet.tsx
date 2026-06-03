@@ -13,8 +13,8 @@ export default function Cabinet() {
   return (
     <CabinetLayout rightVisual="none">
       <section
-        className="relative w-full overflow-hidden"
-        style={{ minHeight: '100vh', backgroundColor: '#F5EFE6' }}
+        className="relative w-full overflow-hidden flex-1 flex flex-col"
+        style={{ backgroundColor: '#F5EFE6' }}
       >
         {/* Картинка фоном на всю секцию */}
         <img

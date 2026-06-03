@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import { supabase } from '../lib/supabase'
 import VseBankLogo from '../components/VseBankLogo'
 import LegalFooter from '../components/LegalFooter'
+import LegalModal from '../components/LegalModal'
+import { LEGAL_DOCS, type LegalDocKey } from '../components/legalContent'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -16,6 +18,7 @@ export default function Login() {
   const [resetOpen, setResetOpen] = useState(false)
   const [resetEmail, setResetEmail] = useState('')
   const [resetLoading, setResetLoading] = useState(false)
+  const [openLegal, setOpenLegal] = useState<LegalDocKey | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -62,10 +65,11 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-cream-100 flex flex-col">
+    <div className="bg-cream-100">
 
-      {/* Главная зона: форма + иллюстрация в две колонки на десктопе */}
-      <div className="flex-1 flex flex-col lg:flex-row">
+      {/* Главная зона занимает полный экран — арка и форма не сжимаются,
+          футер появляется ниже при скролле. */}
+      <div className="min-h-screen flex flex-col lg:flex-row">
 
       {/* Левая половина — форма входа */}
       <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 md:px-12 py-10 lg:py-6">
@@ -117,16 +121,16 @@ export default function Login() {
             Забыли пароль?
           </button>
 
-          {/* Юридическая подпись под кнопкой входа */}
+          {/* Юридическая подпись под кнопкой входа — ссылки открывают модалки */}
           <p className="font-sans text-[11px] text-ink-500 text-center leading-relaxed pt-2">
             Нажимая кнопку, ты подтверждаешь актуальные условия{' '}
-            <Link to="/terms" className="text-gold-700 hover:text-gold-900 underline-offset-2 hover:underline">
+            <button type="button" onClick={() => setOpenLegal('terms')} className="text-gold-700 hover:text-gold-900 underline-offset-2 hover:underline cursor-pointer">
               Пользовательского соглашения
-            </Link>{' '}
+            </button>{' '}
             и{' '}
-            <Link to="/privacy" className="text-gold-700 hover:text-gold-900 underline-offset-2 hover:underline">
+            <button type="button" onClick={() => setOpenLegal('privacy')} className="text-gold-700 hover:text-gold-900 underline-offset-2 hover:underline cursor-pointer">
               Политики конфиденциальности
-            </Link>
+            </button>
             .
           </p>
         </form>
@@ -165,6 +169,23 @@ export default function Login() {
 
       {/* Сквозной юридический футер */}
       <LegalFooter />
+
+      {/* Модалки с юридическими документами — открываются по подписи под кнопкой */}
+      {openLegal && (() => {
+        const doc = LEGAL_DOCS[openLegal]
+        const Content = doc.Content
+        return (
+          <LegalModal
+            open={true}
+            onClose={() => setOpenLegal(null)}
+            tag={doc.meta.tag}
+            title={doc.meta.title}
+            intro={doc.meta.intro}
+          >
+            <Content />
+          </LegalModal>
+        )
+      })()}
 
       {/* Модалка восстановления пароля */}
       {resetOpen && (

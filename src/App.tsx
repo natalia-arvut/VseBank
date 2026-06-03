@@ -20,6 +20,7 @@ import Privacy from './pages/Privacy'
 import Cookies from './pages/Cookies'
 import Disclaimer from './pages/Disclaimer'
 import Maintenance from './pages/Maintenance'
+import ScrollToTop from './components/ScrollToTop'
 
 // MAINTENANCE = true — показываем заглушку на всех страницах,
 // КРОМЕ /admin — он остаётся рабочим инструментом для админов.
@@ -119,6 +120,8 @@ function AppRoutes() {
 export default function App() {
   return (
     <HashRouter>
+      {/* Прокручивает страницу в начало при каждой смене маршрута */}
+      <ScrollToTop />
       <AppProvider>
         <AppRoutes />
       </AppProvider>

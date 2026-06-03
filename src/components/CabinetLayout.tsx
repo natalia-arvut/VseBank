@@ -147,8 +147,16 @@ export default function CabinetLayout({
 
       {/* Основной контент — над фоновым декором.
           pt-12 mobile — высота нашего top-bar; pb-16 mobile — высота bottom-nav */}
-      <main className="flex-1 lg:ml-64 pt-12 lg:pt-0 pb-16 lg:pb-0 overflow-y-auto relative" style={{ zIndex: 1 }}>
-        {children}
+      <main
+        className="flex-1 lg:ml-64 pt-12 lg:pt-0 pb-16 lg:pb-0 overflow-y-auto relative flex flex-col min-h-screen"
+        style={{ zIndex: 1 }}
+      >
+        {/* Контент страницы растягивается, чтобы футер всегда был прижат к низу
+            видимой области. На длинных страницах футер просто опускается ниже скролла. */}
+        <div className="flex-1 flex flex-col">
+          {children}
+        </div>
+
         {/* Сквозной юридический футер — внутри скролла, чтобы на mobile его
             не перекрывала фиксированная bottom-nav (внешний pb-16 уже даёт зазор). */}
         <LegalFooter />

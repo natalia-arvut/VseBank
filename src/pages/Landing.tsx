@@ -543,20 +543,17 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Тонкая полоса с кнопкой «Далее» — оставляем как маленький переход к регистрации */}
-      <div className="py-6 border-t border-gold-300/20">
-        <div className="site-container flex items-center justify-end gap-4">
+      {/* Сквозной юридический футер с кнопкой «Далее» в одной полосе */}
+      <LegalFooter
+        rightAction={
           <button
             onClick={() => navigate('/register')}
-            className="font-sans text-sm text-gold-600 hover:text-gold-700 transition-colors"
+            className="font-sans text-sm text-gold-600 hover:text-gold-700 transition-colors whitespace-nowrap"
           >
             Далее →
           </button>
-        </div>
-      </div>
-
-      {/* Сквозной юридический футер — ссылки на документы */}
-      <LegalFooter />
+        }
+      />
 
     </div>
   )

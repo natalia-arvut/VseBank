@@ -1,38 +1,10 @@
-import LegalLayout, { LegalSection, LegalItem, LegalParagraph } from '../components/LegalLayout'
+import LegalLayout from '../components/LegalLayout'
+import { DISCLAIMER_META, DisclaimerContent } from '../components/legalContent'
 
 export default function Disclaimer() {
   return (
-    <LegalLayout
-      tag="Документ"
-      title="Предупреждение о характере игровой практики (психологический дисклеймер)"
-      intro="Документ фиксирует игровой и метафорический характер сайта vsebank.space и границы ответственности."
-    >
-      <LegalSection number="1" title="Информационный и игровой характер ресурса">
-        <LegalItem number="1.1">
-          Веб-сайт vsebank.space является интерактивным симулятором, игровым тренажером для ментальных практик, визуализации целей, работы с подсознанием и психологической разгрузки.
-        </LegalItem>
-        <LegalItem number="1.2">
-          Весь контент, включая «Протоколы взаимодействия с Банком Вселенной», «Правила целевой материализации» и другие тексты на Сайте, сформулирован на основе метафорических, психологических и эзотерических подходов к визуализации желаний.
-        </LegalItem>
-      </LegalSection>
-
-      <LegalSection number="2" title="Отсутствие финансовых и медицинских гарантий">
-        <LegalItem number="2.1">
-          Сайт vsebank.space <strong>НЕ гарантирует</strong> и <strong>НЕ может гарантировать</strong> физическое появление денежных средств на твоих реальных банковских счетах в результате использования тренажера.
-        </LegalItem>
-        <LegalItem number="2.2">
-          Игровой процесс не заменяет собой реальную экономическую деятельность, финансовое планирование, официальное трудоустройство, профессиональные бизнес-консультации или юридическую помощь.
-        </LegalItem>
-        <LegalItem number="2.3">
-          Администрация Сайта не несет ответственности за финансовые, карьерные или личные решения, принятые Пользователем в реальной жизни на основе игрового процесса или субъективной интерпретации текстов Сайта.
-        </LegalItem>
-      </LegalSection>
-
-      <LegalSection number="3" title="Ответственность Пользователя">
-        <LegalParagraph>
-          Пользователь использует Сайт осознанно, воспринимает его как игровую модель и обязуется сохранять критическое мышление и здравый смысл в управлении своими реальными финансами.
-        </LegalParagraph>
-      </LegalSection>
+    <LegalLayout tag={DISCLAIMER_META.tag} title={DISCLAIMER_META.title} intro={DISCLAIMER_META.intro}>
+      <DisclaimerContent />
     </LegalLayout>
   )
 }
