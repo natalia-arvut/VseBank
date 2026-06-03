@@ -21,6 +21,7 @@ import Cookies from './pages/Cookies'
 import Disclaimer from './pages/Disclaimer'
 import Maintenance from './pages/Maintenance'
 import ScrollToTop from './components/ScrollToTop'
+import CookieBanner from './components/CookieBanner'
 
 // MAINTENANCE = true — показываем заглушку на всех страницах,
 // КРОМЕ /admin — он остаётся рабочим инструментом для админов.
@@ -125,6 +126,8 @@ export default function App() {
       <AppProvider>
         <AppRoutes />
       </AppProvider>
+      {/* Cookie-баннер показывается поверх всех страниц при первом заходе */}
+      <CookieBanner />
     </HashRouter>
   )
 }
