@@ -25,7 +25,7 @@ export default function LegalFooter({ rightAction }: LegalFooterProps) {
 
   return (
     <>
-      <footer className="border-t border-gold-300/30 bg-cream-100/60 py-6 px-4 md:px-6">
+      <footer className="border-t border-gold-300/30 bg-cream-100/60 py-4 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           {/* Верхняя строка: копирайт слева, опциональный action справа */}
           <div className="flex items-start gap-4 flex-wrap">
