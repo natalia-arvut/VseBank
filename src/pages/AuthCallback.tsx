@@ -72,7 +72,7 @@ export default function AuthCallback() {
           ) : (
             <>
               <div className="text-5xl text-gold-500 mb-4 animate-spin inline-block">⟳</div>
-              <h1 className="font-serif text-2xl text-stone-800 mb-2">Подтверждаем счёт...</h1>
+              <h1 className="font-serif text-2xl text-stone-800 mb-2">Подтверждаем пространство...</h1>
               <p className="font-sans text-stone-500 text-sm">Это займёт секунду.</p>
             </>
           )}

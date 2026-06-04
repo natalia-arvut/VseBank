@@ -84,7 +84,7 @@ export default function Landing() {
 
               {/* Цитата */}
               <p className="font-sans text-ink-700 text-base md:text-lg leading-relaxed mb-8 md:mb-10 max-w-md font-normal">
-                Бог не знает нехватки. Вселенная знает только одно слово: «ДА». Твой счёт здесь открыт с самого рождения, но пользовался ли ты им?
+                Бог не знает нехватки. Вселенная знает только одно слово: «ДА». Твоё пространство изобилия открыто с самого рождения, но пользовался ли ты им?
               </p>
 
               {/* Кнопка — высокая, как в последнем блоке */}
@@ -92,7 +92,7 @@ export default function Landing() {
                 onClick={() => navigate('/register')}
                 className="btn-gold inline-flex items-center justify-center text-sm md:text-base px-8 md:px-10 py-4 w-full sm:w-auto whitespace-nowrap"
               >
-                Открыть мой счёт бесплатно
+                Открыть моё пространство
               </button>
             </div>
           </div>
@@ -332,7 +332,7 @@ export default function Landing() {
           {/* Заголовок ПО ЦЕНТРУ, текст ниже по левому краю */}
           <div className="text-center mb-10">
             <div className="tag mb-3">Правила</div>
-            <h2 className="section-title mb-5">Правила Пользования Вселенским Счётом</h2>
+            <h2 className="section-title mb-5">Правила пользования пространством</h2>
             <div className="w-12 h-px bg-gold-400 mx-auto mb-6" />
           </div>
           <p className="body-text mb-12">
@@ -364,11 +364,11 @@ export default function Landing() {
               ))}
             </div>
 
-            {/* Форма быстрого открытия счёта */}
+            {/* Форма быстрого открытия пространства */}
             <div className="glass-card p-8 rounded-2xl">
-              <h3 className="card-title mb-2">Открой счёт прямо сейчас</h3>
+              <h3 className="card-title mb-2">Открой пространство сейчас</h3>
               <p className="body-text mb-6">
-                Твой безлимитный счёт уже активирован. Тебе осталось только «присвоить» его себе.
+                Твоё пространство уже активировано. Тебе осталось только «присвоить» его себе.
               </p>
               <div className="space-y-3">
                 <input className="input-field" placeholder="Твоё имя" value={quickName} onChange={e => setQuickName(e.target.value)} />
@@ -377,7 +377,7 @@ export default function Landing() {
                   onClick={handleQuickStart}
                   className="w-full btn-gold text-center"
                 >
-                  Открыть счёт →
+                  Открыть пространство →
                 </button>
                 <button
                   type="button"
@@ -527,10 +527,10 @@ export default function Landing() {
         style={{ backgroundColor: hasReviews ? '#FBF7F0' : '#FDFDFD' }}
       >
         <div className="site-container">
-          <h2 className="section-title mb-5">Твой счёт ждёт тебя</h2>
+          <h2 className="section-title mb-5">Твоё пространство изобилия ждёт тебя</h2>
           <div className="w-12 h-px bg-gold-400 mx-auto mb-6" />
           <p className="body-text mb-10">
-            Твой безлимитный счёт уже активирован. Тебе осталось только «присвоить» его себе.
+            Твоё пространство уже активировано. Тебе осталось только «присвоить» его себе.
             <br />
             Сделай свой первый перевод. Позволь невидимому стать видимым.
           </p>
@@ -538,7 +538,7 @@ export default function Landing() {
             onClick={() => navigate('/register')}
             className="btn-gold inline-flex items-center justify-center text-sm md:text-base px-10 py-4 whitespace-nowrap"
           >
-            Открыть мой счёт бесплатно
+            Открыть моё пространство
           </button>
         </div>
       </section>

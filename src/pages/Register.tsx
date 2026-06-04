@@ -126,12 +126,12 @@ export default function Register() {
           <div className="mb-6 flex justify-center"><VseBankLogo size="md" /></div>
           <div className="glass-card p-10 rounded-2xl">
             <div className="text-5xl text-gold-500 mb-4">✉</div>
-            <div className="tag mb-3 text-sm">Счёт открыт</div>
+            <div className="tag mb-3 text-sm">Пространство открыто</div>
             <h1 className="font-serif text-3xl text-stone-800 mb-3">Проверьте почту</h1>
             <div className="w-12 h-px bg-gold-400 mx-auto mb-5" />
             <p className="font-sans text-stone-600 leading-relaxed mb-2">
               На <span className="text-gold-700">{form.email}</span> отправлено письмо
-              подтверждения открытия счёта.
+              подтверждения открытия пространства.
             </p>
             <p className="font-sans text-stone-500 text-sm mb-4">
               Перейди по ссылке из письма — и ты окажешься в личном кабинете.
@@ -215,16 +215,16 @@ export default function Register() {
 
         <div className="relative z-10 flex-1 flex flex-col justify-center -mt-12">
           <div className="font-sans text-xs text-gold-400 tracking-[0.2em] uppercase mb-4">
-            Открытие счёта
+            Открытие пространства
           </div>
           <h2 className="font-serif text-3xl text-cream-50 leading-tight mb-4">
             С первой секунды<br />ты — Банкир.
           </h2>
           <div className="w-12 h-px bg-gold-500 mb-4" />
           <p className="font-sans text-stone-300 leading-relaxed text-base">
-            Можно открыть как личный счёт, так и на компанию.
+            Можно открыть как личное пространство, так и на компанию.
             <br /><br />
-            Твой счёт изобилия не имеет ограничений.
+            Твоё пространство изобилия не имеет ограничений.
           </p>
         </div>
       </div>
@@ -239,7 +239,7 @@ export default function Register() {
           </div>
 
           <div className="mb-3">
-            <div className="tag text-sm">Открытие счёта</div>
+            <div className="tag text-sm">Открытие пространства</div>
           </div>
 
           {/* Тип счёта — единый размер с кнопкой submit */}
@@ -429,16 +429,16 @@ export default function Register() {
               {loading ? (
                 <>
                   <span className="animate-spin">⟳</span>
-                  Открываем счёт...
+                  Открываем пространство...
                 </>
               ) : (
-                'Открыть счёт'
+                'Открыть пространство'
               )}
             </button>
           </form>
 
           <div className="text-center mt-5">
-            <span className="font-sans text-sm text-stone-500">Уже есть счёт? </span>
+            <span className="font-sans text-sm text-stone-500">Уже есть пространство? </span>
             <button
               onClick={() => navigate('/login')}
               className="font-sans text-sm text-gold-600 hover:text-gold-700 underline"

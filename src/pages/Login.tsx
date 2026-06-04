@@ -78,8 +78,7 @@ export default function Login() {
           <div className="flex justify-center mb-4">
             <VseBankLogo size="md" />
           </div>
-          <div className="w-12 h-px bg-gold-400 mx-auto mb-4" />
-          <p className="font-sans text-stone-600 text-base md:text-lg">Войди в твой кабинет изобилия</p>
+          <div className="w-12 h-px bg-gold-400 mx-auto" />
         </div>
 
         <form onSubmit={handleSubmit} className="glass-card p-6 space-y-3 rounded-2xl">
@@ -136,12 +135,12 @@ export default function Login() {
         </form>
 
         <div className="text-center mt-4">
-          <span className="font-sans text-sm text-stone-500">Нет счёта? </span>
+          <span className="font-sans text-sm text-stone-500">Нет пространства? </span>
           <button
             onClick={() => navigate('/register')}
             className="font-sans text-sm text-gold-600 hover:text-gold-700 underline"
           >
-            Открыть счёт изобилия
+            Открыть пространство изобилия
           </button>
         </div>
 

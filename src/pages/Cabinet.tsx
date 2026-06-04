@@ -43,7 +43,7 @@ export default function Cabinet() {
               <div className="w-12 h-px bg-gold-500 mt-2 mb-4" />
 
               <p className="font-sans text-ink-700 text-sm md:text-base leading-relaxed mb-5">
-                Твой счёт изобилия активен. Твой лимит безграничен.
+                Твоё пространство изобилия активно. Твой лимит безграничен.
               </p>
 
               <button
