@@ -254,7 +254,7 @@ export default function Register() {
               }`}
               style={{ borderRadius: '15px' }}
             >
-              Личный
+              Личное
             </button>
             <button
               type="button"
@@ -266,7 +266,7 @@ export default function Register() {
               }`}
               style={{ borderRadius: '15px' }}
             >
-              Компания
+              Компании
             </button>
           </div>
 
