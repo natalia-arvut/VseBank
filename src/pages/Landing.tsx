@@ -520,9 +520,10 @@ export default function Landing() {
             <button
               type="button"
               onClick={() => setSourcesOpen(true)}
-              className="font-sans text-sm text-gold-600 hover:text-gold-700 underline underline-offset-4 tracking-wider"
+              className="btn-outline inline-flex items-center justify-center gap-2 text-sm md:text-base px-8 md:px-10 py-4 whitespace-nowrap"
             >
-              Учителя и книги, вдохновившие нас →
+              Учителя и книги
+              <span className="text-base leading-none">→</span>
             </button>
           </div>
         </div>
@@ -592,9 +593,9 @@ export default function Landing() {
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-sans text-sm text-gold-600 hover:text-gold-700 underline underline-offset-4"
+                className="inline-flex items-center gap-2 font-sans text-sm text-gold-600 hover:text-gold-700"
               >
-                {s.linkLabel}
+                <span className="underline underline-offset-4">{s.linkLabel}</span>
                 <span className="text-base leading-none">→</span>
               </a>
             </article>
