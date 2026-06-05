@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom'
 import VseBankLogo from '../components/VseBankLogo'
 import LandingReviews from '../components/LandingReviews'
 import LegalFooter from '../components/LegalFooter'
+import LegalModal from '../components/LegalModal'
 
 export default function Landing() {
   const navigate = useNavigate()
   const [quickName, setQuickName] = useState('')
   const [quickEmail, setQuickEmail] = useState('')
   const [rulesOpen, setRulesOpen] = useState(false)
+  const [sourcesOpen, setSourcesOpen] = useState(false)
   // Есть ли одобренные отзывы — нужно для сохранения цветового ритма:
   // если блок Отзывов рендерится, финальный CTA становится тёплым (#FBF7F0).
   // Если нет — CTA остаётся светлым (#FDFDFD), как было.
@@ -512,6 +514,17 @@ export default function Landing() {
             <span>✦ Ты и есть Изобилие</span>
             <span>✦ Твоя Воля — закон материализации</span>
           </div>
+
+          {/* Кнопка «Учителя и книги» — открывает модалку с источниками */}
+          <div className="text-center mt-10">
+            <button
+              type="button"
+              onClick={() => setSourcesOpen(true)}
+              className="font-sans text-sm text-gold-600 hover:text-gold-700 underline underline-offset-4 tracking-wider"
+            >
+              Учителя и книги, вдохновившие нас →
+            </button>
+          </div>
         </div>
       </section>
 
@@ -555,6 +568,70 @@ export default function Landing() {
         }
       />
 
+      {/* Модалка «Учителя и книги» — источники, на которых строится мировоззрение проекта */}
+      <LegalModal
+        open={sourcesOpen}
+        onClose={() => setSourcesOpen(false)}
+        tag="Источники"
+        title="Учителя и книги, вдохновившие нас"
+        intro="Три голоса, из которых сложился взгляд на изобилие, лежащий в основе этого симулятора. Открой ссылку, чтобы узнать о каждом."
+      >
+        <div className="space-y-6">
+          {SOURCES.map(s => (
+            <article
+              key={s.name}
+              className="border border-gold-300/40 rounded-2xl p-6 bg-cream-50/60"
+            >
+              <div className="tag text-xs mb-2">{s.tag}</div>
+              <h3 className="font-serif text-2xl text-ink-900 leading-tight mb-1">{s.name}</h3>
+              <div className="w-10 h-px bg-gold-500 mb-3" />
+              <p className="font-sans text-sm text-ink-700 leading-relaxed mb-4">
+                {s.description}
+              </p>
+              <a
+                href={s.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 font-sans text-sm text-gold-600 hover:text-gold-700 underline underline-offset-4"
+              >
+                {s.linkLabel}
+                <span className="text-base leading-none">→</span>
+              </a>
+            </article>
+          ))}
+        </div>
+      </LegalModal>
+
     </div>
   )
 }
+
+// ─────────────────────────────────────────────────────────
+// Учителя и книги — источники, открываются модалкой из блока Философии.
+// ─────────────────────────────────────────────────────────
+const SOURCES = [
+  {
+    tag: 'Книги',
+    name: 'Нил Доналд Уолш',
+    description:
+      'Серия «Беседы с Богом», книги 1–4. Прямой и простой диалог о природе реальности, изобилия и личной воли. Текст, к которому мы возвращаемся снова и снова.',
+    linkLabel: 'Открыть на ЛитРес',
+    url: 'https://www.litres.ru/book/nil-uolsh/besedy-s-bogom-neobychnyy-dialog-kniga-1-39962388/',
+  },
+  {
+    tag: 'Учитель',
+    name: 'Доктор Джо Диспенза',
+    description:
+      'Нейробиология намерения, медитации и работа с квантовым полем. Объясняет, как мозг учится новой реальности — научная база для всей механики симулятора.',
+    linkLabel: 'Перейти на drjoedispenza.com',
+    url: 'https://drjoedispenza.com/',
+  },
+  {
+    tag: 'Школа',
+    name: 'Школа Михаила Агеева',
+    description:
+      'Русскоязычная школа сознательной трансформации. Практики работы с убеждениями о деньгах, ресурсе и потоке — на близком и понятном языке.',
+    linkLabel: 'Перейти на сайт школы',
+    url: 'https://mikhail-ageev.ru',
+  },
+] as const
