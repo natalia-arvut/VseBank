@@ -515,14 +515,14 @@ export default function Landing() {
             <span>✦ Твоя Воля — закон материализации</span>
           </div>
 
-          {/* Кнопка «Учителя и книги» — открывает модалку с источниками */}
+          {/* Кнопка «Источники информации» — открывает модалку */}
           <div className="text-center mt-10">
             <button
               type="button"
               onClick={() => setSourcesOpen(true)}
-              className="btn-outline inline-flex items-center justify-center gap-2 text-sm md:text-base px-8 md:px-10 py-4 whitespace-nowrap"
+              className="btn-outline inline-flex items-center justify-center gap-2 text-sm md:text-base px-10 py-4 min-w-[320px] whitespace-nowrap"
             >
-              Учителя и книги
+              Источники информации
               <span className="text-base leading-none">→</span>
             </button>
           </div>
@@ -550,7 +550,7 @@ export default function Landing() {
           </p>
           <button
             onClick={() => navigate('/register')}
-            className="btn-gold inline-flex items-center justify-center text-sm md:text-base px-10 py-4 whitespace-nowrap"
+            className="btn-gold inline-flex items-center justify-center text-sm md:text-base px-10 py-4 min-w-[320px] whitespace-nowrap"
           >
             Открыть моё пространство
           </button>
