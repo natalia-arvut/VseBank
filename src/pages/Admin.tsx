@@ -55,6 +55,47 @@ const ALLOWED_PURPOSES = [
   'Творческие проекты',
 ]
 
+// Компактное форматирование сумм для аналитики.
+// В «Банке изобилия» пользователи вводят суммы с произвольным числом нулей
+// (миллиарды, триллионы и больше), поэтому полное число ломает вёрстку —
+// вылезает из карточки и накладывается на соседние. Показываем короткую
+// форму (1,2 млрд), а полное число оставляем в подсказке при наведении.
+const COMPACT_SCALES: { value: number; suffix: string }[] = [
+  { value: 1e33, suffix: 'дец.' }, // дециллион
+  { value: 1e30, suffix: 'нон.' }, // нониллион
+  { value: 1e27, suffix: 'окт.' }, // октиллион
+  { value: 1e24, suffix: 'септ.' }, // септиллион
+  { value: 1e21, suffix: 'секст.' }, // секстиллион
+  { value: 1e18, suffix: 'квинт.' }, // квинтиллион
+  { value: 1e15, suffix: 'квадр.' }, // квадриллион
+  { value: 1e12, suffix: 'трлн' }, // триллион
+  { value: 1e9, suffix: 'млрд' }, // миллиард
+  { value: 1e6, suffix: 'млн' }, // миллион
+]
+
+function formatCompactAmount(n: number): string {
+  if (!isFinite(n)) return '∞'
+  if (n < 1e6) return n.toLocaleString('de-DE')
+  for (const { value, suffix } of COMPACT_SCALES) {
+    if (n >= value) {
+      const scaled = n / value
+      // до 2 знаков после запятой, без хвостовых нулей
+      const num = scaled
+        .toLocaleString('ru-RU', { maximumFractionDigits: 2 })
+      return `${num} ${suffix}`
+    }
+  }
+  // за пределами шкалы — научная запись
+  return n.toExponential(2)
+}
+
+// Полное число для подсказки. Гигантские значения теряют точность в Number,
+// поэтому показываем то, что есть, аккуратно с разделителями разрядов.
+function formatFullAmount(n: number): string {
+  if (!isFinite(n)) return '∞'
+  return n.toLocaleString('de-DE', { maximumFractionDigits: 0 })
+}
+
 export default function Admin() {
   const { user, logout } = useApp()
   const [profiles, setProfiles] = useState<ProfileData[]>([])
@@ -368,10 +409,13 @@ export default function Admin() {
               ) : (
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {sumByCurrency.map(([currency, sum]) => (
-                    <div key={currency} className="border border-gold-300/30 rounded-xl p-4">
+                    <div key={currency} className="border border-gold-300/30 rounded-xl p-4 min-w-0">
                       <div className="font-sans text-xs text-ink-500 tracking-widest uppercase mb-1">{currency}</div>
-                      <div className="font-serif text-2xl text-ink-900 lining-nums">
-                        {sum.toLocaleString('de-DE')}
+                      <div
+                        className="font-serif text-2xl text-ink-900 lining-nums truncate"
+                        title={`${formatFullAmount(sum)} ${currency}`}
+                      >
+                        {formatCompactAmount(sum)}
                       </div>
                     </div>
                   ))}
