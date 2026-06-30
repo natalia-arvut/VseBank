@@ -73,20 +73,44 @@ const COMPACT_SCALES: { value: number; suffix: string }[] = [
   { value: 1e6, suffix: 'млн' }, // миллион
 ]
 
+// Надстрочные цифры для научной записи (9 × 10⁴⁰).
+const SUPERSCRIPT = ['⁰', '¹', '²', '³', '⁴', '⁵', '⁶', '⁷', '⁸', '⁹']
+function toSuperscript(num: number): string {
+  return String(num)
+    .split('')
+    .map(ch => SUPERSCRIPT[Number(ch)] ?? ch)
+    .join('')
+}
+
+// Научная запись для чисел крупнее самой большой именованной единицы:
+// «9 × 10⁴⁰». Короткая и всегда влезает в карточку.
+function formatScientific(n: number): string {
+  const [mantissaRaw, expRaw] = n.toExponential(1).split('e')
+  const exp = Number(expRaw)
+  // мантиссу показываем с запятой и без хвостового ,0
+  const mantissa = Number(mantissaRaw)
+    .toLocaleString('ru-RU', { maximumFractionDigits: 1 })
+  return `${mantissa} × 10${toSuperscript(exp)}`
+}
+
 function formatCompactAmount(n: number): string {
   if (!isFinite(n)) return '∞'
   if (n < 1e6) return n.toLocaleString('de-DE')
   for (const { value, suffix } of COMPACT_SCALES) {
     if (n >= value) {
       const scaled = n / value
+      // Если даже в самой крупной единице остаётся 4+ значной число
+      // (т.е. сумма крупнее ~тысячи дециллионов) — уходим в научную запись,
+      // иначе строка снова станет длинной и сломает карточку.
+      if (scaled >= 1000) break
       // до 2 знаков после запятой, без хвостовых нулей
       const num = scaled
         .toLocaleString('ru-RU', { maximumFractionDigits: 2 })
       return `${num} ${suffix}`
     }
   }
-  // за пределами шкалы — научная запись
-  return n.toExponential(2)
+  // за пределами именованной шкалы — научная запись
+  return formatScientific(n)
 }
 
 // Полное число для подсказки. Гигантские значения теряют точность в Number,
