@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import CabinetLayout from '../components/CabinetLayout'
 import { fetchRequisites, saveRequisite, type Requisite } from '../lib/requisites'
+import { formatThousands, digitsOnly } from '../lib/format'
 
 const TIMINGS = [
   { id: 'fast', label: 'Быстрый', period: '1–3 дня' },
@@ -57,7 +58,7 @@ export default function Transfer() {
     const params = new URLSearchParams(location.search || window.location.hash.split('?')[1] || '')
     const a = params.get('amount')
     const c = params.get('currency')
-    if (a) setAmount(a)
+    if (a) setAmount(digitsOnly(a))
     if (c) setCurrency(c)
   }, [location.search])
 
@@ -160,7 +161,7 @@ export default function Transfer() {
             <div className="glass-card p-6 mb-8 text-left space-y-3 rounded-2xl">
               <div className="flex justify-between text-sm">
                 <span className="text-ink-500 font-sans">Сумма</span>
-                <span className="text-ink-900 font-serif">{amount} {currency}</span>
+                <span className="text-ink-900 font-serif">{formatThousands(amount)} {currency}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-ink-500 font-sans">Цель</span>
@@ -225,8 +226,9 @@ export default function Transfer() {
                 <input
                   className="input-field flex-1 text-xl font-serif"
                   placeholder="Введи сумму"
-                  value={amount}
-                  onChange={e => setAmount(e.target.value)}
+                  inputMode="numeric"
+                  value={formatThousands(amount)}
+                  onChange={e => setAmount(digitsOnly(e.target.value))}
                 />
                 <select
                   className="input-field w-28"
@@ -452,7 +454,7 @@ export default function Transfer() {
             </div>
 
             <div className="space-y-3 mb-6">
-              <Row label="Сумма" value={`${amount} ${currency}`} bold />
+              <Row label="Сумма" value={`${formatThousands(amount)} ${currency}`} bold />
               <Row label="Цель перевода" value={finalPurpose} />
               <Row label="Срок поступления" value={`${TIMINGS.find(t => t.id === timing)?.label} (${TIMINGS.find(t => t.id === timing)?.period})`} />
               {finalRequisites && (

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import CabinetLayout from '../components/CabinetLayout'
+import { formatThousands } from '../lib/format'
 
 export default function Cabinet() {
   const navigate = useNavigate()
@@ -67,10 +68,7 @@ export default function Cabinet() {
                   </div>
                   <div className="space-y-3">
                     {transfers.slice(0, 3).map(t => {
-                      const amountNum = parseInt(String(t.amount).replace(/\D/g, ''), 10)
-                      const amountFormatted = isNaN(amountNum)
-                        ? t.amount
-                        : amountNum.toLocaleString('de-DE')
+                      const amountFormatted = formatThousands(t.amount) || t.amount
                       return (
                         <div key={t.id} className="text-sm">
                           <div className="font-sans text-ink-700">{t.type}</div>

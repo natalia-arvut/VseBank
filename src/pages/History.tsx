@@ -1,5 +1,6 @@
 import { useApp } from '../context/AppContext'
 import CabinetLayout from '../components/CabinetLayout'
+import { formatThousands } from '../lib/format'
 
 export default function History() {
   const { transfers } = useApp()
@@ -29,10 +30,7 @@ export default function History() {
           <div className="space-y-4">
             {transfers.map(t => {
               // Сумма с разделителями разрядов (точки): 1.000.000
-              const amountNum = parseInt(String(t.amount).replace(/\D/g, ''), 10)
-              const amountFormatted = isNaN(amountNum)
-                ? t.amount
-                : amountNum.toLocaleString('de-DE')
+              const amountFormatted = formatThousands(t.amount) || t.amount
               return (
                 <div key={t.id} className="glass-card p-5 rounded-2xl">
                   <div className="font-sans text-sm text-ink-700 font-medium mb-1">{t.type}</div>
