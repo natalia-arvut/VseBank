@@ -6,7 +6,7 @@ import Guilloche from './Guilloche'
 import LegalFooter from './LegalFooter'
 
 const NAV_ITEMS = [
-  { path: '/cabinet', label: 'Главная', icon: '⌂' },
+  { path: '/cabinet', label: 'Дашборд', icon: '⌂' },
   { path: '/transfer', label: 'Переводы', icon: '⇄' },
   { path: '/requisites', label: 'Реквизиты', icon: '≡' },
   { path: '/history', label: 'История', icon: '◷' },
