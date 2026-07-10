@@ -575,9 +575,36 @@ export default function Landing() {
         onClose={() => setSourcesOpen(false)}
         tag="Источники"
         title="Учителя и книги, вдохновившие нас"
-        intro="Три голоса, из которых сложился взгляд на изобилие, лежащий в основе этого симулятора. Открой ссылку, чтобы узнать о каждом."
+        intro="Книга-первоисточник и ещё три голоса, из которых сложился взгляд на изобилие, лежащий в основе этого симулятора. Открой ссылку, чтобы узнать о каждом."
       >
         <div className="space-y-6">
+          {/* Первоисточник — Роберт Шейнфелд. Выделенная карточка, всегда первая. */}
+          <article className="relative border-2 border-gold-500/70 rounded-2xl p-6 pt-7 bg-gradient-to-br from-gold-500/10 via-cream-50/70 to-gold-400/15 shadow-gold">
+            <div className="absolute -top-3 left-6 bg-gold-500 text-white text-[11px] font-sans font-medium tracking-[0.2em] uppercase px-3 py-1 rounded-full">
+              Источник № 1
+            </div>
+            <div className="tag text-xs mb-2">Книга-первоисточник</div>
+            <h3 className="font-serif text-2xl text-ink-900 leading-tight mb-1">Роберт Шейнфелд</h3>
+            <div className="font-serif text-lg text-gold-700 mb-2">«Освобождение от денежной игры»</div>
+            <div className="w-10 h-px bg-gold-500 mb-3" />
+            <p className="font-sans text-sm text-ink-700 leading-relaxed mb-5">
+              Главная книга нашей философии: как выйти из привычной денежной игры и вспомнить,
+              что источник изобилия — ты сам. В нашей Telegram-группе книга доступна в аудио
+              и других форматах.
+            </p>
+            <a
+              href="https://t.me/+St1gFH-ety4wYmIy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold inline-flex items-center gap-2 text-sm px-6 py-2.5"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M21.94 3.02 1.87 10.77c-1.08.42-1.02 1.96.09 2.29l4.6 1.38 1.72 5.5c.32 1.02 1.62 1.24 2.26.39l2.34-3.1 4.72 3.47c.86.63 2.08.17 2.3-.87l3.06-14.6c.24-1.13-.87-2.06-1.92-1.66l-.1.04ZM7.4 13.5l10.7-6.6c.26-.16.52.19.3.4l-8.4 7.8-.34 3.05-1.36-4.35-.9-.3Z"/>
+              </svg>
+              Читать и слушать в Telegram
+            </a>
+          </article>
+
           {SOURCES.map(s => (
             <article
               key={s.name}
