@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import type { ReactNode } from 'react'
+import { useT } from '../i18n'
 import LegalModal from './LegalModal'
-import { LEGAL_DOCS, type LegalDocKey } from './legalContent'
+import { useLegalDocs, type LegalDocKey } from './legalContent'
 
 // Сквозной юридический футер. Подключается на лендинге, логине, регистрации,
 // в кабинете и на странице maintenance — чтобы документы были доступны всегда.
@@ -20,8 +21,19 @@ interface LegalFooterProps {
 
 export default function LegalFooter({ rightAction }: LegalFooterProps) {
   const [openDoc, setOpenDoc] = useState<LegalDocKey | null>(null)
-  const ActiveContent = openDoc ? LEGAL_DOCS[openDoc].Content : null
-  const activeMeta = openDoc ? LEGAL_DOCS[openDoc].meta : null
+  const legalDocs = useLegalDocs()
+  const ActiveContent = openDoc ? legalDocs[openDoc].Content : null
+  const activeMeta = openDoc ? legalDocs[openDoc].meta : null
+  const t = useT({
+    ru: {
+      copyright: 'VseBank. Все права защищены. Сайт является интерактивной игрой-симулятором.',
+      contact: 'Связь:',
+    },
+    en: {
+      copyright: 'VseBank. All rights reserved. This site is an interactive simulator game.',
+      contact: 'Contact:',
+    },
+  })
 
   return (
     <>
@@ -30,7 +42,7 @@ export default function LegalFooter({ rightAction }: LegalFooterProps) {
           {/* Верхняя строка: копирайт слева, опциональный action справа */}
           <div className="flex items-start gap-4 flex-wrap">
             <p className="font-sans text-[11px] md:text-xs text-gold-600 leading-relaxed text-center md:text-left flex-1 min-w-[200px]">
-              © {new Date().getFullYear()} VseBank. Все права защищены. Сайт является интерактивной игрой-симулятором.
+              © {new Date().getFullYear()} {t.copyright}
             </p>
             {rightAction && (
               <div className="flex-shrink-0">{rightAction}</div>
@@ -46,14 +58,14 @@ export default function LegalFooter({ rightAction }: LegalFooterProps) {
                   onClick={() => setOpenDoc(key)}
                   className="text-gold-600 hover:text-gold-700 underline underline-offset-2 transition-colors"
                 >
-                  {LEGAL_DOCS[key].label}
+                  {legalDocs[key].label}
                 </button>
                 {i < ORDER.length - 1 && <span className="text-gold-400/60 select-none">·</span>}
               </span>
             ))}
             <span className="text-gold-400/60 select-none hidden md:inline">·</span>
             <span className="w-full md:w-auto text-center md:text-left mt-1 md:mt-0">
-              Связь:{' '}
+              {t.contact}{' '}
               <a
                 href="mailto:vsebank.space@gmail.com"
                 className="text-gold-600 hover:text-gold-700 underline underline-offset-2"

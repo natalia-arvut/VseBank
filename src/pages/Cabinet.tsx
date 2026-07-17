@@ -2,14 +2,38 @@ import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import CabinetLayout from '../components/CabinetLayout'
 import { formatThousands } from '../lib/format'
+import { useT, useLang } from '../i18n'
 
 export default function Cabinet() {
   const navigate = useNavigate()
   const { user, transfers } = useApp()
+  const { lang } = useLang()
+  const t = useT({
+    ru: {
+      welcomeTag: 'Добро пожаловать в банк',
+      morning: 'Доброе утро',
+      afternoon: 'Добрый день',
+      evening: 'Добрый вечер',
+      spaceActive: 'Твоё пространство изобилия активно. Твой лимит безграничен.',
+      makeTransfer: 'Совершить перевод →',
+      recentTag: 'Последние транзакции',
+      all: 'Все →',
+    },
+    en: {
+      welcomeTag: 'Welcome to the bank',
+      morning: 'Good morning',
+      afternoon: 'Good afternoon',
+      evening: 'Good evening',
+      spaceActive: 'Your space of abundance is active. Your limit is boundless.',
+      makeTransfer: 'Make a transfer →',
+      recentTag: 'Recent transactions',
+      all: 'All →',
+    },
+  })
 
   const now = new Date()
   const hours = now.getHours()
-  const greeting = hours < 12 ? 'Доброе утро' : hours < 18 ? 'Добрый день' : 'Добрый вечер'
+  const greeting = hours < 12 ? t.morning : hours < 18 ? t.afternoon : t.evening
 
   return (
     <CabinetLayout rightVisual="none">
@@ -35,7 +59,7 @@ export default function Cabinet() {
             <div className="bg-cream-100/85 lg:bg-cream-100/75 backdrop-blur-[3px] border border-gold-300/30 rounded-2xl flex flex-col">
               <div className="flex-1 p-5 md:p-8 flex flex-col">
 
-              <div className="tag text-xs md:text-sm mb-2">Добро пожаловать в банк</div>
+              <div className="tag text-xs md:text-sm mb-2">{t.welcomeTag}</div>
 
               <h1 className="font-serif text-2xl md:text-3xl text-ink-900 mb-2">
                 {greeting}{user?.firstName ? `, ${user.firstName}` : ''}!
@@ -44,39 +68,39 @@ export default function Cabinet() {
               <div className="w-12 h-px bg-gold-500 mt-2 mb-4" />
 
               <p className="font-sans text-ink-700 text-sm md:text-base leading-relaxed mb-5">
-                Твоё пространство изобилия активно. Твой лимит безграничен.
+                {t.spaceActive}
               </p>
 
               <button
                 onClick={() => navigate('/transfer')}
                 className="btn-gold inline-flex items-center gap-2 text-xs md:text-sm px-5 md:px-6 py-2.5 self-start"
               >
-                Совершить перевод →
+                {t.makeTransfer}
               </button>
 
               {/* Последние транзакции */}
               {transfers.length > 0 && (
                 <div className="mt-8 pt-6 border-t border-gold-300/30">
                   <div className="flex justify-between items-center mb-3">
-                    <div className="tag text-xs">Последние транзакции</div>
+                    <div className="tag text-xs">{t.recentTag}</div>
                     <button
                       onClick={() => navigate('/history')}
                       className="font-sans text-xs text-gold-600 hover:text-gold-700"
                     >
-                      Все →
+                      {t.all}
                     </button>
                   </div>
                   <div className="space-y-3">
-                    {transfers.slice(0, 3).map(t => {
-                      const amountFormatted = formatThousands(t.amount) || t.amount
+                    {transfers.slice(0, 3).map(tr => {
+                      const amountFormatted = formatThousands(tr.amount) || tr.amount
                       return (
-                        <div key={t.id} className="text-sm">
-                          <div className="font-sans text-ink-700">{t.type}</div>
+                        <div key={tr.id} className="text-sm">
+                          <div className="font-sans text-ink-700">{tr.type}</div>
                           <div className="font-sans text-xs text-ink-500">
-                            {new Date(t.createdAt).toLocaleDateString('ru')}
+                            {new Date(tr.createdAt).toLocaleDateString(lang)}
                           </div>
                           <div className="font-sans text-xs text-gold-600 tracking-[0.2em] uppercase font-medium mt-1">
-                            + {amountFormatted} {t.currency}
+                            + {amountFormatted} {tr.currency}
                           </div>
                         </div>
                       )

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { useT } from '../i18n'
 
 // ─────────────────────────────────────────────────────────
 // Блок «Отзывы» на лендинге.
@@ -21,10 +22,15 @@ const MONTHS_RU = [
   'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',
 ]
 
-function formatMonth(iso: string): string {
+const MONTHS_EN = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+]
+
+function formatMonth(iso: string, months: string[]): string {
   try {
     const d = new Date(iso)
-    return `${MONTHS_RU[d.getMonth()]} ${d.getFullYear()}`
+    return `${months[d.getMonth()]} ${d.getFullYear()}`
   } catch {
     return ''
   }
@@ -40,6 +46,20 @@ export default function LandingReviews({ onLoad }: LandingReviewsProps) {
   const [reviews, setReviews] = useState<Review[]>([])
   const [expanded, setExpanded] = useState(false)
   const [loaded, setLoaded] = useState(false)
+  const t = useT({
+    ru: {
+      tag: 'Отзывы',
+      title: 'Голоса изобилия',
+      collapse: 'Свернуть',
+      showMore: 'Показать ещё',
+    },
+    en: {
+      tag: 'Reviews',
+      title: 'Voices of abundance',
+      collapse: 'Collapse',
+      showMore: 'Show more',
+    },
+  })
 
   useEffect(() => {
     const load = async () => {
@@ -73,8 +93,8 @@ export default function LandingReviews({ onLoad }: LandingReviewsProps) {
       <div className="site-container">
         {/* Заголовок секции */}
         <div className="text-center mb-12">
-          <div className="tag mb-3">Отзывы</div>
-          <h2 className="section-title mb-5">Голоса изобилия</h2>
+          <div className="tag mb-3">{t.tag}</div>
+          <h2 className="section-title mb-5">{t.title}</h2>
           <div className="w-12 h-px bg-gold-400 mx-auto" />
         </div>
 
@@ -104,7 +124,7 @@ export default function LandingReviews({ onLoad }: LandingReviewsProps) {
                 onClick={() => setExpanded(e => !e)}
                 className="btn-outline text-sm px-8 py-3"
               >
-                {expanded ? 'Свернуть' : `Показать ещё ${extra.length}`}
+                {expanded ? t.collapse : `${t.showMore} ${extra.length}`}
               </button>
             </div>
           </>
@@ -115,6 +135,10 @@ export default function LandingReviews({ onLoad }: LandingReviewsProps) {
 }
 
 function ReviewCard({ review }: { review: Review }) {
+  const t = useT({
+    ru: { noName: 'Без имени', months: MONTHS_RU },
+    en: { noName: 'No name', months: MONTHS_EN },
+  })
   return (
     <div className="bg-white/70 backdrop-blur-sm border border-gold-400/30 p-7 md:p-8 rounded-2xl shadow-card flex flex-col h-full">
       {/* Декоративная кавычка */}
@@ -139,10 +163,10 @@ function ReviewCard({ review }: { review: Review }) {
 
       <div className="border-t border-gold-300/30 pt-4 mt-auto">
         <div className="font-sans text-sm text-ink-900 font-medium">
-          {review.author_name || 'Без имени'}
+          {review.author_name || t.noName}
         </div>
         <div className="font-sans text-xs text-ink-500 mt-0.5 tracking-wide">
-          {formatMonth(review.created_at)}
+          {formatMonth(review.created_at, t.months)}
         </div>
       </div>
     </div>

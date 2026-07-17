@@ -1,9 +1,10 @@
 import LegalLayout from '../components/LegalLayout'
-import { COOKIES_META, CookiesContent } from '../components/legalContent'
+import { useCookiesMeta, CookiesContent } from '../components/legalContent'
 
 export default function Cookies() {
+  const meta = useCookiesMeta()
   return (
-    <LegalLayout tag={COOKIES_META.tag} title={COOKIES_META.title} intro={COOKIES_META.intro}>
+    <LegalLayout tag={meta.tag} title={meta.title} intro={meta.intro}>
       <CookiesContent />
     </LegalLayout>
   )

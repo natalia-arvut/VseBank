@@ -2,12 +2,29 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import VseBankLogo from '../components/VseBankLogo'
+import { useT } from '../i18n'
 
 // Страница куда попадает пользователь после клика по ссылке подтверждения email.
 // Supabase кладёт токены в URL hash — SDK сам читает их при detectSessionInUrl,
 // но мы вызываем getSession явно и редиректим в кабинет.
 export default function AuthCallback() {
   const navigate = useNavigate()
+  const t = useT({
+    ru: {
+      confirmFailed: 'Не удалось подтвердить email. Попробуйте войти заново.',
+      errorTitle: 'Что-то пошло не так',
+      toLogin: 'На страницу входа',
+      confirming: 'Подтверждаем пространство...',
+      oneSecond: 'Это займёт секунду.',
+    },
+    en: {
+      confirmFailed: 'We couldn’t confirm your email. Please try logging in again.',
+      errorTitle: 'Something went wrong',
+      toLogin: 'Go to login',
+      confirming: 'Confirming your space...',
+      oneSecond: 'This will take a second.',
+    },
+  })
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -48,7 +65,7 @@ export default function AuthCallback() {
       const { data } = await supabase.auth.getSession()
       if (cancelled) return
       if (data.session) navigate('/cabinet', { replace: true })
-      else setError('Не удалось подтвердить email. Попробуйте войти заново.')
+      else setError(t.confirmFailed)
     }
 
     run()
@@ -62,18 +79,18 @@ export default function AuthCallback() {
         <div className="glass-card p-10 rounded-2xl">
           {error ? (
             <>
-              <h1 className="font-serif text-2xl text-stone-800 mb-3">Что-то пошло не так</h1>
+              <h1 className="font-serif text-2xl text-stone-800 mb-3">{t.errorTitle}</h1>
               <div className="w-12 h-px bg-gold-400 mx-auto mb-5" />
               <p className="font-sans text-stone-600 mb-6">{error}</p>
               <button onClick={() => navigate('/login')} className="w-full btn-gold">
-                На страницу входа
+                {t.toLogin}
               </button>
             </>
           ) : (
             <>
               <div className="text-5xl text-gold-500 mb-4 animate-spin inline-block">⟳</div>
-              <h1 className="font-serif text-2xl text-stone-800 mb-2">Подтверждаем пространство...</h1>
-              <p className="font-sans text-stone-500 text-sm">Это займёт секунду.</p>
+              <h1 className="font-serif text-2xl text-stone-800 mb-2">{t.confirming}</h1>
+              <p className="font-sans text-stone-500 text-sm">{t.oneSecond}</p>
             </>
           )}
         </div>

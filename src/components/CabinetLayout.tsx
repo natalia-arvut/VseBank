@@ -1,17 +1,10 @@
 import type { ReactNode } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import { useT, LangSwitch } from '../i18n'
 import VseBankLogo from './VseBankLogo'
 import Guilloche from './Guilloche'
 import LegalFooter from './LegalFooter'
-
-const NAV_ITEMS = [
-  { path: '/cabinet', label: 'Дашборд', icon: '⌂' },
-  { path: '/transfer', label: 'Переводы', icon: '⇄' },
-  { path: '/history', label: 'История', icon: '◷' },
-  { path: '/paths', label: 'Донат VseBank', icon: '♡' },
-  { path: '/reviews', label: 'Отзывы', icon: '✦' },
-]
 
 // rightVisual — фоновый декор в правой части main:
 //   'arch' — картинка с золотой аркой (как на странице входа)
@@ -27,6 +20,32 @@ export default function CabinetLayout({
   const navigate = useNavigate()
   const location = useLocation()
   const { user, logout } = useApp()
+  const t = useT({
+    ru: {
+      dashboard: 'Дашборд',
+      transfers: 'Переводы',
+      history: 'История',
+      donation: 'Донат VseBank',
+      reviews: 'Отзывы',
+      logout: 'Выход',
+    },
+    en: {
+      dashboard: 'Dashboard',
+      transfers: 'Transfers',
+      history: 'History',
+      donation: 'VseBank Donation',
+      reviews: 'Reviews',
+      logout: 'Log out',
+    },
+  })
+
+  const NAV_ITEMS = [
+    { path: '/cabinet', label: t.dashboard, icon: '⌂' },
+    { path: '/transfer', label: t.transfers, icon: '⇄' },
+    { path: '/history', label: t.history, icon: '◷' },
+    { path: '/paths', label: t.donation, icon: '♡' },
+    { path: '/reviews', label: t.reviews, icon: '✦' },
+  ]
 
   const handleLogout = () => {
     logout()
@@ -64,6 +83,9 @@ export default function CabinetLayout({
         </nav>
 
         <div className="border-t border-white/10 pt-6 mt-6">
+          <div className="mb-4">
+            <LangSwitch />
+          </div>
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-8 rounded-full bg-gold-500/20 border border-gold-500/40 flex items-center justify-center">
               <span className="text-gold-400 text-xs font-serif">
@@ -80,7 +102,7 @@ export default function CabinetLayout({
             className="w-full flex items-center gap-2 px-4 py-2 text-stone-500 hover:text-stone-300 transition-colors"
           >
             <span>→</span>
-            <span className="font-sans text-xs">Выход</span>
+            <span className="font-sans text-xs">{t.logout}</span>
           </button>
         </div>
       </aside>
@@ -109,12 +131,15 @@ export default function CabinetLayout({
       {/* Верхняя панель — компактная */}
       <div className="lg:hidden fixed top-0 left-0 right-0 bg-cream-100 border-b border-gold-300/20 px-4 py-2 flex items-center justify-between z-20">
         <VseBankLogo size="xs" />
-        <button
-          onClick={handleLogout}
-          className="font-sans text-xs text-stone-500 hover:text-stone-700 px-3 py-1.5 border border-gold-300/40 rounded-md"
-        >
-          Выход
-        </button>
+        <div className="flex items-center gap-2">
+          <LangSwitch />
+          <button
+            onClick={handleLogout}
+            className="font-sans text-xs text-stone-500 hover:text-stone-700 px-3 py-1.5 border border-gold-300/40 rounded-md"
+          >
+            {t.logout}
+          </button>
+        </div>
       </div>
 
       {/* Картинка-арка справа — только для Благотворительности на широких экранах.

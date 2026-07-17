@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useApp } from '../context/AppContext'
 import VseBankLogo from '../components/VseBankLogo'
+import { useT } from '../i18n'
 
 // Страница установки нового пароля.
 // Пользователь попадает сюда по ссылке из письма «сброс пароля».
@@ -10,6 +11,38 @@ import VseBankLogo from '../components/VseBankLogo'
 export default function ResetPassword() {
   const navigate = useNavigate()
   const { updatePassword } = useApp()
+  const t = useT({
+    ru: {
+      linkInvalid: 'Ссылка для сброса пароля недействительна или истекла.',
+      passwordShort: 'Пароль должен быть не короче 6 символов',
+      passwordsMismatch: 'Пароли не совпадают',
+      updateFailed: 'Не удалось установить пароль',
+      updated: 'Пароль успешно обновлён. Перенаправляем в кабинет...',
+      tag: 'Сброс пароля',
+      title: 'Установите новый пароль',
+      checking: 'Проверяем ссылку...',
+      newPassword: 'Новый пароль',
+      repeatPassword: 'Повторите новый пароль',
+      saving: 'Сохраняем...',
+      setPassword: 'Установить пароль',
+      toLogin: 'На страницу входа',
+    },
+    en: {
+      linkInvalid: 'This password-reset link is invalid or has expired.',
+      passwordShort: 'Password must be at least 6 characters long',
+      passwordsMismatch: 'Passwords do not match',
+      updateFailed: 'We couldn’t set the password',
+      updated: 'Password updated successfully. Redirecting to your account...',
+      tag: 'Password reset',
+      title: 'Set a new password',
+      checking: 'Verifying the link...',
+      newPassword: 'New password',
+      repeatPassword: 'Repeat new password',
+      saving: 'Saving...',
+      setPassword: 'Set password',
+      toLogin: 'Go to login',
+    },
+  })
   const [ready, setReady] = useState(false)
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
@@ -42,7 +75,7 @@ export default function ResetPassword() {
       // Если уже есть recovery-сессия (Supabase сам её установил при detectSessionInUrl)
       const { data } = await supabase.auth.getSession()
       if (data.session) setReady(true)
-      else setError('Ссылка для сброса пароля недействительна или истекла.')
+      else setError(t.linkInvalid)
     }
     run()
   }, [])
@@ -50,14 +83,14 @@ export default function ResetPassword() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    if (password.length < 6) { setError('Пароль должен быть не короче 6 символов'); return }
-    if (password !== password2) { setError('Пароли не совпадают'); return }
+    if (password.length < 6) { setError(t.passwordShort); return }
+    if (password !== password2) { setError(t.passwordsMismatch); return }
 
     setLoading(true)
     const result = await updatePassword(password)
     setLoading(false)
-    if (!result.ok) { setError(result.error || 'Не удалось установить пароль'); return }
-    setInfo('Пароль успешно обновлён. Перенаправляем в кабинет...')
+    if (!result.ok) { setError(result.error || t.updateFailed); return }
+    setInfo(t.updated)
     setTimeout(() => navigate('/cabinet', { replace: true }), 1500)
   }
 
@@ -67,15 +100,15 @@ export default function ResetPassword() {
         <div className="mb-6 flex justify-center"><VseBankLogo size="md" /></div>
         <div className="glass-card p-8 rounded-2xl">
           <div className="text-center mb-5">
-            <div className="tag mb-2 text-sm">Сброс пароля</div>
-            <h1 className="font-serif text-2xl text-stone-800">Установите новый пароль</h1>
+            <div className="tag mb-2 text-sm">{t.tag}</div>
+            <h1 className="font-serif text-2xl text-stone-800">{t.title}</h1>
             <div className="w-12 h-px bg-gold-400 mx-auto mt-3" />
           </div>
 
           {!ready && !error && (
             <div className="text-center text-stone-500 py-6">
               <span className="animate-spin inline-block text-2xl text-gold-500">⟳</span>
-              <p className="mt-2 text-sm">Проверяем ссылку...</p>
+              <p className="mt-2 text-sm">{t.checking}</p>
             </div>
           )}
 
@@ -84,14 +117,14 @@ export default function ResetPassword() {
               <input
                 type="password"
                 className="input-field"
-                placeholder="Новый пароль"
+                placeholder={t.newPassword}
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />
               <input
                 type="password"
                 className="input-field"
-                placeholder="Повторите новый пароль"
+                placeholder={t.repeatPassword}
                 value={password2}
                 onChange={e => setPassword2(e.target.value)}
               />
@@ -102,7 +135,7 @@ export default function ResetPassword() {
                 <div className="font-sans text-sm text-gold-700 bg-gold-500/10 border border-gold-400/40 px-4 py-3 rounded-md">{info}</div>
               )}
               <button type="submit" disabled={loading} className="w-full btn-gold disabled:opacity-50">
-                {loading ? 'Сохраняем...' : 'Установить пароль'}
+                {loading ? t.saving : t.setPassword}
               </button>
             </form>
           )}
@@ -111,7 +144,7 @@ export default function ResetPassword() {
             <div className="text-center">
               <p className="font-sans text-red-600 mb-4">{error}</p>
               <button onClick={() => navigate('/login')} className="w-full btn-outline">
-                На страницу входа
+                {t.toLogin}
               </button>
             </div>
           )}

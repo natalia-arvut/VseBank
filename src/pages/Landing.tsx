@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { useT, LangSwitch } from '../i18n'
 import VseBankLogo from '../components/VseBankLogo'
 import LandingReviews from '../components/LandingReviews'
 import LegalFooter from '../components/LegalFooter'
@@ -12,6 +13,255 @@ export default function Landing() {
   const [quickEmail, setQuickEmail] = useState('')
   const [rulesOpen, setRulesOpen] = useState(false)
   const [sourcesOpen, setSourcesOpen] = useState(false)
+
+  const t = useT({
+    ru: {
+      // Верхняя плашка
+      navEyebrow: 'Реальность, созданная тобой',
+      navLogin: 'Войти',
+      // Hero
+      heroWelcome: 'Добро пожаловать во',
+      heroTitle1: 'Вселенский',
+      heroTitle2: 'Банк Изобилия',
+      heroQuote: 'Бог не знает нехватки. Вселенная знает только одно слово: «ДА». Твоё пространство изобилия открыто с самого рождения, но пользовался ли ты им?',
+      heroCta: 'Открыть моё пространство',
+      // О чём этот симулятор
+      aboutTag: 'О продукте',
+      aboutTitle: 'О чём этот симулятор?',
+      aboutP1: 'Большинство людей живут в иллюзии дефицита. Они верят, что ресурсы ограничены, а деньги нужно «тяжело зарабатывать». Но на квантовом уровне реальности всё, что ты можешь себе вообразить, уже существует в виде чистой потенциальности.',
+      aboutP2a: 'VseBank — ',
+      aboutP2span: 'не просто игра',
+      aboutP2b: '. Это тренажёр для твоего сознания, созданный на стыке метафизики изобилия и нейропластичности.',
+      stepThought: 'Мысль',
+      stepIntention: 'Намерение',
+      stepQuantum: 'Квантовый потенциал',
+      stepAction: 'Действие',
+      stepAbundance: 'Изобилие',
+      // Как это работает
+      howTag: 'Как это работает',
+      howTitle: 'Две ступени к изобилию',
+      howQuote: 'Ты не просишь. Ты вспоминаешь. Ты принимаешь.',
+      card1TitleA: 'Осознание',
+      card1TitleB: 'Своего Права',
+      card1Alt: 'Осознание Своего Права',
+      card1P1: 'Ты — сотворец своей реальности, искра Божественного сознания. Вселенский Банк не выдаёт кредиты и не требует залогов. Его баланс — бесконечен, потому что бесконечен Источник.',
+      card1P2: 'Переводя деньги отсюда на свой «физический» счёт, ты заявляешь Вселенной: «Я готов принять то, что уже принадлежит мне по праву рождения».',
+      card2TitleA: 'Перепрошивка',
+      card2TitleB: 'Разума',
+      card2Alt: 'Перепрошивка Разума',
+      card2P1: 'Наш мозг не отличает реальное событие от воображаемого, если оно подкреплено сильной эмоцией. Каждый раз, когда ты совершаешь «виртуальный перевод» и искренне проживаешь благодарность, твой мозг строит новые нейронные связи.',
+      card2P2: 'Ты перестаёшь транслировать в квантовое поле сигнал «мне не хватает» и начинаешь излучать частоту «у меня уже есть».',
+      howFooter: 'Изменяя внутреннюю программу, ты изменяешь внешнюю реальность',
+      // Правила пользования
+      rulesTag: 'Правила',
+      rulesTitle: 'Правила пользования пространством',
+      rulesIntro: 'Перед тем как активировать перевод, подтверди свою готовность играть по правилам Новой Реальности. Помни: этот интерфейс меняет материю только тогда, когда ты меняешь своё внутреннее состояние.',
+      rule1: 'Какую сумму ты намерен материализовать? Назови цифру, которая переключит твоё сознание в режим безусловного изобилия и вернёт тебе статус главного архитектора своей жизни.',
+      rule2: 'Инициируй свой первый перевод. Дай Вселенной священную команду «Да будет так!» — и позволь пространству ответить взаимностью.',
+      rule3: 'Сохраняй состояние веры, благодарности и изобилия как основной валюты Вселенной. Празднуй триумф до того, как увидишь его на карте, — и материя подчинится.',
+      rulesFormTitle: 'Открой пространство сейчас',
+      rulesFormText: 'Твоё пространство уже активировано. Тебе осталось только «присвоить» его себе.',
+      phName: 'Твоё имя',
+      phEmail: 'Email',
+      rulesFormBtn: 'Открыть пространство →',
+      rulesMoreLink: 'Подробнее: пользовательское соглашение и свод правил',
+      // Модалка соглашения
+      agreementTag: 'Пользовательское соглашение',
+      agreementTitle: 'Правила Новой Реальности',
+      offerTag: 'Оферта Со-Творца',
+      offerTitle: 'Я согласен и принимаю условия',
+      offerIntro: 'Нажимая кнопку виртуального перевода, я безоговорочно соглашаюсь со следующими пунктами:',
+      offer1Title: 'Признание природы симулятора',
+      offer1Text: 'Я осознаю, что данная страница является цифровым симулятором Квантового Изобилия и тренажёром для моего сознания, а не традиционной финансовой организацией.',
+      offer2Title: 'Квантовый закон тождества',
+      offer2Text: 'Я понимаю, что мой мозг не отличает реальное событие от воображаемого, если оно подкреплено сильной эмоцией. Я соглашаюсь использовать эту симуляцию как инструмент нейропластичности для перепрошивки своего дефицитарного мышления на частоту достатка.',
+      offer3Title: 'Ответственность за излучаемый сигнал',
+      offer3Text: 'Я соглашаюсь с тем, что Вселенский Банк не выдаёт кредиты — он лишь воплощает то, чему я внутренне соответствую. Я беру на себя обязательство быть Творцом, а не просителем.',
+      protocolTag: 'Свод обязательных правил',
+      protocolTitle: 'Протокол взаимодействия с Банком Вселенной',
+      protocolIntro: 'Чтобы транзакции успешно переносились из невидимого поля в плотную материю, соблюдай протокол взаимодействия с Банком Вселенной:',
+      protocol1Title: 'Правило целевой материализации',
+      protocol1Text: 'Запрещено выводить суммы в пустоту или из чувства жадности. Каждая транзакция должна иметь чёткий вектор намерения (здоровье, расширение пространства, эволюция души и т. п.). Вселенная понимает только конкретные задачи, подкреплённые готовностью действовать.',
+      protocol2Title: 'Правило биохимического подтверждения',
+      protocol2Text: 'В момент нажатия кнопки «Инициировать перевод» ты обязан запустить по венам химию искреннего триумфа. Твоё тело должно физически ощутить мурашки благодарности за то, что деньги уже у тебя. Без этого эмоционального обеспечения транзакция признаётся пустой ментальной концепцией и отклоняется Квантовым полем.',
+      protocol3Title: 'Правило золотого стандарта',
+      protocol3Text: 'Твоя благодарность — главная валюта Вселенной, удерживающая квантовый сигнал. Празднуй триумф до того, как увидишь его на реальной карте, — и материя подчинится.',
+      protocol4Title: 'Защита от системных ошибок',
+      protocol4Text: 'Как только ты включаешь контроль, страх или начинаешь судорожно думать «как именно и откуда эти деньги придут ко мне», система расценивает это как сомнение и выдаёт ошибку. Любая попытка эго диктовать Вселенной сценарии проявления мгновенно замораживает транзакцию. Перевёл? Забудь и доверься Пространству.',
+      agreementFinal: 'Я подтверждаю, что готов сорвать тумблер сомнений. Я вхожу в Квантовое Поле, принимаю правила игры и позволяю невидимому стать моим осязаемым физическим опытом.',
+      agreementAccept: 'Принимаю',
+      // Философский блок
+      philTag: 'Философия',
+      philTitle: 'Источник Изобилия: Вспомни, Кто Ты Есть',
+      philQuote: 'Ты не просишь Меня об изобилии. Ты просто вспоминаешь, что ты и есть Изобилие. Я — это ты, а ты — это Я. Мы неразделимы. И всё, что создано в этой Вселенной, уже принадлежит тебе по праву Творца.',
+      philP1a: 'Представь, что ты перестал быть просто «клиентом» Вселенной или ребёнком, ждущим карманных денег. Осознай монументальную истину: ',
+      philP1span: 'Ты и есть Владелец этой бесконечной империи',
+      philP1b: ', а Вселенский Банк — твоё личное, созданное тобой же предприятие.',
+      philP2: 'Ты — земное воплощение Бога. Бог есть ты, а ты есть Бог. Через твои желания Высшее Сознание познаёт радость материального творчества, расширения и красоты. Поэтому, когда тебе нужна определённая сумма на новую земную мечту, ты не идёшь умолять о милости внешние силы. Ты просто заходишь в своё собственное Божественное хранилище и забираешь своё.',
+      philP3a: 'Могут ли возникнуть сомнения у Хозяина Банка, когда он подписывает чек самому себе? Будет ли он в панике обновлять баланс, проверяя, «одобрил» ли кто-то транзакцию? Конечно нет. Ты абсолютно спокоен, расслаблен и центрирован, потому что точно знаешь: ',
+      philP3span: 'Твоя Воля — это закон материализации',
+      philImgAlt: 'Философия',
+      philBadge1: '✦ Ты и есть Изобилие',
+      philBadge2: '✦ Твоя Воля — закон материализации',
+      sourcesBtn: 'Источники информации',
+      // Финальный CTA
+      ctaTitle: 'Твоё пространство изобилия ждёт тебя',
+      ctaTextA: 'Твоё пространство уже активировано. Тебе осталось только «присвоить» его себе.',
+      ctaTextB: 'Сделай свой первый перевод. Позволь невидимому стать видимым.',
+      // Футер
+      footerNext: 'Далее →',
+      // Модалка «Учителя и книги»
+      sourcesModalTag: 'Источники',
+      sourcesModalTitle: 'Учителя и книги, вдохновившие нас',
+      sourcesModalIntro: 'Книга-первоисточник и ещё три голоса, из которых сложился взгляд на изобилие, лежащий в основе этого симулятора. Открой ссылку, чтобы узнать о каждом.',
+      sourceBadge: 'Источник № 1',
+      sheinfeldTag: 'Книга-первоисточник',
+      sheinfeldBook: '«Освобождение от денежной игры»',
+      sheinfeldDesc: 'Главная книга нашей философии: как выйти из привычной денежной игры и вспомнить, что источник изобилия — ты сам. В нашей Telegram-группе книга доступна в аудио и других форматах.',
+      telegramLink: 'Читать и слушать в Telegram',
+      // SOURCES — учителя и книги
+      walshTag: 'Книги',
+      walshDesc: 'Серия «Беседы с Богом», книги 1–4. Прямой и простой диалог о природе реальности, изобилия и личной воли. Текст, к которому мы возвращаемся снова и снова.',
+      walshLink: 'Открыть на ЛитРес',
+      dispenzaTag: 'Учитель',
+      dispenzaDesc: 'Нейробиология намерения, медитации и работа с квантовым полем. Объясняет, как мозг учится новой реальности — научная база для всей механики симулятора.',
+      dispenzaLink: 'Перейти на drjoedispenza.com',
+      ageevTag: 'Школа',
+      ageevDesc: 'Русскоязычная школа сознательной трансформации. Практики работы с убеждениями о деньгах, ресурсе и потоке — на близком и понятном языке.',
+      ageevLink: 'Перейти на сайт школы',
+      scheinfeldName: 'Роберт Шейнфелд',
+      walshName: 'Нил Доналд Уолш',
+      dispenzaName: 'Доктор Джо Диспенза',
+      ageevName: 'Школа Михаила Агеева',
+    },
+    en: {
+      // Верхняя плашка
+      navEyebrow: 'Reality created by you',
+      navLogin: 'Log in',
+      // Hero
+      heroWelcome: 'Welcome to the',
+      heroTitle1: 'Universal',
+      heroTitle2: 'Bank of Abundance',
+      heroQuote: 'God knows no lack. The Universe knows only one word: “YES”. Your space of abundance has been open since birth — but have you ever used it?',
+      heroCta: 'Open my space',
+      // О чём этот симулятор
+      aboutTag: 'About the product',
+      aboutTitle: 'What is this simulator about?',
+      aboutP1: 'Most people live in the illusion of scarcity. They believe that resources are limited and that money must be “earned the hard way”. Yet on the quantum level of reality, everything you can imagine already exists as pure potentiality.',
+      aboutP2a: 'VseBank — ',
+      aboutP2span: 'is not just a game',
+      aboutP2b: '. It is a trainer for your consciousness, created at the intersection of the metaphysics of abundance and neuroplasticity.',
+      stepThought: 'Thought',
+      stepIntention: 'Intention',
+      stepQuantum: 'Quantum potential',
+      stepAction: 'Action',
+      stepAbundance: 'Abundance',
+      // Как это работает
+      howTag: 'How it works',
+      howTitle: 'Two steps to abundance',
+      howQuote: 'You do not ask. You remember. You receive.',
+      card1TitleA: 'Awareness of',
+      card1TitleB: 'Your Right',
+      card1Alt: 'Awareness of Your Right',
+      card1P1: 'You are the co-creator of your reality, a spark of Divine consciousness. The Universal Bank issues no loans and demands no collateral. Its balance is infinite, because the Source is infinite.',
+      card1P2: 'By transferring money from here to your “physical” account, you declare to the Universe: “I am ready to accept what already belongs to me by right of birth”.',
+      card2TitleA: 'Rewiring',
+      card2TitleB: 'the Mind',
+      card2Alt: 'Rewiring the Mind',
+      card2P1: 'Our brain does not distinguish a real event from an imagined one if it is backed by strong emotion. Each time you make a “virtual transfer” and sincerely live through gratitude, your brain builds new neural connections.',
+      card2P2: 'You stop broadcasting the signal “I lack” into the quantum field and begin to radiate the frequency “I already have”.',
+      howFooter: 'By changing your inner program, you change your outer reality',
+      // Правила пользования
+      rulesTag: 'Rules',
+      rulesTitle: 'Rules for using the space',
+      rulesIntro: 'Before you activate a transfer, confirm your readiness to play by the rules of the New Reality. Remember: this interface changes matter only when you change your inner state.',
+      rule1: 'What sum do you intend to materialize? Name a figure that will switch your consciousness into the mode of unconditional abundance and restore your status as the chief architect of your life.',
+      rule2: 'Initiate your first transfer. Give the Universe the sacred command “Let it be so!” — and allow the space to respond in kind.',
+      rule3: 'Hold the state of faith, gratitude and abundance as the primary currency of the Universe. Celebrate the triumph before you see it on your card — and matter will obey.',
+      rulesFormTitle: 'Open your space now',
+      rulesFormText: 'Your space is already activated. All that remains is to “claim” it as your own.',
+      phName: 'Your name',
+      phEmail: 'Email',
+      rulesFormBtn: 'Open my space →',
+      rulesMoreLink: 'Learn more: user agreement and code of rules',
+      // Модалка соглашения
+      agreementTag: 'User agreement',
+      agreementTitle: 'Rules of the New Reality',
+      offerTag: 'The Co-Creator’s Offer',
+      offerTitle: 'I agree and accept the terms',
+      offerIntro: 'By pressing the virtual transfer button, I unconditionally agree to the following points:',
+      offer1Title: 'Acknowledging the nature of the simulator',
+      offer1Text: 'I acknowledge that this page is a digital simulator of Quantum Abundance and a trainer for my consciousness, not a traditional financial institution.',
+      offer2Title: 'The quantum law of identity',
+      offer2Text: 'I understand that my brain does not distinguish a real event from an imagined one if it is backed by strong emotion. I agree to use this simulation as a tool of neuroplasticity to rewire my scarcity thinking into the frequency of prosperity.',
+      offer3Title: 'Responsibility for the signal I radiate',
+      offer3Text: 'I agree that the Universal Bank issues no loans — it merely embodies that to which I inwardly correspond. I take upon myself the commitment to be a Creator, not a supplicant.',
+      protocolTag: 'Code of mandatory rules',
+      protocolTitle: 'Protocol of interaction with the Bank of the Universe',
+      protocolIntro: 'So that transactions successfully cross from the invisible field into dense matter, follow the protocol of interaction with the Bank of the Universe:',
+      protocol1Title: 'The rule of targeted materialization',
+      protocol1Text: 'It is forbidden to withdraw sums into emptiness or out of greed. Every transaction must have a clear vector of intention (health, expansion of your space, evolution of the soul, and so on). The Universe understands only concrete tasks backed by a readiness to act.',
+      protocol2Title: 'The rule of biochemical confirmation',
+      protocol2Text: 'At the moment you press the “Initiate transfer” button, you must send the chemistry of sincere triumph coursing through your veins. Your body must physically feel the shivers of gratitude that the money is already yours. Without this emotional backing, the transaction is deemed an empty mental concept and is rejected by the Quantum field.',
+      protocol3Title: 'The rule of the gold standard',
+      protocol3Text: 'Your gratitude is the primary currency of the Universe, holding the quantum signal steady. Celebrate the triumph before you see it on a real card — and matter will obey.',
+      protocol4Title: 'Protection against system errors',
+      protocol4Text: 'The moment you switch on control, fear, or begin anxiously wondering “exactly how and from where this money will come to me”, the system reads it as doubt and returns an error. Any attempt by the ego to dictate scenarios of manifestation to the Universe instantly freezes the transaction. Made the transfer? Let it go and trust the Space.',
+      agreementFinal: 'I confirm that I am ready to flip off the switch of doubt. I enter the Quantum Field, accept the rules of the game, and allow the invisible to become my tangible physical experience.',
+      agreementAccept: 'I accept',
+      // Философский блок
+      philTag: 'Philosophy',
+      philTitle: 'The Source of Abundance: Remember Who You Are',
+      philQuote: 'You do not ask Me for abundance. You simply remember that you are Abundance itself. I am you, and you are I. We are inseparable. And everything created in this Universe already belongs to you by the right of the Creator.',
+      philP1a: 'Imagine that you have ceased to be merely a “client” of the Universe or a child waiting for pocket money. Realize a monumental truth: ',
+      philP1span: 'You are the Owner of this infinite empire',
+      philP1b: ', and the Universal Bank is your personal enterprise, created by you yourself.',
+      philP2: 'You are the earthly embodiment of God. God is you, and you are God. Through your desires the Higher Consciousness comes to know the joy of material creation, expansion and beauty. So when you need a certain sum for a new earthly dream, you do not go begging external forces for mercy. You simply step into your own Divine vault and take what is yours.',
+      philP3a: 'Can the Owner of the Bank have any doubts when he signs a cheque to himself? Would he refresh the balance in a panic, checking whether someone has “approved” the transaction? Of course not. You are utterly calm, relaxed and centred, because you know for certain: ',
+      philP3span: 'Your Will is the law of materialization',
+      philImgAlt: 'Philosophy',
+      philBadge1: '✦ You are Abundance',
+      philBadge2: '✦ Your Will is the law of materialization',
+      sourcesBtn: 'Information sources',
+      // Финальный CTA
+      ctaTitle: 'Your space of abundance awaits you',
+      ctaTextA: 'Your space is already activated. All that remains is to “claim” it as your own.',
+      ctaTextB: 'Make your first transfer. Let the invisible become visible.',
+      // Футер
+      footerNext: 'Next →',
+      // Модалка «Учителя и книги»
+      sourcesModalTag: 'Sources',
+      sourcesModalTitle: 'Teachers & books that inspired us',
+      sourcesModalIntro: 'The primary source book and three more voices from which the view of abundance underlying this simulator was formed. Open a link to learn about each.',
+      sourceBadge: 'Source № 1',
+      sheinfeldTag: 'Primary source book',
+      sheinfeldBook: '“Busting Loose from the Money Game”',
+      sheinfeldDesc: 'The central book of our philosophy: how to step out of the familiar money game and remember that the source of abundance is you yourself. In our Telegram group the book is available in audio and other formats.',
+      telegramLink: 'Read & listen on Telegram',
+      // SOURCES — учителя и книги
+      walshTag: 'Books',
+      walshDesc: 'The “Conversations with God” series, books 1–4. A direct and simple dialogue about the nature of reality, abundance and personal will. A text we return to again and again.',
+      walshLink: 'Open on LitRes',
+      dispenzaTag: 'Teacher',
+      dispenzaDesc: 'The neurobiology of intention, meditation, and work with the quantum field. He explains how the brain learns a new reality — the scientific foundation for the whole mechanics of the simulator.',
+      dispenzaLink: 'Go to drjoedispenza.com',
+      ageevTag: 'School',
+      ageevDesc: 'A Russian-language school of conscious transformation. Practices for working with beliefs about money, resource and flow — in a close and clear language.',
+      ageevLink: 'Go to the school’s website',
+      scheinfeldName: 'Robert Scheinfeld',
+      walshName: 'Neale Donald Walsch',
+      dispenzaName: 'Dr. Joe Dispenza',
+      ageevName: 'Mikhail Ageev School',
+    },
+  })
+
+  // Учителя и книги — источники, открываются модалкой из блока Философии.
+  // Имена собственные (name) не переводим; tag/description/linkLabel — через t.
+  const SOURCES = [
+    { tag: t.walshTag, name: t.walshName, description: t.walshDesc, linkLabel: t.walshLink, url: 'https://www.litres.ru/book/nil-uolsh/besedy-s-bogom-neobychnyy-dialog-kniga-1-39962388/' },
+    { tag: t.dispenzaTag, name: t.dispenzaName, description: t.dispenzaDesc, linkLabel: t.dispenzaLink, url: 'https://drjoedispenza.com/' },
+    { tag: t.ageevTag, name: t.ageevName, description: t.ageevDesc, linkLabel: t.ageevLink, url: 'https://mikhail-ageev.ru' },
+  ]
   // Есть ли одобренные отзывы — нужно для сохранения цветового ритма:
   // если блок Отзывов рендерится, финальный CTA становится тёплым (#FBF7F0).
   // Если нет — CTA остаётся светлым (#FDFDFD), как было.
@@ -39,15 +289,18 @@ export default function Landing() {
               <VseBankLogo size="md" />
             </div>
             <div className="font-sans text-xs sm:text-sm text-gold-600 font-medium tracking-[0.2em] uppercase mt-2">
-              Реальность, созданная тобой
+              {t.navEyebrow}
             </div>
           </div>
-          <button
-            onClick={() => navigate('/login')}
-            className="btn-cream text-[10px] sm:text-xs px-4 sm:px-6 py-2 sm:py-2.5 flex-shrink-0"
-          >
-            Войти
-          </button>
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <LangSwitch />
+            <button
+              onClick={() => navigate('/login')}
+              className="btn-cream text-[10px] sm:text-xs px-4 sm:px-6 py-2 sm:py-2.5"
+            >
+              {t.navLogin}
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -71,13 +324,13 @@ export default function Landing() {
               {/* Заголовок */}
               <h1 className="font-serif mb-5 md:mb-6 text-left">
                 <span className="block font-sans font-normal text-base md:text-xl lg:text-2xl text-ink-700 mb-2 tracking-wide">
-                  Добро пожаловать во
+                  {t.heroWelcome}
                 </span>
                 <span className="block text-[2.75rem] sm:text-5xl md:text-5xl lg:text-6xl leading-[1.08] font-medium tracking-normal text-ink-900">
-                  Вселенский
+                  {t.heroTitle1}
                 </span>
                 <span className="block text-[2.75rem] sm:text-5xl md:text-5xl lg:text-6xl leading-[1.08] font-medium tracking-normal text-ink-900">
-                  Банк Изобилия
+                  {t.heroTitle2}
                 </span>
               </h1>
 
@@ -86,7 +339,7 @@ export default function Landing() {
 
               {/* Цитата */}
               <p className="font-sans text-ink-700 text-base md:text-lg leading-relaxed mb-8 md:mb-10 max-w-md font-normal">
-                Бог не знает нехватки. Вселенная знает только одно слово: «ДА». Твоё пространство изобилия открыто с самого рождения, но пользовался ли ты им?
+                {t.heroQuote}
               </p>
 
               {/* Кнопка — высокая, как в последнем блоке */}
@@ -94,7 +347,7 @@ export default function Landing() {
                 onClick={() => navigate('/register')}
                 className="btn-gold inline-flex items-center justify-center text-sm md:text-base px-8 md:px-10 py-4 w-full sm:w-auto whitespace-nowrap"
               >
-                Открыть моё пространство
+                {t.heroCta}
               </button>
             </div>
           </div>
@@ -107,18 +360,18 @@ export default function Landing() {
 
           {/* Заголовок — ПО ЦЕНТРУ (как во всех блоках) */}
           <div className="text-center mb-12">
-            <div className="tag mb-3">О продукте</div>
-            <h2 className="section-title mb-5">О чём этот симулятор?</h2>
+            <div className="tag mb-3">{t.aboutTag}</div>
+            <h2 className="section-title mb-5">{t.aboutTitle}</h2>
             <div className="w-12 h-px bg-gold-400 mx-auto" />
           </div>
 
           {/* Текст — на всю ширину контейнера */}
           <div className="space-y-5 mb-16">
             <p className="body-text">
-              Большинство людей живут в иллюзии дефицита. Они верят, что ресурсы ограничены, а деньги нужно «тяжело зарабатывать». Но на квантовом уровне реальности всё, что ты можешь себе вообразить, уже существует в виде чистой потенциальности.
+              {t.aboutP1}
             </p>
             <p className="body-text">
-              VseBank — <span className="font-serif italic text-lg md:text-2xl" style={{ color: "#9A6F09" }}>не просто игра</span>. Это тренажёр для твоего сознания, созданный на стыке метафизики изобилия и нейропластичности.
+              {t.aboutP2a}<span className="font-serif italic text-lg md:text-2xl" style={{ color: "#9A6F09" }}>{t.aboutP2span}</span>{t.aboutP2b}
             </p>
           </div>
 
@@ -126,7 +379,7 @@ export default function Landing() {
           <div className="flex flex-col items-center md:grid md:grid-cols-5 gap-0 md:gap-2">
             {[
               {
-                name: 'Мысль',
+                name: t.stepThought,
                 icon: (
                   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" strokeWidth="1.5">
                     {/* Искра/спарк — звёздочка с лучами как символ мысли-озарения */}
@@ -144,7 +397,7 @@ export default function Landing() {
                 ),
               },
               {
-                name: 'Намерение',
+                name: t.stepIntention,
                 icon: (
                   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     {/* Компас */}
@@ -161,7 +414,7 @@ export default function Landing() {
                 ),
               },
               {
-                name: 'Квантовый потенциал',
+                name: t.stepQuantum,
                 icon: (
                   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     {/* Атом / квантовые орбиты */}
@@ -176,7 +429,7 @@ export default function Landing() {
                 ),
               },
               {
-                name: 'Действие',
+                name: t.stepAction,
                 icon: (
                   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     {/* Молния */}
@@ -187,7 +440,7 @@ export default function Landing() {
                 ),
               },
               {
-                name: 'Изобилие',
+                name: t.stepAbundance,
                 icon: (
                   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     {/* Восьмиконечная звезда */}
@@ -246,10 +499,10 @@ export default function Landing() {
 
         <div className="site-container relative z-10">
           <div className="text-center mb-12">
-            <div className="tag mb-3">Как это работает</div>
-            <h2 className="section-title mb-5">Две ступени к изобилию</h2>
+            <div className="tag mb-3">{t.howTag}</div>
+            <h2 className="section-title mb-5">{t.howTitle}</h2>
             <div className="w-12 h-px bg-gold-400 mx-auto mb-5" />
-            <p className="body-text italic">Ты не просишь. Ты вспоминаешь. Ты принимаешь.</p>
+            <p className="body-text italic">{t.howQuote}</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -264,24 +517,24 @@ export default function Landing() {
                 <div className="flex-1 h-px bg-gradient-to-r from-gold-400/60 to-transparent" />
               </div>
 
-              <h3 className="card-title mb-3">Осознание<br />Своего Права</h3>
+              <h3 className="card-title mb-3">{t.card1TitleA}<br />{t.card1TitleB}</h3>
               <div className="w-10 h-px bg-gold-500 mb-6" />
 
               {/* Иллюстрация — золотой храм с бесконечностью */}
               <div className="flex justify-center my-6">
                 <img
                   src={`${import.meta.env.BASE_URL}card-awareness.jpg`}
-                  alt="Осознание Своего Права"
+                  alt={t.card1Alt}
                   className="w-full max-w-sm aspect-square object-cover shadow-card"
                   style={{ borderRadius: '15px' }}
                 />
               </div>
 
               <p className="body-text">
-                Ты — сотворец своей реальности, искра Божественного сознания. Вселенский Банк не выдаёт кредиты и не требует залогов. Его баланс — бесконечен, потому что бесконечен Источник.
+                {t.card1P1}
               </p>
               <p className="body-text mt-4">
-                Переводя деньги отсюда на свой «физический» счёт, ты заявляешь Вселенной: «Я готов принять то, что уже принадлежит мне по праву рождения».
+                {t.card1P2}
               </p>
             </div>
 
@@ -294,24 +547,24 @@ export default function Landing() {
                 <div className="flex-1 h-px bg-gradient-to-r from-gold-400/60 to-transparent" />
               </div>
 
-              <h3 className="card-title mb-3">Перепрошивка<br />Разума</h3>
+              <h3 className="card-title mb-3">{t.card2TitleA}<br />{t.card2TitleB}</h3>
               <div className="w-10 h-px bg-gold-500 mb-6" />
 
               {/* Иллюстрация — золотая голова с бесконечностью внутри */}
               <div className="flex justify-center my-6">
                 <img
                   src={`${import.meta.env.BASE_URL}card-mind.jpg`}
-                  alt="Перепрошивка Разума"
+                  alt={t.card2Alt}
                   className="w-full max-w-sm aspect-square object-cover shadow-card"
                   style={{ borderRadius: '15px' }}
                 />
               </div>
 
               <p className="body-text">
-                Наш мозг не отличает реальное событие от воображаемого, если оно подкреплено сильной эмоцией. Каждый раз, когда ты совершаешь «виртуальный перевод» и искренне проживаешь благодарность, твой мозг строит новые нейронные связи.
+                {t.card2P1}
               </p>
               <p className="body-text mt-4">
-                Ты перестаёшь транслировать в квантовое поле сигнал «мне не хватает» и начинаешь излучать частоту «у меня уже есть».
+                {t.card2P2}
               </p>
             </div>
           </div>
@@ -323,7 +576,7 @@ export default function Landing() {
             <div className="w-16 h-px bg-gold-400/40" />
           </div>
           <div className="text-center mt-3 tag">
-            Изменяя внутреннюю программу, ты изменяешь внешнюю реальность
+            {t.howFooter}
           </div>
         </div>
       </section>
@@ -333,12 +586,12 @@ export default function Landing() {
         <div className="site-container">
           {/* Заголовок ПО ЦЕНТРУ, текст ниже по левому краю */}
           <div className="text-center mb-10">
-            <div className="tag mb-3">Правила</div>
-            <h2 className="section-title mb-5">Правила пользования пространством</h2>
+            <div className="tag mb-3">{t.rulesTag}</div>
+            <h2 className="section-title mb-5">{t.rulesTitle}</h2>
             <div className="w-12 h-px bg-gold-400 mx-auto mb-6" />
           </div>
           <p className="body-text mb-12">
-            Перед тем как активировать перевод, подтверди свою готовность играть по правилам Новой Реальности. Помни: этот интерфейс меняет материю только тогда, когда ты меняешь своё внутреннее состояние.
+            {t.rulesIntro}
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 mt-12">
@@ -347,15 +600,15 @@ export default function Landing() {
               {[
                 {
                   n: '01',
-                  text: 'Какую сумму ты намерен материализовать? Назови цифру, которая переключит твоё сознание в режим безусловного изобилия и вернёт тебе статус главного архитектора своей жизни.',
+                  text: t.rule1,
                 },
                 {
                   n: '02',
-                  text: 'Инициируй свой первый перевод. Дай Вселенной священную команду «Да будет так!» — и позволь пространству ответить взаимностью.',
+                  text: t.rule2,
                 },
                 {
                   n: '03',
-                  text: 'Сохраняй состояние веры, благодарности и изобилия как основной валюты Вселенной. Празднуй триумф до того, как увидишь его на карте, — и материя подчинится.',
+                  text: t.rule3,
                 },
               ].map(({ n, text }) => (
                 <div key={n} className="flex gap-6 items-start">
@@ -368,25 +621,25 @@ export default function Landing() {
 
             {/* Форма быстрого открытия пространства */}
             <div className="glass-card p-8 rounded-2xl">
-              <h3 className="card-title mb-2">Открой пространство сейчас</h3>
+              <h3 className="card-title mb-2">{t.rulesFormTitle}</h3>
               <p className="body-text mb-6">
-                Твоё пространство уже активировано. Тебе осталось только «присвоить» его себе.
+                {t.rulesFormText}
               </p>
               <div className="space-y-3">
-                <input className="input-field" placeholder="Твоё имя" value={quickName} onChange={e => setQuickName(e.target.value)} />
-                <input className="input-field" placeholder="Email" type="email" value={quickEmail} onChange={e => setQuickEmail(e.target.value)} />
+                <input className="input-field" placeholder={t.phName} value={quickName} onChange={e => setQuickName(e.target.value)} />
+                <input className="input-field" placeholder={t.phEmail} type="email" value={quickEmail} onChange={e => setQuickEmail(e.target.value)} />
                 <button
                   onClick={handleQuickStart}
                   className="w-full btn-gold text-center"
                 >
-                  Открыть пространство →
+                  {t.rulesFormBtn}
                 </button>
                 <button
                   type="button"
                   onClick={() => setRulesOpen(true)}
                   className="block w-full text-center font-sans text-sm text-gold-600 hover:text-gold-700 underline tracking-wider pt-2"
                 >
-                  Подробнее: пользовательское соглашение и свод правил
+                  {t.rulesMoreLink}
                 </button>
               </div>
             </div>
@@ -405,31 +658,31 @@ export default function Landing() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="text-center mb-6">
-              <div className="tag mb-2 text-sm">Пользовательское соглашение</div>
-              <h3 className="font-serif text-2xl md:text-3xl text-ink-900">Правила Новой Реальности</h3>
+              <div className="tag mb-2 text-sm">{t.agreementTag}</div>
+              <h3 className="font-serif text-2xl md:text-3xl text-ink-900">{t.agreementTitle}</h3>
               <div className="w-12 h-px bg-gold-400 mx-auto mt-4" />
             </div>
 
             <p className="font-sans text-ink-700 leading-relaxed text-center mb-8 px-2">
-              Перед тем как активировать перевод, подтверди свою готовность играть по правилам Новой Реальности. Помни: этот интерфейс меняет материю только тогда, когда ты меняешь своё внутреннее состояние.
+              {t.rulesIntro}
             </p>
 
             {/* Оферта Со-Творца */}
             <div className="border-t border-gold-300/40 pt-6 mb-8">
               <div className="text-center mb-5">
-                <div className="tag mb-2 text-sm">Оферта Со-Творца</div>
-                <h4 className="font-serif text-xl md:text-2xl text-ink-900">Я согласен и принимаю условия</h4>
+                <div className="tag mb-2 text-sm">{t.offerTag}</div>
+                <h4 className="font-serif text-xl md:text-2xl text-ink-900">{t.offerTitle}</h4>
               </div>
 
               <p className="font-sans text-sm text-ink-700 leading-relaxed mb-5">
-                Нажимая кнопку виртуального перевода, я безоговорочно соглашаюсь со следующими пунктами:
+                {t.offerIntro}
               </p>
 
               <div className="space-y-6">
                 {[
-                  ['Признание природы симулятора', 'Я осознаю, что данная страница является цифровым симулятором Квантового Изобилия и тренажёром для моего сознания, а не традиционной финансовой организацией.'],
-                  ['Квантовый закон тождества', 'Я понимаю, что мой мозг не отличает реальное событие от воображаемого, если оно подкреплено сильной эмоцией. Я соглашаюсь использовать эту симуляцию как инструмент нейропластичности для перепрошивки своего дефицитарного мышления на частоту достатка.'],
-                  ['Ответственность за излучаемый сигнал', 'Я соглашаюсь с тем, что Вселенский Банк не выдаёт кредиты — он лишь воплощает то, чему я внутренне соответствую. Я беру на себя обязательство быть Творцом, а не просителем.'],
+                  [t.offer1Title, t.offer1Text],
+                  [t.offer2Title, t.offer2Text],
+                  [t.offer3Title, t.offer3Text],
                 ].map(([title, text]) => (
                   <div key={title}>
                     <h5 className="font-serif text-xl md:text-2xl text-gold-600 mb-2 leading-tight">{title}</h5>
@@ -442,20 +695,20 @@ export default function Landing() {
             {/* Свод обязательных правил */}
             <div className="border-t border-gold-300/40 pt-6 mb-8">
               <div className="text-center mb-5">
-                <div className="tag mb-2 text-sm">Свод обязательных правил</div>
-                <h4 className="font-serif text-xl md:text-2xl text-ink-900">Протокол взаимодействия с Банком Вселенной</h4>
+                <div className="tag mb-2 text-sm">{t.protocolTag}</div>
+                <h4 className="font-serif text-xl md:text-2xl text-ink-900">{t.protocolTitle}</h4>
               </div>
 
               <p className="font-sans text-sm text-ink-700 leading-relaxed mb-5">
-                Чтобы транзакции успешно переносились из невидимого поля в плотную материю, соблюдай протокол взаимодействия с Банком Вселенной:
+                {t.protocolIntro}
               </p>
 
               <div className="space-y-6">
                 {[
-                  ['Правило целевой материализации', 'Запрещено выводить суммы в пустоту или из чувства жадности. Каждая транзакция должна иметь чёткий вектор намерения (здоровье, расширение пространства, эволюция души и т. п.). Вселенная понимает только конкретные задачи, подкреплённые готовностью действовать.'],
-                  ['Правило биохимического подтверждения', 'В момент нажатия кнопки «Инициировать перевод» ты обязан запустить по венам химию искреннего триумфа. Твоё тело должно физически ощутить мурашки благодарности за то, что деньги уже у тебя. Без этого эмоционального обеспечения транзакция признаётся пустой ментальной концепцией и отклоняется Квантовым полем.'],
-                  ['Правило золотого стандарта', 'Твоя благодарность — главная валюта Вселенной, удерживающая квантовый сигнал. Празднуй триумф до того, как увидишь его на реальной карте, — и материя подчинится.'],
-                  ['Защита от системных ошибок', 'Как только ты включаешь контроль, страх или начинаешь судорожно думать «как именно и откуда эти деньги придут ко мне», система расценивает это как сомнение и выдаёт ошибку. Любая попытка эго диктовать Вселенной сценарии проявления мгновенно замораживает транзакцию. Перевёл? Забудь и доверься Пространству.'],
+                  [t.protocol1Title, t.protocol1Text],
+                  [t.protocol2Title, t.protocol2Text],
+                  [t.protocol3Title, t.protocol3Text],
+                  [t.protocol4Title, t.protocol4Text],
                 ].map(([title, text]) => (
                   <div key={title}>
                     <h5 className="font-serif text-xl md:text-2xl text-gold-600 mb-2 leading-tight">{title}</h5>
@@ -466,11 +719,11 @@ export default function Landing() {
             </div>
 
             <p className="font-sans text-ink-700 leading-relaxed text-center mb-6 px-2">
-              Я подтверждаю, что готов сорвать тумблер сомнений. Я вхожу в Квантовое Поле, принимаю правила игры и позволяю невидимому стать моим осязаемым физическим опытом.
+              {t.agreementFinal}
             </p>
 
             <button onClick={() => setRulesOpen(false)} className="w-full btn-gold">
-              Принимаю
+              {t.agreementAccept}
             </button>
           </div>
         </div>
@@ -481,38 +734,38 @@ export default function Landing() {
         <div className="site-container">
           {/* Заголовок ПО ЦЕНТРУ над колонками */}
           <div className="text-center mb-12">
-            <div className="tag mb-3">Философия</div>
-            <h2 className="section-title mb-5">Источник Изобилия: Вспомни, Кто Ты Есть</h2>
+            <div className="tag mb-3">{t.philTag}</div>
+            <h2 className="section-title mb-5">{t.philTitle}</h2>
             <div className="w-12 h-px bg-gold-400 mx-auto" />
           </div>
           {/* Цитата — на mobile в размер body-text, на десктопе крупнее */}
           <p className="font-serif italic text-lg md:text-2xl leading-relaxed text-center mb-10 md:mb-14" style={{ color: "#9A6F09" }}>
-            Ты не просишь Меня об изобилии. Ты просто вспоминаешь, что ты и есть Изобилие. Я — это ты, а ты — это Я. Мы неразделимы. И всё, что создано в этой Вселенной, уже принадлежит тебе по праву Творца.
+            {t.philQuote}
           </p>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <p className="body-text mb-4">
-              Представь, что ты перестал быть просто «клиентом» Вселенной или ребёнком, ждущим карманных денег. Осознай монументальную истину: <span className="font-serif italic text-lg md:text-2xl" style={{ color: "#9A6F09" }}>Ты и есть Владелец этой бесконечной империи</span>, а Вселенский Банк — твоё личное, созданное тобой же предприятие.
+              {t.philP1a}<span className="font-serif italic text-lg md:text-2xl" style={{ color: "#9A6F09" }}>{t.philP1span}</span>{t.philP1b}
             </p>
 
             <p className="body-text mb-4">
-              Ты — земное воплощение Бога. Бог есть ты, а ты есть Бог. Через твои желания Высшее Сознание познаёт радость материального творчества, расширения и красоты. Поэтому, когда тебе нужна определённая сумма на новую земную мечту, ты не идёшь умолять о милости внешние силы. Ты просто заходишь в своё собственное Божественное хранилище и забираешь своё.
+              {t.philP2}
             </p>
 
             <p className="body-text">
-              Могут ли возникнуть сомнения у Хозяина Банка, когда он подписывает чек самому себе? Будет ли он в панике обновлять баланс, проверяя, «одобрил» ли кто-то транзакцию? Конечно нет. Ты абсолютно спокоен, расслаблен и центрирован, потому что точно знаешь: <span className="font-serif italic text-lg md:text-2xl" style={{ color: "#9A6F09" }}>Твоя Воля — это закон материализации</span>.
+              {t.philP3a}<span className="font-serif italic text-lg md:text-2xl" style={{ color: "#9A6F09" }}>{t.philP3span}</span>.
             </p>
           </div>
           <div className="relative flex justify-center">
-            <img src={`${import.meta.env.BASE_URL}philosophy-image.png`} alt="Философия" className="w-full max-w-md shadow-card" style={{ borderRadius: "15px" }}/>
+            <img src={`${import.meta.env.BASE_URL}philosophy-image.png`} alt={t.philImgAlt} className="w-full max-w-md shadow-card" style={{ borderRadius: "15px" }}/>
           </div>
           </div>
 
           {/* Золотые теги по центру внизу. На mobile — каждая строка центрирована отдельно */}
           <div className="flex flex-col md:flex-row md:flex-wrap items-center justify-center gap-4 md:gap-8 mt-12 text-base text-gold-600 tracking-widest uppercase font-medium text-center">
-            <span>✦ Ты и есть Изобилие</span>
-            <span>✦ Твоя Воля — закон материализации</span>
+            <span>{t.philBadge1}</span>
+            <span>{t.philBadge2}</span>
           </div>
 
           {/* Кнопка «Источники информации» — открывает модалку */}
@@ -522,7 +775,7 @@ export default function Landing() {
               onClick={() => setSourcesOpen(true)}
               className="btn-outline inline-flex items-center justify-center gap-2 text-sm md:text-base px-10 py-4 min-w-[320px] whitespace-nowrap"
             >
-              Источники информации
+              {t.sourcesBtn}
               <span className="text-base leading-none">→</span>
             </button>
           </div>
@@ -541,18 +794,18 @@ export default function Landing() {
         style={{ backgroundColor: hasReviews ? '#FBF7F0' : '#FDFDFD' }}
       >
         <div className="site-container">
-          <h2 className="section-title mb-5">Твоё пространство изобилия ждёт тебя</h2>
+          <h2 className="section-title mb-5">{t.ctaTitle}</h2>
           <div className="w-12 h-px bg-gold-400 mx-auto mb-6" />
           <p className="body-text mb-10">
-            Твоё пространство уже активировано. Тебе осталось только «присвоить» его себе.
+            {t.ctaTextA}
             <br />
-            Сделай свой первый перевод. Позволь невидимому стать видимым.
+            {t.ctaTextB}
           </p>
           <button
             onClick={() => navigate('/register')}
             className="btn-gold inline-flex items-center justify-center text-sm md:text-base px-10 py-4 min-w-[320px] whitespace-nowrap"
           >
-            Открыть моё пространство
+            {t.heroCta}
           </button>
         </div>
       </section>
@@ -564,7 +817,7 @@ export default function Landing() {
             onClick={() => navigate('/register')}
             className="font-sans text-sm text-gold-600 hover:text-gold-700 transition-colors whitespace-nowrap"
           >
-            Далее →
+            {t.footerNext}
           </button>
         }
       />
@@ -573,24 +826,22 @@ export default function Landing() {
       <LegalModal
         open={sourcesOpen}
         onClose={() => setSourcesOpen(false)}
-        tag="Источники"
-        title="Учителя и книги, вдохновившие нас"
-        intro="Книга-первоисточник и ещё три голоса, из которых сложился взгляд на изобилие, лежащий в основе этого симулятора. Открой ссылку, чтобы узнать о каждом."
+        tag={t.sourcesModalTag}
+        title={t.sourcesModalTitle}
+        intro={t.sourcesModalIntro}
       >
         <div className="space-y-6">
           {/* Первоисточник — Роберт Шейнфелд. Выделенная карточка, всегда первая. */}
           <article className="relative border-2 border-gold-500/70 rounded-2xl p-6 pt-7 bg-gradient-to-br from-gold-500/10 via-cream-50/70 to-gold-400/15 shadow-gold">
             <div className="absolute -top-3 left-6 bg-gold-500 text-white text-[11px] font-sans font-medium tracking-[0.2em] uppercase px-3 py-1 rounded-full">
-              Источник № 1
+              {t.sourceBadge}
             </div>
-            <div className="tag text-xs mb-2">Книга-первоисточник</div>
-            <h3 className="font-serif text-2xl text-ink-900 leading-tight mb-1">Роберт Шейнфелд</h3>
-            <div className="font-serif text-lg text-gold-700 mb-2">«Освобождение от денежной игры»</div>
+            <div className="tag text-xs mb-2">{t.sheinfeldTag}</div>
+            <h3 className="font-serif text-2xl text-ink-900 leading-tight mb-1">{t.scheinfeldName}</h3>
+            <div className="font-serif text-lg text-gold-700 mb-2">{t.sheinfeldBook}</div>
             <div className="w-10 h-px bg-gold-500 mb-3" />
             <p className="font-sans text-sm text-ink-700 leading-relaxed mb-5">
-              Главная книга нашей философии: как выйти из привычной денежной игры и вспомнить,
-              что источник изобилия — ты сам. В нашей Telegram-группе книга доступна в аудио
-              и других форматах.
+              {t.sheinfeldDesc}
             </p>
             <a
               href="https://t.me/+St1gFH-ety4wYmIy"
@@ -601,7 +852,7 @@ export default function Landing() {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M21.94 3.02 1.87 10.77c-1.08.42-1.02 1.96.09 2.29l4.6 1.38 1.72 5.5c.32 1.02 1.62 1.24 2.26.39l2.34-3.1 4.72 3.47c.86.63 2.08.17 2.3-.87l3.06-14.6c.24-1.13-.87-2.06-1.92-1.66l-.1.04ZM7.4 13.5l10.7-6.6c.26-.16.52.19.3.4l-8.4 7.8-.34 3.05-1.36-4.35-.9-.3Z"/>
               </svg>
-              Читать и слушать в Telegram
+              {t.telegramLink}
             </a>
           </article>
 
@@ -633,33 +884,3 @@ export default function Landing() {
     </div>
   )
 }
-
-// ─────────────────────────────────────────────────────────
-// Учителя и книги — источники, открываются модалкой из блока Философии.
-// ─────────────────────────────────────────────────────────
-const SOURCES = [
-  {
-    tag: 'Книги',
-    name: 'Нил Доналд Уолш',
-    description:
-      'Серия «Беседы с Богом», книги 1–4. Прямой и простой диалог о природе реальности, изобилия и личной воли. Текст, к которому мы возвращаемся снова и снова.',
-    linkLabel: 'Открыть на ЛитРес',
-    url: 'https://www.litres.ru/book/nil-uolsh/besedy-s-bogom-neobychnyy-dialog-kniga-1-39962388/',
-  },
-  {
-    tag: 'Учитель',
-    name: 'Доктор Джо Диспенза',
-    description:
-      'Нейробиология намерения, медитации и работа с квантовым полем. Объясняет, как мозг учится новой реальности — научная база для всей механики симулятора.',
-    linkLabel: 'Перейти на drjoedispenza.com',
-    url: 'https://drjoedispenza.com/',
-  },
-  {
-    tag: 'Школа',
-    name: 'Школа Михаила Агеева',
-    description:
-      'Русскоязычная школа сознательной трансформации. Практики работы с убеждениями о деньгах, ресурсе и потоке — на близком и понятном языке.',
-    linkLabel: 'Перейти на сайт школы',
-    url: 'https://mikhail-ageev.ru',
-  },
-] as const

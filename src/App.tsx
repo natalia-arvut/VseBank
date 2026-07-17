@@ -1,5 +1,6 @@
 import { HashRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AppProvider, useApp } from './context/AppContext'
+import { LangProvider } from './i18n'
 
 import Landing from './pages/Landing'
 import Register from './pages/Register'
@@ -121,11 +122,13 @@ export default function App() {
     <HashRouter>
       {/* Прокручивает страницу в начало при каждой смене маршрута */}
       <ScrollToTop />
-      <AppProvider>
-        <AppRoutes />
-      </AppProvider>
-      {/* Cookie-баннер показывается поверх всех страниц при первом заходе */}
-      <CookieBanner />
+      <LangProvider>
+        <AppProvider>
+          <AppRoutes />
+        </AppProvider>
+        {/* Cookie-баннер показывается поверх всех страниц при первом заходе */}
+        <CookieBanner />
+      </LangProvider>
     </HashRouter>
   )
 }

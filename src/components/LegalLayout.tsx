@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
+import { useT } from '../i18n'
 import VseBankLogo from './VseBankLogo'
 import LegalFooter from './LegalFooter'
 
@@ -15,6 +16,7 @@ interface LegalLayoutProps {
 }
 
 export default function LegalLayout({ tag, title, intro, children }: LegalLayoutProps) {
+  const t = useT({ ru: { backHome: '← на главную' }, en: { backHome: '← Home' } })
   return (
     <div className="bg-cream-50">
       {/* Top bar */}
@@ -27,7 +29,7 @@ export default function LegalLayout({ tag, title, intro, children }: LegalLayout
             to="/"
             className="font-sans text-xs text-gold-700 hover:text-gold-900 underline-offset-2 hover:underline"
           >
-            ← на главную
+            {t.backHome}
           </Link>
         </div>
       </header>

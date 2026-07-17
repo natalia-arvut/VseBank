@@ -2,11 +2,42 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import CabinetLayout from '../components/CabinetLayout'
+import { useT } from '../i18n'
 
 export default function Signature() {
   const navigate = useNavigate()
   const { user, logout } = useApp()
   const [signed, setSigned] = useState(false)
+  const t = useT({
+    ru: {
+      tag: 'Подпись и выход',
+      title: 'Подтверди своё намерение',
+      declareIntro: 'Нажимая «Подпись», ты заявляешь Вселенной:',
+      declaration: '«Я готов принять то, что уже принадлежит мне по праву рождения».',
+      signer: 'Подписант',
+      signBtn: '✦ Подпись',
+      exitBtn: 'Выход →',
+      congratsTitle: 'Прими поздравление от нашей команды!',
+      congratsQuote: 'Завтра на твоём счету уже будет твой первый миллион.',
+      congratsSub: 'Улыбайся. Верь. Радуйся. Наслаждайся новой реальностью.',
+      toCabinet: 'В личный кабинет →',
+      exit: 'Выйти',
+    },
+    en: {
+      tag: 'Signature and exit',
+      title: 'Confirm your intention',
+      declareIntro: 'By pressing “Signature”, you declare to the Universe:',
+      declaration: '“I am ready to receive what already belongs to me by birthright.”',
+      signer: 'Signatory',
+      signBtn: '✦ Signature',
+      exitBtn: 'Exit →',
+      congratsTitle: 'Receive congratulations from our team!',
+      congratsQuote: 'Tomorrow your first million will already be in your account.',
+      congratsSub: 'Smile. Believe. Rejoice. Enjoy your new reality.',
+      toCabinet: 'To personal account →',
+      exit: 'Sign out',
+    },
+  })
 
   const handleSign = () => {
     setSigned(true)
@@ -26,23 +57,23 @@ export default function Signature() {
             <>
               <div className="text-center mb-8">
                 <div className="text-5xl text-gold-400/60 mb-4">✦</div>
-                <div className="tag mb-3">Подпись и выход</div>
+                <div className="tag mb-3">{t.tag}</div>
                 <h1 className="font-serif text-3xl text-stone-800 mb-4">
-                  Подтверди своё намерение
+                  {t.title}
                 </h1>
                 <div className="gold-divider" />
                 <p className="font-sans text-stone-600 leading-relaxed mt-6">
-                  Нажимая «Подпись», ты заявляешь Вселенной:
+                  {t.declareIntro}
                 </p>
                 <p className="font-serif text-xl italic text-stone-700 mt-3">
-                  «Я готов принять то, что уже принадлежит мне по праву рождения».
+                  {t.declaration}
                 </p>
               </div>
 
               <div className="glass-card p-6 mb-6">
                 <div className="text-center mb-4">
                   <div className="font-sans text-xs text-stone-500 tracking-widest uppercase mb-2">
-                    Подписант
+                    {t.signer}
                   </div>
                   <div className="font-serif text-2xl text-stone-800 italic">
                     {user?.firstName} {user?.lastName}
@@ -60,10 +91,10 @@ export default function Signature() {
 
               <div className="flex gap-3">
                 <button onClick={handleSign} className="flex-1 btn-gold">
-                  ✦ Подпись
+                  {t.signBtn}
                 </button>
                 <button onClick={handleExit} className="flex-1 btn-outline">
-                  Выход →
+                  {t.exitBtn}
                 </button>
               </div>
             </>
@@ -71,24 +102,24 @@ export default function Signature() {
             <div className="text-center">
               <div className="text-6xl text-gold-400/60 mb-6 animate-float">∞</div>
               <h1 className="font-serif text-4xl text-stone-800 mb-4">
-                Прими поздравление от нашей команды!
+                {t.congratsTitle}
               </h1>
               <div className="gold-divider" />
               <p className="font-serif text-xl italic text-stone-700 mt-6 mb-4">
-                Завтра на твоём счету уже будет твой первый миллион.
+                {t.congratsQuote}
               </p>
               <p className="font-sans text-stone-500 text-sm mb-10">
-                Улыбайся. Верь. Радуйся. Наслаждайся новой реальностью.
+                {t.congratsSub}
               </p>
               <div className="flex gap-3 justify-center">
                 <button
                   onClick={() => navigate('/cabinet')}
                   className="btn-gold"
                 >
-                  В личный кабинет →
+                  {t.toCabinet}
                 </button>
                 <button onClick={handleExit} className="btn-outline">
-                  Выйти
+                  {t.exit}
                 </button>
               </div>
             </div>

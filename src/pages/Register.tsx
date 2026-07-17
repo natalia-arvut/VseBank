@@ -5,8 +5,11 @@ import VseBankLogo from '../components/VseBankLogo'
 import Guilloche from '../components/Guilloche'
 import LegalFooter from '../components/LegalFooter'
 import LegalModal from '../components/LegalModal'
-import { LEGAL_DOCS, type LegalDocKey } from '../components/legalContent'
+import { useLegalDocs, type LegalDocKey } from '../components/legalContent'
+import { useT } from '../i18n'
 
+// Значения стран (служебные, уходят в бэкенд) — не переводим.
+// Отображаемые метки берём из словаря t.countryLabels по этому же значению.
 const COUNTRIES = [
   'Россия', 'Украина', 'Беларусь', 'Казахстан', 'Германия', 'Швейцария',
   'Франция', 'Великобритания', 'США', 'Израиль', 'Грузия', 'Другая',
@@ -15,6 +18,181 @@ const COUNTRIES = [
 export default function Register() {
   const navigate = useNavigate()
   const { register } = useApp()
+  const legalDocs = useLegalDocs()
+  const t = useT({
+    ru: {
+      mustAcceptRules: 'Необходимо принять правила платформы',
+      fillRequired: 'Пожалуйста, заполни все обязательные поля',
+      passwordShort: 'Пароль должен быть не короче 6 символов',
+      alreadyRegistered: 'Пользователь с таким email уже зарегистрирован. Войдите в кабинет.',
+      registerError: 'Ошибка регистрации',
+      // Экран ожидания подтверждения
+      spaceOpenedTag: 'Пространство открыто',
+      checkEmail: 'Проверьте почту',
+      emailSentBefore: 'На ',
+      emailSentAfter: ' отправлено письмо подтверждения открытия пространства.',
+      followLink: 'Перейди по ссылке из письма — и ты окажешься в личном кабинете.',
+      spamBefore: '✦ Если письма нет во входящих — проверь папку ',
+      spamWord1: '«Спам»',
+      spamMid: '. Найди — отметь ',
+      spamWord2: '«Не спам»',
+      spamAfter: ', и следующие письма от VseBank будут приходить сразу в Inbox.',
+      toLogin: 'На страницу входа',
+      // Левая панель
+      openingSpace: 'Открытие пространства',
+      heroLine1: 'С первой секунды',
+      heroLine2: 'ты — Банкир.',
+      panelText1: 'Можно открыть как личное пространство, так и на компанию.',
+      panelText2: 'Твоё пространство изобилия не имеет ограничений.',
+      // Форма
+      accountPersonal: 'Личное',
+      accountCompany: 'Компании',
+      companyNamePh: 'Наименование компании *',
+      companyRegPh: 'Регистрационный номер компании *',
+      firstNamePh: 'Имя *',
+      lastNamePh: 'Фамилия *',
+      birthDateLabel: 'Дата рождения',
+      genderPh: 'Пол',
+      genderMale: 'Мужской',
+      genderFemale: 'Женский',
+      emailPh: 'E-mail *',
+      passwordPh: 'Пароль *',
+      countryCompanyPh: 'Страна регистрации *',
+      countryPersonalPh: 'Страна проживания *',
+      agreePrefix: 'Я согласен с ',
+      agreeComma: ', ',
+      agreeAnd: ' и ',
+      linkTerms: 'Пользовательским соглашением',
+      linkDisclaimer: 'Дисклеймером',
+      linkPrivacy: 'Политикой конфиденциальности',
+      linkManifest: 'Манифестом Со-Творца',
+      opening: 'Открываем пространство...',
+      openBtn: 'Открыть пространство',
+      haveSpace: 'Уже есть пространство? ',
+      loginLink: 'Войти',
+      dataProtected: 'Твои данные защищены квантовым уровнем шифрования. Мы с тобой на одной частоте.',
+      countryLabels: {
+        'Россия': 'Россия', 'Украина': 'Украина', 'Беларусь': 'Беларусь',
+        'Казахстан': 'Казахстан', 'Германия': 'Германия', 'Швейцария': 'Швейцария',
+        'Франция': 'Франция', 'Великобритания': 'Великобритания', 'США': 'США',
+        'Израиль': 'Израиль', 'Грузия': 'Грузия', 'Другая': 'Другая',
+      } as Record<string, string>,
+      // Модалка «Манифест Со-Творца»
+      manifestTag: 'Пользовательское соглашение',
+      manifestTitle: 'Правила Новой Реальности',
+      manifestIntro: 'Перед тем как активировать перевод, подтверди свою готовность играть по правилам Новой Реальности. Помни: этот интерфейс меняет материю только тогда, когда ты меняешь своё внутреннее состояние.',
+      steps: [
+        ['01', 'Какую сумму ты намерен материализовать? Назови цифру, которая переключит твоё сознание в режим безусловного изобилия и вернёт тебе статус главного архитектора своей жизни.'],
+        ['02', 'Инициируй свой первый перевод. Дай Вселенной священную команду «Да будет так!» — и позволь пространству ответить взаимностью.'],
+        ['03', 'Сохраняй состояние веры, благодарности и изобилия как основной валюты Вселенной. Празднуй триумф до того, как увидишь его на карте, — и материя подчинится.'],
+      ] as [string, string][],
+      offerTag: 'Оферта Со-Творца',
+      offerTitle: 'Я согласен и принимаю условия',
+      offerIntro: 'Нажимая кнопку виртуального перевода, я безоговорочно соглашаюсь со следующими пунктами:',
+      offerItems: [
+        ['Признание природы симулятора', 'Я осознаю, что данная страница является цифровым симулятором Квантового Изобилия и тренажёром для моего сознания, а не традиционной финансовой организацией.'],
+        ['Квантовый закон тождества', 'Я понимаю, что мой мозг не отличает реальное событие от воображаемого, если оно подкреплено сильной эмоцией. Я соглашаюсь использовать эту симуляцию как инструмент нейропластичности для перепрошивки своего дефицитарного мышления на частоту достатка.'],
+        ['Ответственность за излучаемый сигнал', 'Я соглашаюсь с тем, что Вселенский Банк не выдаёт кредиты — он лишь воплощает то, чему я внутренне соответствую. Я беру на себя обязательство быть Творцом, а не просителем.'],
+      ] as [string, string][],
+      rulesTag: 'Свод обязательных правил',
+      rulesTitle: 'Протокол взаимодействия с Банком Вселенной',
+      rulesIntro: 'Чтобы твои транзакции успешно переносились из невидимого поля в плотную материю, строго соблюдай протокол взаимодействия с Банком Вселенной:',
+      rulesItems: [
+        ['Правило целевой материализации', 'Шаг 1', 'Запрещено выводить суммы в пустоту или из чувства жадности. Каждая транзакция должна иметь чёткий вектор намерения (здоровье, расширение пространства, эволюция души и т. п.). Вселенная понимает только конкретные задачи, подкреплённые готовностью действовать.'],
+        ['Правило биохимического подтверждения', 'Шаг 2', 'В момент нажатия кнопки «Инициировать перевод» ты обязан запустить по венам химию искреннего триумфа. Твоё тело должно физически ощутить мурашки благодарности за то, что деньги уже у тебя. Без этого эмоционального обеспечения транзакция признаётся пустой ментальной концепцией и отклоняется Квантовым полем.'],
+        ['Правило золотого стандарта', 'Шаг 3', 'Твоя благодарность — главная валюта Вселенной, удерживающая квантовый сигнал. Празднуй триумф до того, как увидишь его на реальной карте, — и материя подчинится.'],
+        ['Защита от системных ошибок', 'Политика конфиденциальности ума', 'Как только ты включаешь контроль, страх или начинаешь судорожно думать «как именно и откуда эти деньги придут ко мне», система расценивает это как сомнение и выдаёт ошибку. Любая попытка эго диктовать Вселенной сценарии проявления мгновенно замораживает транзакцию. Перевёл? Забудь и доверься Пространству.'],
+      ] as [string, string, string][],
+      manifestFinal: 'Я подтверждаю, что готов сорвать тумблер сомнений. Я вхожу в Квантовое Поле, принимаю правила игры и позволяю невидимому стать моим осязаемым физическим опытом.',
+      acceptBtn: 'Принять и согласиться',
+    },
+    en: {
+      mustAcceptRules: 'You must accept the platform rules',
+      fillRequired: 'Please fill in all required fields',
+      passwordShort: 'Password must be at least 6 characters long',
+      alreadyRegistered: 'A user with this email is already registered. Please log in.',
+      registerError: 'Registration error',
+      // Экран ожидания подтверждения
+      spaceOpenedTag: 'Space opened',
+      checkEmail: 'Check your email',
+      emailSentBefore: 'A confirmation email for opening your space has been sent to ',
+      emailSentAfter: '.',
+      followLink: 'Follow the link in the email — and you’ll arrive in your personal account.',
+      spamBefore: '✦ If the email isn’t in your inbox — check your ',
+      spamWord1: '“Spam”',
+      spamMid: ' folder. Found it? Mark it ',
+      spamWord2: '“Not spam”',
+      spamAfter: ', and future emails from VseBank will land straight in your Inbox.',
+      toLogin: 'Go to login',
+      // Левая панель
+      openingSpace: 'Opening your space',
+      heroLine1: 'From the very first second',
+      heroLine2: 'you are the Banker.',
+      panelText1: 'You can open either a personal space or one for a company.',
+      panelText2: 'Your space of abundance has no limits.',
+      // Форма
+      accountPersonal: 'Personal',
+      accountCompany: 'Company',
+      companyNamePh: 'Company name *',
+      companyRegPh: 'Company registration number *',
+      firstNamePh: 'First name *',
+      lastNamePh: 'Last name *',
+      birthDateLabel: 'Date of birth',
+      genderPh: 'Gender',
+      genderMale: 'Male',
+      genderFemale: 'Female',
+      emailPh: 'E-mail *',
+      passwordPh: 'Password *',
+      countryCompanyPh: 'Country of registration *',
+      countryPersonalPh: 'Country of residence *',
+      agreePrefix: 'I agree to the ',
+      agreeComma: ', ',
+      agreeAnd: ' and the ',
+      linkTerms: 'Terms of Service',
+      linkDisclaimer: 'Disclaimer',
+      linkPrivacy: 'Privacy Policy',
+      linkManifest: 'Co-Creator’s Manifesto',
+      opening: 'Opening your space...',
+      openBtn: 'Open my space',
+      haveSpace: 'Already have a space? ',
+      loginLink: 'Log in',
+      dataProtected: 'Your data is protected with quantum-level encryption. We’re on the same frequency.',
+      countryLabels: {
+        'Россия': 'Russia', 'Украина': 'Ukraine', 'Беларусь': 'Belarus',
+        'Казахстан': 'Kazakhstan', 'Германия': 'Germany', 'Швейцария': 'Switzerland',
+        'Франция': 'France', 'Великобритания': 'United Kingdom', 'США': 'United States',
+        'Израиль': 'Israel', 'Грузия': 'Georgia', 'Другая': 'Other',
+      } as Record<string, string>,
+      // Модалка «Манифест Со-Творца»
+      manifestTag: 'Terms of Service',
+      manifestTitle: 'Rules of the New Reality',
+      manifestIntro: 'Before you activate a transfer, confirm that you’re ready to play by the rules of the New Reality. Remember: this interface transforms matter only when you transform your inner state.',
+      steps: [
+        ['01', 'What amount do you intend to materialize? Name a figure that switches your consciousness into the mode of unconditional abundance and restores your status as the chief architect of your life.'],
+        ['02', 'Initiate your first transfer. Give the Universe the sacred command “So be it!” — and let the space respond in kind.'],
+        ['03', 'Hold the state of faith, gratitude and abundance as the Universe’s core currency. Celebrate your triumph before you see it on the card — and matter will obey.'],
+      ] as [string, string][],
+      offerTag: 'Co-Creator’s Offer',
+      offerTitle: 'I agree to and accept the terms',
+      offerIntro: 'By pressing the virtual transfer button, I unconditionally agree to the following points:',
+      offerItems: [
+        ['Acknowledging the nature of the simulator', 'I understand that this page is a digital simulator of Quantum Abundance and a training tool for my consciousness, not a traditional financial institution.'],
+        ['The quantum law of identity', 'I understand that my brain does not distinguish a real event from an imagined one when it is reinforced by strong emotion. I agree to use this simulation as a neuroplasticity tool to rewire my scarcity mindset to the frequency of abundance.'],
+        ['Responsibility for the signal I emit', 'I agree that the Universal Bank does not issue loans — it merely brings into being what I inwardly correspond to. I take on the commitment to be a Creator, not a petitioner.'],
+      ] as [string, string][],
+      rulesTag: 'Code of mandatory rules',
+      rulesTitle: 'Protocol for interacting with the Bank of the Universe',
+      rulesIntro: 'For your transactions to successfully cross from the invisible field into dense matter, strictly follow the protocol for interacting with the Bank of the Universe:',
+      rulesItems: [
+        ['The rule of purposeful materialization', 'Step 1', 'Withdrawing sums into the void or out of greed is forbidden. Every transaction must have a clear vector of intention (health, expanding your space, the evolution of the soul, and so on). The Universe understands only specific tasks backed by a readiness to act.'],
+        ['The rule of biochemical confirmation', 'Step 2', 'At the moment you press the “Initiate transfer” button, you must send the chemistry of sincere triumph through your veins. Your body must physically feel the goosebumps of gratitude that the money is already yours. Without this emotional backing, the transaction is deemed an empty mental concept and is rejected by the Quantum field.'],
+        ['The rule of the gold standard', 'Step 3', 'Your gratitude is the Universe’s main currency, holding the quantum signal. Celebrate your triumph before you see it on a real card — and matter will obey.'],
+        ['Protection against system errors', 'Privacy policy of the mind', 'The moment you switch on control, fear, or start anxiously thinking “exactly how and where this money will come to me,” the system reads it as doubt and returns an error. Any attempt by the ego to dictate manifestation scenarios to the Universe instantly freezes the transaction. Made the transfer? Let it go and trust the Space.'],
+      ] as [string, string, string][],
+      manifestFinal: 'I confirm that I’m ready to flip the switch of doubt. I enter the Quantum Field, accept the rules of the game and allow the invisible to become my tangible physical experience.',
+      acceptBtn: 'Accept and agree',
+    },
+  })
 
   const [form, setForm] = useState({
     firstName: '',
@@ -58,15 +236,15 @@ export default function Register() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!form.agreed) {
-      setError('Необходимо принять правила платформы')
+      setError(t.mustAcceptRules)
       return
     }
     if (!form.firstName || !form.email || !form.password || !form.country) {
-      setError('Пожалуйста, заполни все обязательные поля')
+      setError(t.fillRequired)
       return
     }
     if (form.password.length < 6) {
-      setError('Пароль должен быть не короче 6 символов')
+      setError(t.passwordShort)
       return
     }
 
@@ -90,9 +268,9 @@ export default function Register() {
     if (!result.ok) {
       const msg = (result.error || '').toLowerCase()
       if (msg.includes('already') || msg.includes('exists') || msg.includes('registered'))
-        setError('Пользователь с таким email уже зарегистрирован. Войдите в кабинет.')
+        setError(t.alreadyRegistered)
       else
-        setError(result.error || 'Ошибка регистрации')
+        setError(result.error || t.registerError)
       return
     }
 
@@ -126,25 +304,22 @@ export default function Register() {
           <div className="mb-6 flex justify-center"><VseBankLogo size="md" /></div>
           <div className="glass-card p-10 rounded-2xl">
             <div className="text-5xl text-gold-500 mb-4">✉</div>
-            <div className="tag mb-3 text-sm">Пространство открыто</div>
-            <h1 className="font-serif text-3xl text-stone-800 mb-3">Проверьте почту</h1>
+            <div className="tag mb-3 text-sm">{t.spaceOpenedTag}</div>
+            <h1 className="font-serif text-3xl text-stone-800 mb-3">{t.checkEmail}</h1>
             <div className="w-12 h-px bg-gold-400 mx-auto mb-5" />
             <p className="font-sans text-stone-600 leading-relaxed mb-2">
-              На <span className="text-gold-700">{form.email}</span> отправлено письмо
-              подтверждения открытия пространства.
+              {t.emailSentBefore}<span className="text-gold-700">{form.email}</span>{t.emailSentAfter}
             </p>
             <p className="font-sans text-stone-500 text-sm mb-4">
-              Перейди по ссылке из письма — и ты окажешься в личном кабинете.
+              {t.followLink}
             </p>
             <div className="bg-gold-500/10 border border-gold-400/40 rounded-md px-4 py-3 mb-6">
               <p className="font-sans text-xs text-gold-700 leading-relaxed">
-                ✦ Если письма нет во входящих — проверь папку <strong>«Спам»</strong>.
-                Найди — отметь <strong>«Не спам»</strong>, и следующие письма от VseBank
-                будут приходить сразу в Inbox.
+                {t.spamBefore}<strong>{t.spamWord1}</strong>{t.spamMid}<strong>{t.spamWord2}</strong>{t.spamAfter}
               </p>
             </div>
             <button onClick={() => navigate('/login')} className="w-full btn-outline">
-              На страницу входа
+              {t.toLogin}
             </button>
           </div>
         </div>
@@ -215,16 +390,16 @@ export default function Register() {
 
         <div className="relative z-10 flex-1 flex flex-col justify-center -mt-12">
           <div className="font-sans text-xs text-gold-400 tracking-[0.2em] uppercase mb-4">
-            Открытие пространства
+            {t.openingSpace}
           </div>
           <h2 className="font-serif text-3xl text-cream-50 leading-tight mb-4">
-            С первой секунды<br />ты — Банкир.
+            {t.heroLine1}<br />{t.heroLine2}
           </h2>
           <div className="w-12 h-px bg-gold-500 mb-4" />
           <p className="font-sans text-stone-300 leading-relaxed text-base">
-            Можно открыть как личное пространство, так и на компанию.
+            {t.panelText1}
             <br /><br />
-            Твоё пространство изобилия не имеет ограничений.
+            {t.panelText2}
           </p>
         </div>
       </div>
@@ -239,7 +414,7 @@ export default function Register() {
           </div>
 
           <div className="mb-3">
-            <div className="tag text-sm">Открытие пространства</div>
+            <div className="tag text-sm">{t.openingSpace}</div>
           </div>
 
           {/* Тип счёта — единый размер с кнопкой submit */}
@@ -254,7 +429,7 @@ export default function Register() {
               }`}
               style={{ borderRadius: '15px' }}
             >
-              Личное
+              {t.accountPersonal}
             </button>
             <button
               type="button"
@@ -266,7 +441,7 @@ export default function Register() {
               }`}
               style={{ borderRadius: '15px' }}
             >
-              Компании
+              {t.accountCompany}
             </button>
           </div>
 
@@ -276,13 +451,13 @@ export default function Register() {
               <>
                 <input
                   className="input-field"
-                  placeholder="Наименование компании *"
+                  placeholder={t.companyNamePh}
                   value={form.firstName}
                   onChange={e => handleChange('firstName', e.target.value)}
                 />
                 <input
                   className="input-field"
-                  placeholder="Регистрационный номер компании *"
+                  placeholder={t.companyRegPh}
                   value={form.companyRegNumber}
                   onChange={e => handleChange('companyRegNumber', e.target.value)}
                 />
@@ -292,13 +467,13 @@ export default function Register() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <input
                   className="input-field"
-                  placeholder="Имя *"
+                  placeholder={t.firstNamePh}
                   value={form.firstName}
                   onChange={e => handleChange('firstName', e.target.value)}
                 />
                 <input
                   className="input-field"
-                  placeholder="Фамилия *"
+                  placeholder={t.lastNamePh}
                   value={form.lastName}
                   onChange={e => handleChange('lastName', e.target.value)}
                 />
@@ -310,7 +485,7 @@ export default function Register() {
                 {/* Дата рождения с лейблом — только desktop */}
                 <div className="relative">
                   <label className="absolute left-4 top-1.5 text-[10px] text-gold-700 tracking-wide uppercase pointer-events-none z-10">
-                    Дата рождения
+                    {t.birthDateLabel}
                   </label>
                   <input
                     className="input-field pt-6 pb-2"
@@ -325,16 +500,16 @@ export default function Register() {
                   value={form.gender}
                   onChange={e => handleChange('gender', e.target.value)}
                 >
-                  <option value="">Пол</option>
-                  <option value="male">Мужской</option>
-                  <option value="female">Женский</option>
+                  <option value="">{t.genderPh}</option>
+                  <option value="male">{t.genderMale}</option>
+                  <option value="female">{t.genderFemale}</option>
                 </select>
               </div>
             )}
 
             <input
               className="input-field"
-              placeholder="E-mail *"
+              placeholder={t.emailPh}
               type="email"
               value={form.email}
               onChange={e => handleChange('email', e.target.value)}
@@ -343,7 +518,7 @@ export default function Register() {
             <div className="relative">
               <input
                 className="input-field pr-10"
-                placeholder="Пароль *"
+                placeholder={t.passwordPh}
                 type="password"
                 value={form.password}
                 onChange={e => handleChange('password', e.target.value)}
@@ -356,10 +531,10 @@ export default function Register() {
               onChange={e => handleChange('country', e.target.value)}
             >
               <option value="">
-                {form.accountType === 'company' ? 'Страна регистрации *' : 'Страна проживания *'}
+                {form.accountType === 'company' ? t.countryCompanyPh : t.countryPersonalPh}
               </option>
               {COUNTRIES.map(c => (
-                <option key={c} value={c}>{c}</option>
+                <option key={c} value={c}>{t.countryLabels[c]}</option>
               ))}
             </select>
 
@@ -401,21 +576,21 @@ export default function Register() {
                 )}
               </span>
               <span className="font-sans text-xs text-gold-600 leading-relaxed">
-                Я согласен с{' '}
+                {t.agreePrefix}
                 <button type="button" onClick={() => setOpenLegal('terms')} className="text-gold-600 underline underline-offset-2 hover:text-gold-700 cursor-pointer">
-                  Пользовательским соглашением
+                  {t.linkTerms}
                 </button>
-                {', '}
+                {t.agreeComma}
                 <button type="button" onClick={() => setOpenLegal('disclaimer')} className="text-gold-600 underline underline-offset-2 hover:text-gold-700 cursor-pointer">
-                  Дисклеймером
+                  {t.linkDisclaimer}
                 </button>
-                {', '}
+                {t.agreeComma}
                 <button type="button" onClick={() => setOpenLegal('privacy')} className="text-gold-600 underline underline-offset-2 hover:text-gold-700 cursor-pointer">
-                  Политикой конфиденциальности
+                  {t.linkPrivacy}
                 </button>
-                {' и '}
+                {t.agreeAnd}
                 <button type="button" onClick={() => setRulesOpen(true)} className="text-gold-600 underline underline-offset-2 hover:text-gold-700 cursor-pointer">
-                  Манифестом Со-Творца
+                  {t.linkManifest}
                 </button>
                 .
               </span>
@@ -429,21 +604,21 @@ export default function Register() {
               {loading ? (
                 <>
                   <span className="animate-spin">⟳</span>
-                  Открываем пространство...
+                  {t.opening}
                 </>
               ) : (
-                'Открыть пространство'
+                t.openBtn
               )}
             </button>
           </form>
 
           <div className="text-center mt-5">
-            <span className="font-sans text-sm text-stone-500">Уже есть пространство? </span>
+            <span className="font-sans text-sm text-stone-500">{t.haveSpace}</span>
             <button
               onClick={() => navigate('/login')}
               className="font-sans text-sm text-gold-600 hover:text-gold-700 underline"
             >
-              Войти
+              {t.loginLink}
             </button>
           </div>
 
@@ -455,7 +630,7 @@ export default function Register() {
               <path d="M9 13 C 9 10.5, 10.5 9.5, 12 11 C 13.5 12.5, 15 12.5, 15 11 C 15 9.5, 13.5 9.5, 12 11 C 10.5 12.5, 9 12.5, 9 13 Z"
                 stroke="#B89058" strokeWidth="1" fill="none" strokeLinecap="round"/>
             </svg>
-            <span>Твои данные защищены квантовым уровнем шифрования. Мы с тобой на одной частоте.</span>
+            <span>{t.dataProtected}</span>
           </div>
         </div>
       </div>
@@ -467,7 +642,7 @@ export default function Register() {
 
       {/* Модалки с юридическими документами — открываются по ссылкам из чекбокса */}
       {openLegal && (() => {
-        const doc = LEGAL_DOCS[openLegal]
+        const doc = legalDocs[openLegal]
         const Content = doc.Content
         return (
           <LegalModal
@@ -491,22 +666,18 @@ export default function Register() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="text-center mb-6">
-              <div className="tag mb-2 text-sm">Пользовательское соглашение</div>
-              <h2 className="font-serif text-2xl md:text-3xl text-ink-900">Правила Новой Реальности</h2>
+              <div className="tag mb-2 text-sm">{t.manifestTag}</div>
+              <h2 className="font-serif text-2xl md:text-3xl text-ink-900">{t.manifestTitle}</h2>
               <div className="w-12 h-px bg-gold-400 mx-auto mt-4" />
             </div>
 
             <p className="font-sans text-ink-700 leading-relaxed text-center mb-8 px-2">
-              Перед тем как активировать перевод, подтверди свою готовность играть по правилам Новой Реальности. Помни: этот интерфейс меняет материю только тогда, когда ты меняешь своё внутреннее состояние.
+              {t.manifestIntro}
             </p>
 
             {/* 01–03 — три ключевые шага */}
             <div className="space-y-5 mb-10">
-              {[
-                ['01', 'Какую сумму ты намерен материализовать? Назови цифру, которая переключит твоё сознание в режим безусловного изобилия и вернёт тебе статус главного архитектора своей жизни.'],
-                ['02', 'Инициируй свой первый перевод. Дай Вселенной священную команду «Да будет так!» — и позволь пространству ответить взаимностью.'],
-                ['03', 'Сохраняй состояние веры, благодарности и изобилия как основной валюты Вселенной. Празднуй триумф до того, как увидишь его на карте, — и материя подчинится.'],
-              ].map(([n, text]) => (
+              {t.steps.map(([n, text]) => (
                 <div key={n} className="flex gap-4 items-start">
                   <div className="font-serif text-3xl text-gold-500 leading-none flex-shrink-0 w-10">{n}</div>
                   <p className="text-sm text-ink-700 leading-relaxed pt-1">{text}</p>
@@ -517,20 +688,16 @@ export default function Register() {
             {/* Оферта Со-Творца */}
             <div className="border-t border-gold-300/40 pt-6 mb-8">
               <div className="text-center mb-5">
-                <div className="tag mb-2 text-sm">Оферта Со-Творца</div>
-                <h3 className="font-serif text-xl md:text-2xl text-ink-900">Я согласен и принимаю условия</h3>
+                <div className="tag mb-2 text-sm">{t.offerTag}</div>
+                <h3 className="font-serif text-xl md:text-2xl text-ink-900">{t.offerTitle}</h3>
               </div>
 
               <p className="font-sans text-sm text-ink-700 leading-relaxed mb-5">
-                Нажимая кнопку виртуального перевода, я безоговорочно соглашаюсь со следующими пунктами:
+                {t.offerIntro}
               </p>
 
               <div className="space-y-6">
-                {[
-                  ['Признание природы симулятора', 'Я осознаю, что данная страница является цифровым симулятором Квантового Изобилия и тренажёром для моего сознания, а не традиционной финансовой организацией.'],
-                  ['Квантовый закон тождества', 'Я понимаю, что мой мозг не отличает реальное событие от воображаемого, если оно подкреплено сильной эмоцией. Я соглашаюсь использовать эту симуляцию как инструмент нейропластичности для перепрошивки своего дефицитарного мышления на частоту достатка.'],
-                  ['Ответственность за излучаемый сигнал', 'Я соглашаюсь с тем, что Вселенский Банк не выдаёт кредиты — он лишь воплощает то, чему я внутренне соответствую. Я беру на себя обязательство быть Творцом, а не просителем.'],
-                ].map(([title, text]) => (
+                {t.offerItems.map(([title, text]) => (
                   <div key={title}>
                     <h4 className="font-serif text-xl md:text-2xl text-gold-600 mb-2 leading-tight">{title}</h4>
                     <p className="font-sans text-sm text-ink-700 leading-relaxed">{text}</p>
@@ -542,21 +709,16 @@ export default function Register() {
             {/* Свод обязательных правил */}
             <div className="border-t border-gold-300/40 pt-6 mb-8">
               <div className="text-center mb-5">
-                <div className="tag mb-2 text-sm">Свод обязательных правил</div>
-                <h3 className="font-serif text-xl md:text-2xl text-ink-900">Протокол взаимодействия с Банком Вселенной</h3>
+                <div className="tag mb-2 text-sm">{t.rulesTag}</div>
+                <h3 className="font-serif text-xl md:text-2xl text-ink-900">{t.rulesTitle}</h3>
               </div>
 
               <p className="font-sans text-sm text-ink-700 leading-relaxed mb-5">
-                Чтобы твои транзакции успешно переносились из невидимого поля в плотную материю, строго соблюдай протокол взаимодействия с Банком Вселенной:
+                {t.rulesIntro}
               </p>
 
               <div className="space-y-8">
-                {[
-                  ['Правило целевой материализации', 'Шаг 1', 'Запрещено выводить суммы в пустоту или из чувства жадности. Каждая транзакция должна иметь чёткий вектор намерения (здоровье, расширение пространства, эволюция души и т. п.). Вселенная понимает только конкретные задачи, подкреплённые готовностью действовать.'],
-                  ['Правило биохимического подтверждения', 'Шаг 2', 'В момент нажатия кнопки «Инициировать перевод» ты обязан запустить по венам химию искреннего триумфа. Твоё тело должно физически ощутить мурашки благодарности за то, что деньги уже у тебя. Без этого эмоционального обеспечения транзакция признаётся пустой ментальной концепцией и отклоняется Квантовым полем.'],
-                  ['Правило золотого стандарта', 'Шаг 3', 'Твоя благодарность — главная валюта Вселенной, удерживающая квантовый сигнал. Празднуй триумф до того, как увидишь его на реальной карте, — и материя подчинится.'],
-                  ['Защита от системных ошибок', 'Политика конфиденциальности ума', 'Как только ты включаешь контроль, страх или начинаешь судорожно думать «как именно и откуда эти деньги придут ко мне», система расценивает это как сомнение и выдаёт ошибку. Любая попытка эго диктовать Вселенной сценарии проявления мгновенно замораживает транзакцию. Перевёл? Забудь и доверься Пространству.'],
-                ].map(([title, step, text]) => (
+                {t.rulesItems.map(([title, step, text]) => (
                   <div key={title} className="text-center">
                     <div className="font-sans text-sm text-gold-600 tracking-[0.25em] uppercase font-semibold mb-2">{step}</div>
                     <h4 className="font-serif text-xl md:text-2xl text-gold-600 mb-3 leading-tight">{title}</h4>
@@ -567,14 +729,14 @@ export default function Register() {
             </div>
 
             <p className="font-sans text-ink-700 leading-relaxed text-center mb-6 px-2">
-              Я подтверждаю, что готов сорвать тумблер сомнений. Я вхожу в Квантовое Поле, принимаю правила игры и позволяю невидимому стать моим осязаемым физическим опытом.
+              {t.manifestFinal}
             </p>
 
             <button
               onClick={() => { handleChange('agreed', true); setRulesOpen(false) }}
               className="w-full btn-gold"
             >
-              Принять и согласиться
+              {t.acceptBtn}
             </button>
           </div>
         </div>

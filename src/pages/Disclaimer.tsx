@@ -1,9 +1,10 @@
 import LegalLayout from '../components/LegalLayout'
-import { DISCLAIMER_META, DisclaimerContent } from '../components/legalContent'
+import { useDisclaimerMeta, DisclaimerContent } from '../components/legalContent'
 
 export default function Disclaimer() {
+  const meta = useDisclaimerMeta()
   return (
-    <LegalLayout tag={DISCLAIMER_META.tag} title={DISCLAIMER_META.title} intro={DISCLAIMER_META.intro}>
+    <LegalLayout tag={meta.tag} title={meta.title} intro={meta.intro}>
       <DisclaimerContent />
     </LegalLayout>
   )

@@ -3,8 +3,29 @@
 
 import Guilloche from '../components/Guilloche'
 import LegalFooter from '../components/LegalFooter'
+import { useT } from '../i18n'
 
 export default function Maintenance() {
+  const t = useT({
+    ru: {
+      tag: 'Скоро откроемся',
+      titleLine1: 'Настраиваем',
+      titleLine2: 'Квантовое Поле',
+      lead: 'Сейчас мы готовим юридические документы и финальные настройки, чтобы открыть двери Банка для тебя в полную силу.',
+      italic: 'Изобилие уже движется к тебе. Просто немного терпения.',
+      contactLabel: 'Связаться с нами',
+      signature: 'VseBank · Вселенский Банк Изобилия',
+    },
+    en: {
+      tag: 'Opening soon',
+      titleLine1: 'Tuning the',
+      titleLine2: 'Quantum Field',
+      lead: "We're preparing the legal documents and final settings to open the Bank's doors for you in full.",
+      italic: 'Abundance is already on its way to you. Just a little patience.',
+      contactLabel: 'Get in touch',
+      signature: 'VseBank · Universal Bank of Abundance',
+    },
+  })
   return (
     <div
       className="min-h-screen flex flex-col"
@@ -43,29 +64,29 @@ export default function Maintenance() {
 
         {/* Tag */}
         <div className="font-sans text-xs md:text-sm text-gold-600 tracking-[0.3em] uppercase font-medium mb-4">
-          Скоро откроемся
+          {t.tag}
         </div>
 
         {/* Заголовок */}
         <h1 className="font-serif text-3xl md:text-5xl text-ink-900 leading-tight mb-4">
-          Настраиваем<br />Квантовое Поле
+          {t.titleLine1}<br />{t.titleLine2}
         </h1>
 
         <div className="w-12 h-px bg-gold-500 mx-auto mb-6" />
 
         {/* Текст */}
         <p className="font-sans text-base md:text-lg text-ink-700 leading-relaxed mb-3">
-          Сейчас мы готовим юридические документы и финальные настройки, чтобы открыть двери Банка для тебя в полную силу.
+          {t.lead}
         </p>
 
         <p className="font-serif italic text-base md:text-lg leading-relaxed mb-10" style={{ color: '#9A6F09' }}>
-          Изобилие уже движется к тебе. Просто немного терпения.
+          {t.italic}
         </p>
 
         {/* Контакт */}
         <div className="pt-6 border-t border-gold-300/40">
           <p className="font-sans text-xs md:text-sm text-ink-500 tracking-wide uppercase mb-2">
-            Связаться с нами
+            {t.contactLabel}
           </p>
           <a
             href="mailto:vsebank.space@gmail.com"
@@ -78,7 +99,7 @@ export default function Maintenance() {
         {/* Подпись */}
         <div className="mt-10 text-center">
           <p className="font-serif text-sm text-ink-500 tracking-wider">
-            VseBank · Вселенский Банк Изобилия
+            {t.signature}
           </p>
         </div>
       </div>

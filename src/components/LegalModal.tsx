@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import type { ReactNode } from 'react'
+import { useT } from '../i18n'
 
 // Модальное окно для юридических документов и подобного контента.
 // Стиль повторяет существующую модалку «Манифест Со-Творца» на регистрации.
@@ -34,6 +35,8 @@ export default function LegalModal({ open, onClose, tag, title, intro, children 
     }
   }, [open])
 
+  const t = useT({ ru: { close: 'Закрыть' }, en: { close: 'Close' } })
+
   if (!open) return null
 
   return (
@@ -48,7 +51,7 @@ export default function LegalModal({ open, onClose, tag, title, intro, children 
         {/* Кнопка-крестик в правом верхнем углу */}
         <button
           onClick={onClose}
-          aria-label="Закрыть"
+          aria-label={t.close}
           className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center text-ink-500 hover:text-ink-900 transition-colors rounded-full hover:bg-gold-300/20"
         >
           <span className="text-xl leading-none">×</span>
@@ -74,7 +77,7 @@ export default function LegalModal({ open, onClose, tag, title, intro, children 
         {/* Кнопка закрытия снизу */}
         <div className="mt-8 text-center">
           <button onClick={onClose} className="btn-outline px-10">
-            Закрыть
+            {t.close}
           </button>
         </div>
       </div>

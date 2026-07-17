@@ -1,9 +1,10 @@
 import LegalLayout from '../components/LegalLayout'
-import { PRIVACY_META, PrivacyContent } from '../components/legalContent'
+import { usePrivacyMeta, PrivacyContent } from '../components/legalContent'
 
 export default function Privacy() {
+  const meta = usePrivacyMeta()
   return (
-    <LegalLayout tag={PRIVACY_META.tag} title={PRIVACY_META.title} intro={PRIVACY_META.intro}>
+    <LegalLayout tag={meta.tag} title={meta.title} intro={meta.intro}>
       <PrivacyContent />
     </LegalLayout>
   )
