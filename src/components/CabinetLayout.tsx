@@ -8,7 +8,6 @@ import LegalFooter from './LegalFooter'
 const NAV_ITEMS = [
   { path: '/cabinet', label: 'Дашборд', icon: '⌂' },
   { path: '/transfer', label: 'Переводы', icon: '⇄' },
-  { path: '/requisites', label: 'Реквизиты', icon: '≡' },
   { path: '/history', label: 'История', icon: '◷' },
   { path: '/paths', label: 'Донат VseBank', icon: '♡' },
   { path: '/reviews', label: 'Отзывы', icon: '✦' },

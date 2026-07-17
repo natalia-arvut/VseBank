@@ -55,6 +55,10 @@ interface AppContextType {
   // Применяет новый пароль (вызывать на странице /reset-password после клика по ссылке)
   updatePassword: (newPassword: string) => Promise<{ ok: boolean; error?: string }>
   addTransfer: (transfer: Omit<Transfer, 'id'> & { id?: string }) => Promise<{ ok: boolean; error?: string }>
+  // Подтвердить перевод — статус меняется на 'completed' (перевод пришёл)
+  confirmTransfer: (id: string) => Promise<{ ok: boolean; error?: string }>
+  // Удалить перевод (не пришёл) — удаляется из БД
+  deleteTransfer: (id: string) => Promise<{ ok: boolean; error?: string }>
   refreshTransfers: () => Promise<void>
 }
 
@@ -238,6 +242,32 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return { ok: true }
   }
 
+  const confirmTransfer: AppContextType['confirmTransfer'] = async (id) => {
+    if (!userId) return { ok: false, error: 'Нет активной сессии' }
+    const { data, error } = await supabase
+      .from('transfers')
+      .update({ status: 'completed' })
+      .eq('id', id)
+      .eq('user_id', userId)
+      .select()
+      .single()
+    if (error) return { ok: false, error: error.message }
+    setTransfers(prev => prev.map(t => (t.id === id ? transferFromRow(data as TransferRow) : t)))
+    return { ok: true }
+  }
+
+  const deleteTransfer: AppContextType['deleteTransfer'] = async (id) => {
+    if (!userId) return { ok: false, error: 'Нет активной сессии' }
+    const { error } = await supabase
+      .from('transfers')
+      .delete()
+      .eq('id', id)
+      .eq('user_id', userId)
+    if (error) return { ok: false, error: error.message }
+    setTransfers(prev => prev.filter(t => t.id !== id))
+    return { ok: true }
+  }
+
   const refreshTransfers: AppContextType['refreshTransfers'] = async () => {
     if (!userId) return
     const { data } = await supabase
@@ -261,6 +291,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       resetPassword,
       updatePassword,
       addTransfer,
+      confirmTransfer,
+      deleteTransfer,
       refreshTransfers,
     }}>
       {children}

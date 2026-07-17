@@ -1,9 +1,28 @@
+import { useState } from 'react'
 import { useApp } from '../context/AppContext'
 import CabinetLayout from '../components/CabinetLayout'
 import { formatThousands } from '../lib/format'
 
 export default function History() {
-  const { transfers } = useApp()
+  const { transfers, confirmTransfer, deleteTransfer } = useApp()
+
+  // id перевода, по которому нажали «Удалить» и ждём подтверждения «точно?»
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null)
+  // id перевода, по которому идёт операция (блокируем кнопки)
+  const [busyId, setBusyId] = useState<string | null>(null)
+
+  const handleConfirm = async (id: string) => {
+    setBusyId(id)
+    await confirmTransfer(id)
+    setBusyId(null)
+  }
+
+  const handleDelete = async (id: string) => {
+    setBusyId(id)
+    await deleteTransfer(id)
+    setBusyId(null)
+    setConfirmDeleteId(null)
+  }
 
   return (
     <CabinetLayout>
@@ -31,6 +50,8 @@ export default function History() {
             {transfers.map(t => {
               // Сумма с разделителями разрядов (точки): 1.000.000
               const amountFormatted = formatThousands(t.amount) || t.amount
+              const isBusy = busyId === t.id
+              const isConfirmingDelete = confirmDeleteId === t.id
               return (
                 <div key={t.id} className="glass-card p-5 rounded-2xl">
                   <div className="font-sans text-sm text-ink-700 font-medium mb-1">{t.type}</div>
@@ -50,6 +71,50 @@ export default function History() {
                   <div className="border-t border-gold-300/20 pt-3 mt-3 font-sans text-xs text-ink-500">
                     {t.timing}
                   </div>
+
+                  {/* Кнопки действий — только для переводов «в обработке».
+                      Пришёл → «Подтвердить» (статус меняется на «Завершён»).
+                      Не пришёл → «Удалить» (с шагом подтверждения). */}
+                  {t.status !== 'completed' && (
+                    <div className="mt-4 pt-4 border-t border-gold-300/30">
+                      {isConfirmingDelete ? (
+                        <div className="flex items-center gap-3 flex-wrap">
+                          <span className="font-sans text-xs text-ink-600">Удалить этот перевод?</span>
+                          <button
+                            onClick={() => handleDelete(t.id)}
+                            disabled={isBusy}
+                            className="font-sans text-xs font-medium tracking-wide uppercase px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors disabled:opacity-50"
+                          >
+                            {isBusy ? 'Удаляю…' : 'Да, удалить'}
+                          </button>
+                          <button
+                            onClick={() => setConfirmDeleteId(null)}
+                            disabled={isBusy}
+                            className="font-sans text-xs text-ink-500 hover:text-ink-700 px-2 py-2"
+                          >
+                            Отмена
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex gap-3 flex-wrap">
+                          <button
+                            onClick={() => handleConfirm(t.id)}
+                            disabled={isBusy}
+                            className="font-sans text-xs font-medium tracking-wide uppercase px-5 py-2 rounded-lg bg-gold-500 text-white hover:bg-gold-600 transition-colors disabled:opacity-50 inline-flex items-center gap-1.5"
+                          >
+                            {isBusy ? 'Секунду…' : '✓ Подтвердить'}
+                          </button>
+                          <button
+                            onClick={() => setConfirmDeleteId(t.id)}
+                            disabled={isBusy}
+                            className="font-sans text-xs font-medium tracking-wide uppercase px-5 py-2 rounded-lg border border-gold-300/60 text-ink-500 hover:border-red-400 hover:text-red-600 transition-colors disabled:opacity-50"
+                          >
+                            Удалить
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               )
             })}

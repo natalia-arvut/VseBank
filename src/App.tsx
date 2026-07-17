@@ -8,7 +8,6 @@ import AuthCallback from './pages/AuthCallback'
 import ResetPassword from './pages/ResetPassword'
 import Paths from './pages/Paths'
 import Cabinet from './pages/Cabinet'
-import Requisites from './pages/Requisites'
 import Transfer from './pages/Transfer'
 import Signature from './pages/Signature'
 import Reviews from './pages/Reviews'
@@ -96,7 +95,6 @@ function AppRoutes() {
       {/* Защищённые маршруты */}
       <Route path="/paths" element={<PrivateRoute><Paths /></PrivateRoute>} />
       <Route path="/cabinet" element={<PrivateRoute><Cabinet /></PrivateRoute>} />
-      <Route path="/requisites" element={<PrivateRoute><Requisites /></PrivateRoute>} />
       <Route path="/transfer" element={<PrivateRoute><Transfer /></PrivateRoute>} />
       <Route path="/signature" element={<PrivateRoute><Signature /></PrivateRoute>} />
       <Route path="/reviews" element={<PrivateRoute><Reviews /></PrivateRoute>} />

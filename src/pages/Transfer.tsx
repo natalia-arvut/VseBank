@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import CabinetLayout from '../components/CabinetLayout'
-import { fetchRequisites, saveRequisite, type Requisite } from '../lib/requisites'
 import { formatThousands, digitsOnly } from '../lib/format'
 
 const TIMINGS = [
@@ -35,18 +34,13 @@ export default function Transfer() {
   const [purposeOption, setPurposeOption] = useState<string>(PURPOSES[0])
   const [purposeCustom, setPurposeCustom] = useState('')
 
-  // Реквизиты
-  const [savedRequisites, setSavedRequisites] = useState<Requisite[]>([])
-  const [requisiteMode, setRequisiteMode] = useState<'saved' | 'new'>('new')
-  const [selectedRequisiteId, setSelectedRequisiteId] = useState<string>('')
+  // Реквизиты получателя — вводятся при каждом переводе и нигде не сохраняются
   const [newReq, setNewReq] = useState({
-    label: '',
     bankName: '',
     iban: '',
     bic: '',
     recipientName: '',
   })
-  const [saveNewRequisite, setSaveNewRequisite] = useState(true)
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -62,43 +56,19 @@ export default function Transfer() {
     if (c) setCurrency(c)
   }, [location.search])
 
-  // Загружаем сохранённые реквизиты пользователя из БД;
-  // если пришли со страницы Реквизиты — подхватываем выбранные.
-  useEffect(() => {
-    const load = async () => {
-      const reqs = await fetchRequisites()
-      setSavedRequisites(reqs)
-      if (reqs.length > 0) {
-        setRequisiteMode('saved')
-        const preselected = localStorage.getItem('vbi_preselected_requisite')
-        if (preselected && reqs.find(r => r.id === preselected)) {
-          setSelectedRequisiteId(preselected)
-          localStorage.removeItem('vbi_preselected_requisite')
-        } else {
-          setSelectedRequisiteId(reqs[0].id)
-        }
-      }
-    }
-    load()
-  }, [])
-
   // Финальная цель — либо выбранная из списка, либо своя
   const finalPurpose = purposeOption === '__custom__' ? purposeCustom.trim() : purposeOption
 
-  // Финальные реквизиты — для отображения и записи
-  const finalRequisites: { bankName: string; iban: string; bic: string; recipientName: string } | null = (() => {
-    if (requisiteMode === 'saved') {
-      const r = savedRequisites.find(x => x.id === selectedRequisiteId)
-      return r ? { bankName: r.bankName, iban: r.iban, bic: r.bic, recipientName: r.recipientName } : null
-    }
-    if (!newReq.iban || !newReq.recipientName) return null
-    return {
-      bankName: newReq.bankName,
-      iban: newReq.iban,
-      bic: newReq.bic,
-      recipientName: newReq.recipientName,
-    }
-  })()
+  // Финальные реквизиты — введённые в форме (обязательны имя получателя и IBAN)
+  const finalRequisites: { bankName: string; iban: string; bic: string; recipientName: string } | null =
+    !newReq.iban || !newReq.recipientName
+      ? null
+      : {
+          bankName: newReq.bankName,
+          iban: newReq.iban,
+          bic: newReq.bic,
+          recipientName: newReq.recipientName,
+        }
 
   const canSubmit = !!amount && !!finalPurpose && !!finalRequisites
 
@@ -111,20 +81,6 @@ export default function Transfer() {
     setLoading(true)
 
     const selectedTiming = TIMINGS.find(t => t.id === timing)!
-
-    // Если пользователь ввёл новые реквизиты и попросил сохранить — записываем в БД
-    if (requisiteMode === 'new' && saveNewRequisite && finalRequisites) {
-      const saved = await saveRequisite({
-        label: newReq.label || finalRequisites.recipientName || finalRequisites.bankName || 'Реквизиты',
-        recipientName: finalRequisites.recipientName,
-        bankName: finalRequisites.bankName,
-        iban: finalRequisites.iban,
-        bic: finalRequisites.bic,
-      })
-      if (saved.ok && saved.data) {
-        setSavedRequisites(prev => [saved.data!, ...prev])
-      }
-    }
 
     const result = await addTransfer({
       amount,
@@ -290,96 +246,34 @@ export default function Transfer() {
             <div className="glass-card p-6 rounded-2xl">
               <div className="tag mb-4 text-sm">Реквизиты перевода</div>
 
-              {/* Переключатель: сохранённые / новые */}
-              <div className="flex gap-2 mb-5">
-                <button
-                  type="button"
-                  disabled={savedRequisites.length === 0}
-                  onClick={() => setRequisiteMode('saved')}
-                  className={`flex-1 py-2.5 px-4 text-sm font-sans font-medium tracking-widest uppercase border transition-all duration-200 ${
-                    requisiteMode === 'saved'
-                      ? 'bg-gold-500 text-white border-gold-500'
-                      : 'border-gold-300/60 text-ink-500 hover:border-gold-500'
-                  } ${savedRequisites.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  style={{ borderRadius: '12px' }}
-                >
-                  Из сохранённых{savedRequisites.length > 0 ? ` (${savedRequisites.length})` : ''}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setRequisiteMode('new')}
-                  className={`flex-1 py-2.5 px-4 text-sm font-sans font-medium tracking-widest uppercase border transition-all duration-200 ${
-                    requisiteMode === 'new'
-                      ? 'bg-gold-500 text-white border-gold-500'
-                      : 'border-gold-300/60 text-ink-500 hover:border-gold-500'
-                  }`}
-                  style={{ borderRadius: '12px' }}
-                >
-                  Внести новые
-                </button>
-              </div>
-
-              {requisiteMode === 'saved' && savedRequisites.length > 0 && (
-                <select
+              <div className="space-y-3">
+                <input
                   className="input-field"
-                  value={selectedRequisiteId}
-                  onChange={e => setSelectedRequisiteId(e.target.value)}
-                >
-                  {savedRequisites.map(r => (
-                    <option key={r.id} value={r.id}>
-                      {r.label} — {r.iban || r.bankName}
-                    </option>
-                  ))}
-                </select>
-              )}
-
-              {requisiteMode === 'new' && (
-                <div className="space-y-3">
+                  placeholder="Имя получателя"
+                  value={newReq.recipientName}
+                  onChange={e => setNewReq({ ...newReq, recipientName: e.target.value })}
+                />
+                <input
+                  className="input-field"
+                  placeholder="Название банка"
+                  value={newReq.bankName}
+                  onChange={e => setNewReq({ ...newReq, bankName: e.target.value })}
+                />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <input
                     className="input-field"
-                    placeholder="Имя получателя"
-                    value={newReq.recipientName}
-                    onChange={e => setNewReq({ ...newReq, recipientName: e.target.value })}
+                    placeholder="IBAN"
+                    value={newReq.iban}
+                    onChange={e => setNewReq({ ...newReq, iban: e.target.value })}
                   />
                   <input
                     className="input-field"
-                    placeholder="Название банка"
-                    value={newReq.bankName}
-                    onChange={e => setNewReq({ ...newReq, bankName: e.target.value })}
+                    placeholder="BIC / SWIFT"
+                    value={newReq.bic}
+                    onChange={e => setNewReq({ ...newReq, bic: e.target.value })}
                   />
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input
-                      className="input-field"
-                      placeholder="IBAN"
-                      value={newReq.iban}
-                      onChange={e => setNewReq({ ...newReq, iban: e.target.value })}
-                    />
-                    <input
-                      className="input-field"
-                      placeholder="BIC / SWIFT"
-                      value={newReq.bic}
-                      onChange={e => setNewReq({ ...newReq, bic: e.target.value })}
-                    />
-                  </div>
-                  <input
-                    className="input-field"
-                    placeholder="Название (например: «UBS — Личный»)"
-                    value={newReq.label}
-                    onChange={e => setNewReq({ ...newReq, label: e.target.value })}
-                  />
-                  <label className="flex items-center gap-2 cursor-pointer pt-1">
-                    <input
-                      type="checkbox"
-                      checked={saveNewRequisite}
-                      onChange={e => setSaveNewRequisite(e.target.checked)}
-                      className="accent-gold-500"
-                    />
-                    <span className="font-sans text-xs text-ink-500">
-                      Сохранить эти реквизиты для будущих переводов
-                    </span>
-                  </label>
                 </div>
-              )}
+              </div>
             </div>
 
             {error && (
