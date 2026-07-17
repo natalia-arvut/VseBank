@@ -1,17 +1,11 @@
-name: Deploy to vsebank.space
+name: Deploy to vsebank.space (DEPRECATED — SSH/Scaleway)
 
-# Auto-deploy на arvut Paris server (163.172.33.136).
-# Запускается на push в main и вручную из UI GitHub.
-#
-# Адаптировано из docs/deploy-workflow.yml под реальность:
-#   - Node 22 (не 20) — Vite 8 требует ≥22.12
-#   - package.json в корне репо (не в app/)
-#   - SSH порт 4848 (не дефолтный 22)
-#   - DEPLOY_PATH = /var/www/vsebank/dist/ на сервере
+# ⚠️ УСТАРЕЛ. Сайт переехал на Cloudflare Pages — см. deploy-pages.yml.
+# Этот деплой по SSH на сервер Scaleway (163.172.33.136) больше не используется
+# (сервер отключён). Оставлен только для ручного запуска на всякий случай;
+# автозапуск на push отключён, чтобы не падал.
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 jobs:

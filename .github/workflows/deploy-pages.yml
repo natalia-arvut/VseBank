@@ -1,0 +1,41 @@
+name: Deploy to Cloudflare Pages
+
+# Автодеплой на Cloudflare Pages (проект vsebank, домен vsebank.space).
+# Заменил старый деплой по SSH на сервер Scaleway — сервер больше не нужен,
+# сайт статический (Vite/React) + Supabase на стороне клиента.
+#
+# На push в main: собираем с VITE_BASE=/ и заливаем dist в Pages через wrangler.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (VITE_BASE=/)
+        env:
+          VITE_BASE: /
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx --yes wrangler@4 pages deploy dist --project-name vsebank --branch main --commit-dirty=true
